@@ -3,7 +3,8 @@
 
 ## Database Schema Design
 
-![Screenshot 2023-04-08 121428](https://user-images.githubusercontent.com/105599802/230731777-df6ca026-81ec-4b5b-a4fe-c959d7405efd.png)
+![Screenshot 2023-04-08 135107](https://user-images.githubusercontent.com/105599802/230735940-b84b585c-2cd7-4b88-ade2-8d3ff2040590.png)
+
 
 
 
