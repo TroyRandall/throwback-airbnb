@@ -2,8 +2,9 @@
 
 
 ## Database Schema Design
+![schemafinaldraft](https://user-images.githubusercontent.com/105599802/230737568-5b0f203d-94b1-4589-b00c-cf6b3b9f8c93.png)
 
-![Screenshot 2023-04-08 135107](https://user-images.githubusercontent.com/105599802/230735940-b84b585c-2cd7-4b88-ade2-8d3ff2040590.png)
+
 
 
 
