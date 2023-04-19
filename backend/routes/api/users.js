@@ -137,23 +137,5 @@ router.post("", validateSignup, async (req, res) => {
 
 }),
 
-// router.use( async (req, res, next, err) => {
-//   if(err.status === 401) {
-//     return res.json({
-//       message: "Invalid credentials",
-//       statusCode: 401
-//     })
-//   };
-
-//   if(err.status === 400) {
-//     return res.json({
-//         message: "Validation error",
-//         statusCode: 400,
-//         errors: [
-//           err.errors.credential
-//         ]
-//       })
-//   }
-// })
 
 module.exports = router;
