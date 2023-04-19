@@ -53,22 +53,6 @@ router.post(
         }
       });
 
-    if(!credential){
-      const err = new Error('login failed');
-      err.status = 400;
-      err.title = 'Login failed';
-      err.errors = { credential: 'Email or username is required'};
-      return next(err);
-    }
-
-    if(!password){
-      const err = new Error('login failed');
-      err.status = 400;
-      err.title = 'Login failed';
-      err.errors = { credential: 'password is required'};
-      return next(err);
-    }
-
     if (!user || !bcrypt.compareSync(password, user.hashedPassword.toString())) {
       const err = new Error('Login failed');
       err.status = 401;
@@ -153,23 +137,23 @@ router.post("", validateSignup, async (req, res) => {
 
 }),
 
-router.use( async (req, res, next, err) => {
-  if(err.status === 401) {
-    return res.json({
-      message: "Invalid credentials",
-      statusCode: 401
-    })
-  };
+// router.use( async (req, res, next, err) => {
+//   if(err.status === 401) {
+//     return res.json({
+//       message: "Invalid credentials",
+//       statusCode: 401
+//     })
+//   };
 
-  if(err.status === 400) {
-    return res.json({
-        message: "Validation error",
-        statusCode: 400,
-        errors: [
-          err.errors.credential
-        ]
-      })
-  }
-})
+//   if(err.status === 400) {
+//     return res.json({
+//         message: "Validation error",
+//         statusCode: 400,
+//         errors: [
+//           err.errors.credential
+//         ]
+//       })
+//   }
+// })
 
 module.exports = router;
