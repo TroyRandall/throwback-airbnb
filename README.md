@@ -2,7 +2,8 @@
 
 
 ## Database Schema Design
-![schemafinaldraft](https://user-images.githubusercontent.com/105599802/230737568-5b0f203d-94b1-4589-b00c-cf6b3b9f8c93.png)
+![updateSchema](https://user-images.githubusercontent.com/105599802/232935335-3a8f9ac4-84fb-472b-a390-0d323c046f59.png)
+
 
 
 
