@@ -153,7 +153,7 @@ router.post("", validateSignup, async (req, res) => {
 
 }),
 
-router.post("", async (req, res, err) => {
+router.use( async (req, res, next, err) => {
   if(err.status === 401) {
     return res.json({
       message: "Invalid credentials",
