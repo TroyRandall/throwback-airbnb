@@ -2,13 +2,35 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const { Op } = require('sequelize');
 const { check, cookie } = require("express-validator");
-const { handleValidationErrors } = require("../../utils/validation");
+const { handleValidationErrors, UserAlreadyExistsErrors } = require("../../utils/validation");
 
 const { setTokenCookie, requireAuth } = require("../../utils/auth");
 const { User } = require("../../db/models");
 
 const router = express.Router();
 
+validateUniqueName = [
+  check("username")
+    .custom( async (value , req, res, next) => {
+      const user = User.findOne({
+        where: {
+          'username': value
+        }
+      })
+
+      if(user){
+        const err = new Error('User already exists');
+        err.status = 403;
+        err.errors = [
+         "User with that username already exists"
+          ]
+
+          next(err);
+       }
+       next();
+    }),
+  UserAlreadyExistsErrors
+]
 const validateSignup = [
   check("email")
     .exists({ checkFalsy: true })
@@ -115,7 +137,7 @@ router.get('/currentuser', async (req, res, next) => {
 
 }),
 // Sign up
-router.post("", validateSignup, async (req, res) => {
+router.post("", validateUniqueName, validateSignup, async (req, res) => {
   const { email, password, username, firstName, lastName } = req.body;
   const hashedPassword = bcrypt.hashSync(password);
   const user = await User.create({ email, username, firstName, lastName, hashedPassword });
