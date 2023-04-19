@@ -79,6 +79,15 @@ app.use((err, _req, _res, next) => {
 
 // Error formatter
 app.use((err, _req, res, _next) => {
+
+  if(err.status === 401){
+    res.status(err.status);
+    return res.json({
+      message: err.message,
+      statusCode: err.status
+    })
+  }
+
   res.status(err.status || 500);
   console.error(err);
   res.json({
