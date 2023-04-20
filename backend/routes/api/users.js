@@ -67,7 +67,7 @@ router.post(
   );
 
 //currentUser
-router.get('/currentuser', async (req, res, next) => {
+router.get('/currentuser', requireAuth, async (req, res, next) => {
   if(req.user){
     const userId = +req.user.id;
   const currentScope = User.scope('current');
