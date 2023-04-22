@@ -23,22 +23,28 @@ const handleValidationErrors = (req, _res, next) => {
   next();
 };
 
+const checkReview_stars = [
+  check('review')
+    .not().isEmpty()
+    .withMessage("Review text is required"),
+  check('stars')
+    .not().isEmpty()
+    .isNumeric()
+    .withMessage('Stars must be an integer from 1 to 5'),
+  handleValidationErrors
+]
 const handleBodyValidations = [
   check('address')
       .exists({ checkFalsy: true})
-      .isString()
       .withMessage('Street address is required'),
   check('city')
       .exists({ checkFalsy: true})
-      .isString()
       .withMessage('City is required'),
   check('state')
       .exists({ checkFalsy: true})
-      .isString()
       .withMessage('State is required'),
   check('country')
       .exists({ checkFalsy: true})
-      .isString()
       .withMessage('Country is required'),
   check('lat')
       .exists({ checkFalsy: true})
@@ -51,11 +57,9 @@ const handleBodyValidations = [
       .withMessage('Name must be less than 50 characters'),
   check('description')
       .exists({ checkFalsy: true})
-      .isString()
       .withMessage('Description is required'),
   check('price')
       .exists({ checkFalsy: true})
-      .isString()
       .withMessage('Price per day is required'),
   handleValidationErrors,
 ]
@@ -135,5 +139,5 @@ const isUniqueName = async (req, res, next) => {
 };
 
 module.exports = {
-  handleValidationErrors, isUniqueName, isUniqueEmail, validateLogin, validateSignup, handleBodyValidations
+  handleValidationErrors, isUniqueName, isUniqueEmail, validateLogin, validateSignup, handleBodyValidations, checkReview_stars
 };

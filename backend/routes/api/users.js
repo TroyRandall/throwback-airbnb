@@ -8,7 +8,7 @@ const
  = require("../../utils/validation");
 
 const { setTokenCookie, requireAuth } = require("../../utils/auth");
-const { User } = require("../../db/models");
+const { User, Review, Spot, RevImage, SpotImage } = require("../../db/models");
 
 const router = express.Router();
 
@@ -65,6 +65,33 @@ router.post(
       return res.json({ message: 'success' });
     }
   );
+
+//currentUser/reviews
+router.get('/currentuser/reviews', requireAuth, async (req, res, next) => {
+  const id = +req.user.id;
+  const Reviews = await Review.findAll({
+    where: {
+      userId: id
+    },
+    include: [
+      {
+        model: User,
+        attributes: ['id', 'firstName', 'lastName']
+      },
+      {
+        model: Spot,
+        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price']
+      },
+      {
+        model: RevImage,
+        as: 'ReviewImages',
+        attributes: ['id', 'url']
+      }
+    ]
+  })
+
+  return res.json({Reviews});
+})
 
 //currentUser
 router.get('/currentuser', requireAuth, async (req, res, next) => {

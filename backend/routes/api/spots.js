@@ -1,11 +1,19 @@
 const express = require("express");
 const { check, cookie } = require("express-validator");
-const { User, Spot, sequelize, Review, SpotImage } = require("../../db/models");
+const {
+  User,
+  Spot,
+  sequelize,
+  Review,
+  SpotImage,
+  RevImage,
+} = require("../../db/models");
 const router = express.Router();
 const { requireAuth } = require("../../utils/auth");
 const {
   handleValidationErrors,
   handleBodyValidations,
+  checkReview_stars,
 } = require("../../utils/validation");
 
 router.delete("/:id", requireAuth, async (req, res, next) => {
@@ -75,6 +83,50 @@ router.put(
       price: price,
     });
     return res.json(updated);
+  }
+);
+
+router.post(
+  "/:id/reviews",
+  requireAuth, //checking authentication before starting
+  checkReview_stars, //checking review
+  async (req, res, next) => {
+    const userId = +req.user.id;
+    const spotId = +req.params.id;
+    const { review, stars } = req.body;
+    const spot = await Spot.findOne({where: {id: spotId}})
+    const prevReview = await Review.findOne({
+        where: {userId: userId, spotId: spotId}
+    });
+
+    //review already exist error handling
+    if(prevReview){
+        const err = new Error('user already has a review for this spot')
+        err.status = 403;
+        next(err);
+    }
+    // spot cant be found error handling
+    if (!spot) {
+        const err = new Error("Spot couldn't be found");
+        err.status = 404;
+        next(err);
+      }
+      // stars validation error handling
+    if(stars < 0 || stars > 5) {
+        const err = new Error('Validation error');
+        err.status = 400;
+        err.errors = ['stars must be an integer from 1 to 5']
+        next(err);
+    }
+
+    const newReview = await Review.create({
+      userId: userId,
+      spotId: spotId,
+      review: review,
+      stars: stars,
+    });
+
+    return res.json(newReview);
   }
 );
 router.post(
@@ -148,6 +200,34 @@ router.post(
   }
 );
 
+router.get("/:id/reviews", async (req, res, next) => {
+  const id = +req.params.id;
+  const Reviews = await Review.findAll({
+    where: {
+      spotId: id,
+    },
+    include: [
+      {
+        model: User,
+        attributes: ["id", "firstName", "lastName"],
+      },
+      {
+        model: RevImage,
+        as: "ReviewImages",
+        attributes: ["id", "url"],
+      },
+    ],
+  });
+  console.log(id + "---" + Reviews);
+
+  if (Reviews.length === 0) {
+    const err = new Error("Spot couldn't be found");
+    err.status = 404;
+    next(err);
+  } else {
+    return res.json({ Reviews });
+  }
+});
 router.get("/currentuser", requireAuth, async (req, res, next) => {
   const userId = req.user.id;
   const spots = await Spot.findAll({
