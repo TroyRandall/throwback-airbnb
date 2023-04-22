@@ -21,6 +21,7 @@ module.exports = {
         references: {
           model: 'Users'
         },
+        onDelete: 'CASCADE'
       },
       address: {
         type: Sequelize.STRING(50),
@@ -31,8 +32,12 @@ module.exports = {
         allowNull: false,
       },
       state: {
-        type: Sequelize.STRING(2),
+        type: Sequelize.STRING,
         allowNull: false,
+      },
+      country: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       lat: {
         type: Sequelize.DECIMAL,

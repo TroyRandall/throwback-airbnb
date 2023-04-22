@@ -80,8 +80,18 @@ app.use((err, _req, _res, next) => {
 // Error formatter
 app.use((err, _req, res, _next) => {
 
+  if(err.status === 404){
+    res.status(err.status);
+    console.error(err);
+    return res.json({
+      message: err.message,
+      statusCode: err.status,
+    })
+  }
+
   if(err.status === 401){
     res.status(err.status);
+    console.error(err);
     return res.json({
       message: err.message,
       statusCode: err.status

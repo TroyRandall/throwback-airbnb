@@ -16,6 +16,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   RevImage.init({
+    url: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+      }
+    },
     reviewId: {
       type: DataTypes.INTEGER,
       allowNull: false,

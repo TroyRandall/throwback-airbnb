@@ -10,19 +10,22 @@ module.exports = {
     options.tableName = 'SpotImages';
     await queryInterface.bulkInsert(options, [
       {
+        url: 'imAnImage.jpeg',
         spotId: 1,
         userId: 1,
-        prevImg: false
+        preview: false
       },
       {
+        url: 'imAlsoAnImage.jpeg',
         spotId: 2,
         userId: 1,
-        prevImg: true
+        preview: true
       },
       {
+        url: 'guessWhatIam.jpeg',
         spotId: 3,
         userId: 2,
-        prevImg: false
+        preview: false
       }
     ], {});
   },

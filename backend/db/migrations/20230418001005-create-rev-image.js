@@ -15,12 +15,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      url: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       reviewId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Reviews'
         },
+        onDelete: 'CASCADE'
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -28,6 +33,7 @@ module.exports = {
         references: {
           model: 'Users'
         },
+        onDelete: 'CASCADE'
       },
       createdAt: {
         allowNull: false,

@@ -23,6 +23,43 @@ const handleValidationErrors = (req, _res, next) => {
   next();
 };
 
+const handleBodyValidations = [
+  check('address')
+      .exists({ checkFalsy: true})
+      .isString()
+      .withMessage('Street address is required'),
+  check('city')
+      .exists({ checkFalsy: true})
+      .isString()
+      .withMessage('City is required'),
+  check('state')
+      .exists({ checkFalsy: true})
+      .isString()
+      .withMessage('State is required'),
+  check('country')
+      .exists({ checkFalsy: true})
+      .isString()
+      .withMessage('Country is required'),
+  check('lat')
+      .exists({ checkFalsy: true})
+      .withMessage('Latitude is required'),
+  check('lng')
+      .exists({ checkFalsy: true})
+      .withMessage('Longitude is required'),
+  check('name')
+      .isLength({ max: 50})
+      .withMessage('Name must be less than 50 characters'),
+  check('description')
+      .exists({ checkFalsy: true})
+      .isString()
+      .withMessage('Description is required'),
+  check('price')
+      .exists({ checkFalsy: true})
+      .isString()
+      .withMessage('Price per day is required'),
+  handleValidationErrors,
+]
+
 const validateSignup = [
   check("email")
     .exists({ checkFalsy: true })
@@ -98,5 +135,5 @@ const isUniqueName = async (req, res, next) => {
 };
 
 module.exports = {
-  handleValidationErrors, isUniqueName, isUniqueEmail, validateLogin, validateSignup
+  handleValidationErrors, isUniqueName, isUniqueEmail, validateLogin, validateSignup, handleBodyValidations
 };

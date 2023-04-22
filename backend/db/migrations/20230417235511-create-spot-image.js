@@ -15,12 +15,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      url: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       spotId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Spots'
         },
+        onDelete: 'CASCADE'
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -28,8 +33,10 @@ module.exports = {
         references: {
           model: 'Users'
         },
+        onDelete: 'CASCADE'
+
       },
-      prevImg: {
+      preview: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },
