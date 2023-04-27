@@ -1,4 +1,5 @@
 const express = require("express");
+const { Op } = require("sequelize");
 const { check, cookie } = require("express-validator");
 const {
   User,
@@ -7,15 +8,45 @@ const {
   Review,
   SpotImage,
   RevImage,
+  Booking,
 } = require("../../db/models");
+const isBefore = require("date-fns/isBefore");
+const parseISO = require("date-fns/parseISO");
 const router = express.Router();
 const { requireAuth } = require("../../utils/auth");
 const {
   handleValidationErrors,
   handleBodyValidations,
   checkReview_stars,
+  validateBooking,
 } = require("../../utils/validation");
 
+router.delete("/:id/images/:imageid", requireAuth, async (req, res, next) => {
+  const spotId = +req.params.id;
+  const spotImageId = +req.params.imageid;
+  const userId = req.user.id;
+  const spot = await Spot.findOne({ where: { id: spotId } });
+  const spotImage = await SpotImage.findOne({ where: { id: spotImageId } });
+  // spot cant be found error handling
+  if (!spot) {
+    const err = new Error("Spot couldn't be found");
+    err.status = 404;
+    next(err);
+  }
+  //authorization error handling
+  if (userId !== spot.ownerId) {
+    const err = new Error("Spot does not belong to current User");
+    err.status = 401;
+    next(err);
+  }
+
+  await spotImage.destroy();
+
+  return res.json({
+    message: "Successfully deleted",
+    statusCode: 200,
+  });
+});
 router.delete("/:id", requireAuth, async (req, res, next) => {
   const userId = +req.user.id;
   const spotId = +req.params.id;
@@ -87,48 +118,120 @@ router.put(
 );
 
 router.post(
-  "/:id/reviews",
-  requireAuth, //checking authentication before starting
-  checkReview_stars, //checking review
+  "/:id/bookings", //url for creating booking based on spots ID
+  requireAuth, //validationg authentication before starting route
+  validateBooking, //validating startDate and endDate from req.body
   async (req, res, next) => {
     const userId = +req.user.id;
     const spotId = +req.params.id;
-    const { review, stars } = req.body;
-    const spot = await Spot.findOne({where: {id: spotId}})
-    const prevReview = await Review.findOne({
-        where: {userId: userId, spotId: spotId}
+    const spot = await Spot.findOne({ where: { id: spotId } });
+    const { startDate, endDate } = req.body;
+    const bookings = await Booking.findAll({
+      where: {
+        spotId: spotId,
+        startDate: { [Op.between]: [startDate, endDate] },
+      },
     });
-
-    //review already exist error handling
-    if(prevReview){
-        const err = new Error('user already has a review for this spot')
-        err.status = 403;
-        next(err);
+    const bookings2 = await Booking.findAll({
+      where: {
+        spotId: spotId,
+        endDate: { [Op.between]: [startDate, endDate] },
+      },
+    });
+    //Enddate cannot be before startDate
+    if (
+      isBefore(parseISO(endDate), parseISO(startDate)) ||
+      endDate === startDate
+    ) {
+      const err = new Error("Validation error");
+      err.status = 400;
+      err.errors = "endDate cannot be on or before startDate";
+      next(err);
     }
     // spot cant be found error handling
     if (!spot) {
+      const err = new Error("Spot couldn't be found");
+      err.status = 404;
+      next(err);
+    }
+    //authorization error handling
+    if (userId === spot.ownerId) {
+      const err = new Error("Spot must not belong to the current User");
+      err.status = 401;
+      next(err);
+    }
+    //validating startDate against existing bookings dates
+    if (bookings.length > 0) {
+      const err = new Error(
+        "Sorry, this spot is already booked for the specified dates"
+      );
+      err.status = 403;
+      err.errors = "Start date conflicts with an existing booking";
+      next(err);
+    }
+    //validating endDate against existing bookings dates
+    if (bookings2.length > 0) {
+      const err = new Error(
+        "Sorry, this spot is already booked for the specified dates"
+      );
+      err.status = 403;
+      err.errors = "End date conflicts with an existing booking";
+      next(err);
+    }
+
+    const newBooking = await Booking.create({
+      userId: userId,
+      spotId: spotId,
+      startDate: startDate,
+      endDate: endDate,
+    });
+
+    return res.json(newBooking);
+  }
+),
+  router.post(
+    "/:id/reviews",
+    requireAuth, //checking authentication before starting
+    checkReview_stars, //checking review
+    async (req, res, next) => {
+      const userId = +req.user.id;
+      const spotId = +req.params.id;
+      const { review, stars } = req.body;
+      const spot = await Spot.findOne({ where: { id: spotId } });
+      const prevReview = await Review.findOne({
+        where: { userId: userId, spotId: spotId },
+      });
+
+      //review already exist error handling
+      if (prevReview) {
+        const err = new Error("user already has a review for this spot");
+        err.status = 403;
+        next(err);
+      }
+      // spot cant be found error handling
+      if (!spot) {
         const err = new Error("Spot couldn't be found");
         err.status = 404;
         next(err);
       }
       // stars validation error handling
-    if(stars < 0 || stars > 5) {
-        const err = new Error('Validation error');
+      if (stars < 0 || stars > 5) {
+        const err = new Error("Validation error");
         err.status = 400;
-        err.errors = ['stars must be an integer from 1 to 5']
+        err.errors = ["stars must be an integer from 1 to 5"];
         next(err);
+      }
+
+      const newReview = await Review.create({
+        userId: userId,
+        spotId: spotId,
+        review: review,
+        stars: stars,
+      });
+
+      return res.json(newReview);
     }
-
-    const newReview = await Review.create({
-      userId: userId,
-      spotId: spotId,
-      review: review,
-      stars: stars,
-    });
-
-    return res.json(newReview);
-  }
-);
+  );
 
 router.post(
   "/:id/images",
@@ -200,9 +303,40 @@ router.post(
     res.json(newSpot);
   }
 );
+router.get("/:id/bookings", requireAuth, async (req, res, next) => {
+  const currentId = +req.user.id;
+  const spotId = +req.params.id;
+  const spot = await Spot.findOne({ where: { id: spotId } });
+  const spotsRelated = Booking.scope("spotsRelated");
+  if (!spot) {
+    const err = new Error("Spot couldn't be found");
+    err.status = 404;
+    next(err);
+  }
+  const userBookings = await Booking.findAll({
+    where: {
+      spotId: spotId,
+    },
+    include: {
+      model: User,
+      attributes: ["id", "firstName", "lastName"],
+    },
+  });
+  const bookings = await spotsRelated.findAll({
+    where: {
+      spotId: spotId,
+    },
+  });
 
+  if (spot.ownerId !== currentId) {
+    return res.json(bookings);
+  } else {
+    return res.json(userBookings);
+  }
+});
 router.get("/:id/reviews", async (req, res, next) => {
   const id = +req.params.id;
+  const spot = await Spot.findOne({ where: { id: id } });
   const Reviews = await Review.findAll({
     where: {
       spotId: id,
@@ -221,7 +355,7 @@ router.get("/:id/reviews", async (req, res, next) => {
   });
   console.log(id + "---" + Reviews);
 
-  if (Reviews.length === 0) {
+  if (!spot) {
     const err = new Error("Spot couldn't be found");
     err.status = 404;
     next(err);
@@ -282,22 +416,74 @@ router.get("/:id", async (req, res, next) => {
 });
 
 router.get("/", async (req, res, next) => {
+  let page = req.query.page;
+  let size = req.query.size;
+  const { minLat, maxLat, maxLng, minLng, minPrice, maxPrice } = req.query;
+  if (!page) page = 0;  //default value for page
+  if (!size) size = 20; //default value for size
+  let queries = { where: {} };
+  let pagination = {};
+  if (page > 0) pagination.offset = size * (page); //validating and setting page
+  pagination.limit = size; // setting size
+  if (maxLat) { //building pagination objects starts here
+    queries.where.lat = { [Op.lte]: maxLat };
+  }
+  if (minLat) {
+    where.lat = { [Op.gte]: minLat };
+  }
+  if (maxLng) {
+    where.lng = { [Op.lte]: maxLng };
+  }
+  if (minLng) {
+    where.lng = { [Op.gte]: minLng };
+  }
+  if (minPrice) {
+    where.price = { [Op.gte]: minPrice };
+  }
+  if (maxPrice) {
+    where.price = { [Op.lte]: maxPrice };
+  } //end of building pagination object
+
   const spots = await Spot.findAll({
-    attributes: {
-      include: [
-        [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
-      ],
-    },
-    group: ["spotId"],
-
-    include: {
-      model: Review,
-      attributes: [],
-    },
+    ...queries,
+    ...pagination,
   });
+  const resArray = [];
 
+  for (let i = 0; i < spots.length; i++) {
+    const spot = spots[i].toJSON();
+
+    const AvgStarRating = await Review.findAll({
+      where: {
+        spotId: spot.id,
+      },
+      attributes: [
+        [sequelize.fn("AVG", sequelize.col("stars")), "avgStarRating"],
+      ],
+      raw: true,
+    });
+    spot.avgStarRating = AvgStarRating[0].avgStarRating;
+
+    const previewImage = await SpotImage.findAll({
+      where: {
+        spotId: spot.id,
+        preview: true,
+      },
+      attributes: ["url"],
+      raw: true,
+    });
+
+    console.log(previewImage);
+    spot.previewImage =
+      previewImage.length > 0 //validating if url exists. if not null
+        ? previewImage[previewImage.length - 1].url
+        : null;
+    resArray.push(spot);
+  }
   return res.json({
-    Spots: spots,
+    Spots: resArray,
+    page: page,
+    size: size,
   });
 });
 

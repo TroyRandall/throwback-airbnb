@@ -16,20 +16,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Booking.init({
-    startDate: {
-      type: Sequelize.DATE,
-      allowNull: false,
-      validate: {
-        notEmpty: true
-      }
-    },
-    endDate:  {
-      type: Sequelize.DATE,
-      allowNull: false,
-      validate: {
-        notEmpty: true
-      }
-    },
     spotId:  {
       type: Sequelize.INTEGER,
       allowNull: false,
@@ -43,10 +29,32 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: true
       }
-    }
+    },
+    startDate: {
+      type: Sequelize.DATEONLY,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    endDate:  {
+      type: Sequelize.DATEONLY,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+
   }, {
     sequelize,
     modelName: 'Booking',
+    scopes: {
+      spotsRelated: {
+        attributes: {
+          exclude: ['id', 'userId', 'createdAt', 'updatedAt',]
+        }
+      }
+    }
   });
   return Booking;
 };

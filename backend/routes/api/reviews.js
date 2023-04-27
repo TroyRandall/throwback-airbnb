@@ -16,10 +16,37 @@ const {
   checkReview_stars,
 } = require("../../utils/validation");
 
+router.delete('/:id/images/:imageid', requireAuth, async (req, res, next) => {
+  const userId = +req.user.id;
+  const reviewId = +req.params.id;
+  const reviewImageId = +req.params.imageid;
+  const review = await Review.findOne({where: {id: reviewId}});
+  const reviewImage = await ReviewImage.findOne({where: {id: reviewImageId}});
+   //validating review exists
+   if (!review) {
+    const err = new Error("Review couldn't be found");
+    err.status = 404;
+    return next(err);
+  }
+  //authorization error handling
+  if (userId !== review.userId) {
+    const err = new Error("Review does not belong to current User");
+    err.status = 401;
+    return next(err);
+  }
+
+  await review.destroy();
+  return res.json({
+    message: "Successfully deleted",
+    statusCode: 200
+  })
+
+})
 router.delete("/:id", requireAuth, async (req, res, next) => {
   const reviewId = +req.params.id;
   const userId = +req.user.id;
   const review = await Review.findOne({ where: { id: reviewId } });
+  //validating review exists
   if (!review) {
     const err = new Error("Review couldn't be found");
     err.status = 404;

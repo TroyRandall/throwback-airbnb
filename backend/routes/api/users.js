@@ -8,7 +8,7 @@ const
  = require("../../utils/validation");
 
 const { setTokenCookie, requireAuth } = require("../../utils/auth");
-const { User, Review, Spot, RevImage, SpotImage } = require("../../db/models");
+const { User, Review, Spot, RevImage, SpotImage, Booking } = require("../../db/models");
 
 const router = express.Router();
 
@@ -65,7 +65,21 @@ router.post(
       return res.json({ message: 'success' });
     }
   );
-
+//currentUser/bookings
+router.get('/currentuser/bookings', requireAuth, async (req, res, next) => {
+  const currentId = +req.user.id;
+  const Bookings = await Booking.findAll({
+    where: {
+      userId: currentId,
+    },
+    include: {
+      model: Spot,
+      attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price']
+    }
+  });
+ 
+  return res.json({Bookings})
+})
 //currentUser/reviews
 router.get('/currentuser/reviews', requireAuth, async (req, res, next) => {
   const id = +req.user.id;

@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const { User } = require('../db/models');
 const { check, cookie } = require("express-validator");
+const { isBefore } = require('date-fns');
 
 
 // middleware for formatting errors from express-validator middleware
@@ -22,7 +23,20 @@ const handleValidationErrors = (req, _res, next) => {
   }
   next();
 };
-
+const validateBooking = [
+  check('startDate')
+    .not().isEmpty()
+    .isDate()
+    .withMessage('startDate is required and must be a date'),
+  check('startDate')
+    .isAfter(Date.Now)
+    .withMessage('startDate must be after the current date'),
+  check('endDate')
+    .not().isEmpty()
+    .isDate()
+    .withMessage('endDate is required and must be a date'),
+    handleValidationErrors
+]
 const checkReview_stars = [
   check('review')
     .not().isEmpty()
@@ -139,5 +153,5 @@ const isUniqueName = async (req, res, next) => {
 };
 
 module.exports = {
-  handleValidationErrors, isUniqueName, isUniqueEmail, validateLogin, validateSignup, handleBodyValidations, checkReview_stars
+  handleValidationErrors, isUniqueName, isUniqueEmail, validateLogin, validateSignup, handleBodyValidations, checkReview_stars, validateBooking
 };
