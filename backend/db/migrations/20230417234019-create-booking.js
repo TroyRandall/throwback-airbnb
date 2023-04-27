@@ -14,14 +14,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      startDate: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
-      endDate: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
       spotId: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -38,6 +30,14 @@ module.exports = {
           model: 'Users'
         },
         onDelete: 'CASCADE'
+      },
+      startDate: {
+        type: Sequelize.DATEONLY,
+        allowNull: false,
+      },
+      endDate: {
+        type: Sequelize.DATEONLY,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

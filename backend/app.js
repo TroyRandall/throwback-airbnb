@@ -83,19 +83,35 @@ app.use((err, _req, res, _next) => {
   if(err.status === 403){
     res.status(err.status);
     console.error(err);
-    return res.json({
+    if(err.errors){
+      return res.json({
+        message: err.message,
+        statusCode: err.status,
+        errors: err.errors
+      })
+    } else {
+        return res.json({
       message: err.message,
-      statusCode: err.status
+      statusCode: err.status,
     })
+    }
+
   }
   if(err.status === 400){
     res.status(err.status);
     console.error(err);
-    return res.json({
+    if(err.errors){
+      return res.json({
+        message: err.message,
+        statusCode: err.status,
+        errors: err.errors
+      })
+    } else {
+        return res.json({
       message: err.message,
       statusCode: err.status,
-      errors: err.errors
-    });
+    })
+    }
   }
   if(err.status === 404){
     res.status(err.status);
