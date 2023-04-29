@@ -12,7 +12,7 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
     await queryInterface.addColumn('Spots', 'country', {
-      type: DataTypes.STRING(),
+      type: Sequelize.STRING(),
       allowNull: false,
 
     })
