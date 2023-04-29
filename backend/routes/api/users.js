@@ -157,7 +157,7 @@ router.get("/currentuser", requireAuth, async (req, res, next) => {
   if (req.user) {
     const userId = +req.user.id;
     const currentScope = User.scope("current");
-
+    console.log(Document.cookie);
     const current = await currentScope.findByPk(userId);
     const { id, firstName, lastName, email, username } = current;
     return res.json({
