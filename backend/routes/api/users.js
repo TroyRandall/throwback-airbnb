@@ -57,10 +57,9 @@ router.post("/login", validateLogin, async (req, res, next) => {
   };
 
   await setTokenCookie(res, safeUser);
-
+safeUser.token = req.cookies.token
   return res.json({
     user: safeUser,
-    token: req.cookies.token
   });
 });
 
@@ -202,10 +201,9 @@ router.get("/currentuser", requireAuth, async (req, res, next) => {
     };
 
     await setTokenCookie(res, safeUser);
-
+    safeUser.token = req.cookies.token
     return res.json({
       user: safeUser,
-      token: req.cookies.token
     });
   }),
   (module.exports = router);
