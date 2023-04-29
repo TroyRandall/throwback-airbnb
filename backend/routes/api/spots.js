@@ -286,7 +286,34 @@ router.post(
       description,
       price,
     } = req.body;
+const spot = await Spot.findAll({where: {name: name}});
 
+if(spot.length > 0){
+  const err = new Error('Validation Error');
+  err.status = 400
+  err.errors = [
+    "Name must be unique"
+  ];
+ return next(err);
+}
+
+if(lat.toString() === lat){
+  const err = new Error('Validation Error');
+  err.status = 400;
+  err.errors = [
+    "Latitude is invalid"
+  ];
+  return next(err);
+}
+
+if(lng.toString() === lng) {
+  const err = new Error('Validation Error');
+  err.status = 400;
+  err.errors = [
+    "longitude is invalid"
+  ];
+  return next(err);
+}
     const newSpot = await Spot.create({
       ownerId: userId,
       address: address,

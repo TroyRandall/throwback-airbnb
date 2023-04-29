@@ -61,10 +61,12 @@ const handleBodyValidations = [
       .exists({ checkFalsy: true})
       .withMessage('Country is required'),
   check('lat')
-      .exists({ checkFalsy: true})
+      .isFloat()
+      .not().isAlpha()
       .withMessage('Latitude is not valid'),
   check('lng')
-      .exists({ checkFalsy: true})
+      .isFloat()
+      .not().isAlpha()
       .withMessage('Longitude is not valid'),
   check('name')
       .isLength({ max: 50})

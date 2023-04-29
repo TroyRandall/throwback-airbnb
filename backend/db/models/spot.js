@@ -60,8 +60,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         notEmpty: true,
-      }
     },
+  },
     lng: {
       type: DataTypes.DECIMAL,
       allowNull: false,
@@ -85,7 +85,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DECIMAL,
       allowNull: false,
     },
-  }, {
+  },
+
+   {
     sequelize,
     modelName: 'Spot',
   });
