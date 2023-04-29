@@ -71,14 +71,26 @@ router.get('/currentuser/bookings', requireAuth, async (req, res, next) => {
   const Bookings = await Booking.findAll({
     where: {
       userId: currentId,
-    },
-    include: {
-      model: Spot,
-      attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price']
-    }
+    }, raw: true
   });
- 
-  return res.json({Bookings})
+
+  let resArray = [];
+  for( let i = 0; i < Bookings.length; i++){
+    const booking = Bookings[i];
+const spot = await Spot.findOne({where: {id: booking.spotId}, raw: true, attributes: {exclude: ['createdAt', 'updatedAt']}});
+const previewImage = await SpotImage.findOne({where: {spotId: booking.spotId, preview: true}, attributes: ['url'], raw: true})
+
+  spot.previewImage =
+    previewImage.length > 0 //validating if url exists. if not null
+      ? previewImage[previewImage.length - 1].url
+      : null;
+      booking.spot = spot;
+      console.log(spot);
+      resArray.push(booking);
+}
+
+
+  return res.json({Bookings: resArray})
 })
 //currentUser/reviews
 router.get('/currentuser/reviews', requireAuth, async (req, res, next) => {
@@ -87,14 +99,11 @@ router.get('/currentuser/reviews', requireAuth, async (req, res, next) => {
     where: {
       userId: id
     },
+    raw: true,
     include: [
       {
         model: User,
-        attributes: ['id', 'firstName', 'lastName']
-      },
-      {
-        model: Spot,
-        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price']
+        attributes: ['id', 'firstName', 'lastName'],
       },
       {
         model: RevImage,
@@ -104,7 +113,30 @@ router.get('/currentuser/reviews', requireAuth, async (req, res, next) => {
     ]
   })
 
-  return res.json({Reviews});
+  const resArray = [];
+  for (let i = 0; i < Reviews.length; i++) {
+    const review = Reviews[i];
+    const spotId = review.spotId;
+    const spot = await Spot.findOne({where: {id: spotId}, raw: true, attributes: { exclude: ['createdAt', 'updatedAt']}});
+  const previewImage = await SpotImage.findAll({
+    where: {
+      spotId: spotId,
+      preview: true,
+    },
+    attributes: ["url"],
+  });
+  // console.log(previewImage[previewImage.length - 1]);
+
+  spot.previewImage =
+    previewImage.length > 0 //validating if url exists. if not null
+      ? previewImage[previewImage.length - 1].url
+      : null;
+      review.spot = spot;
+      console.log(review);
+      resArray.push(review);
+}
+
+  return res.json({Reviews: resArray});
 })
 
 //currentUser

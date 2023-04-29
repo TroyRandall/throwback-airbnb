@@ -30,7 +30,7 @@ router.delete('/:id/images/:imageid', requireAuth, async (req, res, next) => {
   }
   //authorization error handling
   if (userId !== review.userId) {
-    const err = new Error("Review does not belong to current User");
+    const err = new Error("Forbidden");
     err.status = 401;
     return next(err);
   }
@@ -54,7 +54,7 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
   }
   //authorization error handling
   if (userId !== review.userId) {
-    const err = new Error("Review does not belong to current User");
+    const err = new Error("Forbidden");
     err.status = 401;
     next(err);
   }
@@ -109,7 +109,7 @@ router.post("/:id/images", requireAuth, async (req, res, next) => {
   }
   //authorization error handling
   if (userId !== review.userId) {
-    const err = new Error("Review does not belong to current User");
+    const err = new Error("Forbidden");
     err.status = 401;
     next(err);
   }

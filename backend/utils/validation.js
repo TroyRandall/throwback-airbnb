@@ -62,13 +62,16 @@ const handleBodyValidations = [
       .withMessage('Country is required'),
   check('lat')
       .exists({ checkFalsy: true})
-      .withMessage('Latitude is required'),
+      .withMessage('Latitude is not valid'),
   check('lng')
       .exists({ checkFalsy: true})
-      .withMessage('Longitude is required'),
+      .withMessage('Longitude is not valid'),
   check('name')
       .isLength({ max: 50})
       .withMessage('Name must be less than 50 characters'),
+  check('name')
+      .not().isEmpty()
+      .withMessage('Name cannot be empty'),
   check('description')
       .exists({ checkFalsy: true})
       .withMessage('Description is required'),

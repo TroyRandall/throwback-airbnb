@@ -35,7 +35,7 @@ router.delete("/:id/images/:imageid", requireAuth, async (req, res, next) => {
   }
   //authorization error handling
   if (userId !== spot.ownerId) {
-    const err = new Error("Spot does not belong to current User");
+    const err = new Error("Forbidden");
     err.status = 401;
     next(err);
   }
@@ -59,7 +59,7 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
   }
   //authorization error handling
   if (userId !== spot.ownerId) {
-    const err = new Error("Spot does not belong to current User");
+    const err = new Error("Forbidden");
     err.status = 401;
     next(err);
   }
@@ -97,7 +97,7 @@ router.put(
     }
     //authorization error handling
     if (userId !== spot.ownerId) {
-      const err = new Error("Spot does not belong to current User");
+      const err = new Error("Forbidden");
       err.status = 401;
       next(err);
     }
@@ -156,7 +156,7 @@ router.post(
     }
     //authorization error handling
     if (userId === spot.ownerId) {
-      const err = new Error("Spot must not belong to the current User");
+      const err = new Error("Forbidden");
       err.status = 401;
       next(err);
     }
@@ -215,7 +215,7 @@ router.post(
         next(err);
       }
       // stars validation error handling
-      if (stars < 0 || stars > 5) {
+      if (stars < 0 || stars > 5 || stars === undefined) {
         const err = new Error("Validation error");
         err.status = 400;
         err.errors = ["stars must be an integer from 1 to 5"];
@@ -249,7 +249,7 @@ router.post(
     }
     //authorization error handling
     if (userId !== spot.ownerId) {
-      const err = new Error("Spot does not belong to current User");
+      const err = new Error("Forbidden");
       err.status = 401;
       next(err);
     } else {
@@ -368,9 +368,39 @@ router.get("/currentuser", requireAuth, async (req, res, next) => {
   const spots = await Spot.findAll({
     where: { ownerId: userId },
   });
+  const resArray = [];
 
+  for (let i = 0; i < spots.length; i++) {
+    const spot = spots[i].toJSON();
+
+    const AvgStarRating = await Review.findAll({
+      where: {
+        spotId: spot.id,
+      },
+      attributes: [
+        [sequelize.fn("AVG", sequelize.col("stars")), "avgStarRating"],
+      ],
+      raw: true,
+    });
+    spot.avgStarRating = AvgStarRating[0].avgStarRating;
+
+    const previewImage = await SpotImage.findAll({
+      where: {
+        spotId: spot.id,
+        preview: true,
+      },
+      attributes: ["url"],
+      raw: true,
+    });
+
+    spot.previewImage =
+      previewImage.length > 0 //validating if url exists. if not null
+        ? previewImage[previewImage.length - 1].url
+        : null;
+    resArray.push(spot);
+  }
   return res.json({
-    Spots: spots,
+    Spots: resArray,
   });
 });
 
@@ -473,7 +503,6 @@ router.get("/", async (req, res, next) => {
       raw: true,
     });
 
-    console.log(previewImage);
     spot.previewImage =
       previewImage.length > 0 //validating if url exists. if not null
         ? previewImage[previewImage.length - 1].url

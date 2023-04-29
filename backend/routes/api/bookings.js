@@ -41,7 +41,7 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
   const spot = await Spot.findOne({ where: { id: booking.spotId } });
   //authorization error handling
   if (userId !== booking.userId && userId !== spot.ownerId) {
-    const err = new Error("Booking or Spot does not belong to current User");
+    const err = new Error("Forbidden");
     err.status = 401;
     return next(err);
   }
@@ -85,7 +85,7 @@ router.put(
     }
     //authorization error handling
     if (userId !== bookings.userId) {
-      const err = new Error("Booking does not belong to current User");
+      const err = new Error("Forbidden");
       err.status = 401;
       return next(err);
     }
