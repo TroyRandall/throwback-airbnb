@@ -23,6 +23,10 @@ const {
 
 const router = express.Router();
 
+const cookieParser = require("cookie-parser");
+const app = express();
+app.use(cookieParser());
+
 //login route
 router.post("/login", validateLogin, async (req, res, next) => {
   const { credential, password } = req.body;
@@ -50,13 +54,13 @@ router.post("/login", validateLogin, async (req, res, next) => {
     lastName: user.lastName,
     email: user.email,
     username: user.username,
-    token: "",
   };
 
   await setTokenCookie(res, safeUser);
 
   return res.json({
     user: safeUser,
+    token: req.cookies.token
   });
 });
 
@@ -157,7 +161,7 @@ router.get("/currentuser", requireAuth, async (req, res, next) => {
   if (req.user) {
     const userId = +req.user.id;
     const currentScope = User.scope("current");
-    console.log(Document.cookie);
+    console.log(req.cookies.token);
     const current = await currentScope.findByPk(userId);
     const { id, firstName, lastName, email, username } = current;
     return res.json({
@@ -201,6 +205,7 @@ router.get("/currentuser", requireAuth, async (req, res, next) => {
 
     return res.json({
       user: safeUser,
+      token: req.cookies.token
     });
   }),
   (module.exports = router);
