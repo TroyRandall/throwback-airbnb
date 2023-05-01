@@ -303,7 +303,7 @@ Returns all the spots owned (created) by the current user.
 * Require Authentication: true
 * Request
   * Method: GET
-  * URL: /users/currentuser/spots
+  * URL: spots/currentuser
   * Body: none
 
 * Successful Response
@@ -1201,7 +1201,7 @@ Create and return a new booking from a spot specified by id.
         "End date conflicts with an existing booking"
       ]
     }
-    ```
+
 
 ### Edit a Booking
 
@@ -1398,7 +1398,7 @@ Delete an existing image for a Review.
 * Require proper authorization: Review must belong to the current user
 * Request
   * Method: DELETE
-  * URL: /reviews/:id/images/:imgid
+  * URL: /reviews/:id/images/:imageid
   * Body: none
 
 * Successful Response
