@@ -78,7 +78,7 @@ router.get("/currentuser/bookings", requireAuth, async (req, res, next) => {
     },
   });
   console.log(Bookings)
-  if (!Bookings) {
+  if (Bookings.length < 0) {
     return res.json({ Bookings: [] });
   } else {
     let resArray = [];

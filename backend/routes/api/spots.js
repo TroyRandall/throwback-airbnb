@@ -457,7 +457,7 @@ router.get("/:id", async (req, res, next) => {
       {
         model: User,
         as: "Owner",
-        attributes: ["User.id", "firstName", "lastName"],
+        attributes: ["Users.id", "firstName", "lastName"],
       },
     ],
   });
