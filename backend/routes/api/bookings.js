@@ -59,6 +59,7 @@ router.put(
   async (req, res, next) => {
     const bookingId = +req.params.id;
     const userId = +req.user.id;
+    const { endDate, startDate } = req.body;
     const bookings = await Booking.findOne({ where: { id: bookingId } });
     const bookings1 = await Booking.findAll({
       where: {
@@ -69,7 +70,7 @@ router.put(
     const bookings2 = await Booking.findAll({
       where: { id: bookingId, endDate: { [Op.between]: [startDate, endDate] } },
     });
-    const { endDate, startDate } = req.body;
+
     // booking cant be found error handling
     if (!bookings) {
       const err = new Error("Booking couldn't be found");
