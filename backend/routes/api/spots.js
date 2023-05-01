@@ -61,13 +61,13 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
   if (!spot) {
     const err = new Error("Spot couldn't be found");
     err.status = 404;
-    next(err);
+   return next(err);
   }
   //authorization error handling
   if (userId !== spot.ownerId) {
     const err = new Error("Forbidden");
     err.status = 401;
-    next(err);
+   return next(err);
   }
 
   await spot.destroy();
@@ -99,13 +99,13 @@ router.put(
     if (!spot) {
       const err = new Error("Spot couldn't be found");
       err.status = 404;
-      next(err);
+     return next(err);
     }
     //authorization error handling
     if (userId !== spot.ownerId) {
       const err = new Error("Forbidden");
       err.status = 401;
-      next(err);
+      return next(err);
     }
 
     const updated = await spot.update({
@@ -152,19 +152,19 @@ router.post(
       const err = new Error("Validation error");
       err.status = 400;
       err.errors = "endDate cannot be on or before startDate";
-      next(err);
+      return next(err);
     }
     // spot cant be found error handling
     if (!spot) {
       const err = new Error("Spot couldn't be found");
       err.status = 404;
-      next(err);
+      return next(err);
     }
     //authorization error handling
     if (userId === spot.ownerId) {
       const err = new Error("Forbidden");
       err.status = 401;
-      next(err);
+     return next(err);
     }
     //validating startDate against existing bookings dates
     if (bookings.length > 0) {
@@ -173,7 +173,7 @@ router.post(
       );
       err.status = 403;
       err.errors = "Start date conflicts with an existing booking";
-      next(err);
+     return next(err);
     }
     //validating endDate against existing bookings dates
     if (bookings2.length > 0) {
@@ -182,7 +182,7 @@ router.post(
       );
       err.status = 403;
       err.errors = "End date conflicts with an existing booking";
-      next(err);
+     return next(err);
     }
 
     const newBooking = await Booking.create({
@@ -212,20 +212,20 @@ router.post(
       if (prevReview) {
         const err = new Error("user already has a review for this spot");
         err.status = 403;
-        next(err);
+       return next(err);
       }
       // spot cant be found error handling
       if (!spot) {
         const err = new Error("Spot couldn't be found");
         err.status = 404;
-        next(err);
+       return next(err);
       }
       // stars validation error handling
       if (stars < 0 || stars > 5 || stars === undefined) {
         const err = new Error("Validation error");
         err.status = 400;
         err.errors = ["stars must be an integer from 1 to 5"];
-        next(err);
+       return next(err);
       }
 
       const newReview = await Review.create({
