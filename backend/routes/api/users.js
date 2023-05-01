@@ -87,10 +87,12 @@ router.get("/currentuser/bookings", requireAuth, async (req, res, next) => {
       const spot = await Spot.findOne({
         where: { id: booking.spotId },
         attributes: { exclude: ["createdAt", "updatedAt"] },
+        raw: true
       });
       const previewImage = await SpotImage.findAll({
         where: { spotId: booking.spotId, preview: true },
         attributes: ["url"],
+        raw: true
       });
 
       spot.previewImage =
