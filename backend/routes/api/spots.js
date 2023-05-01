@@ -24,22 +24,28 @@ const {
 router.delete("/:id/images/:imageid", requireAuth, async (req, res, next) => {
   const spotId = +req.params.id;
   const spotImageId = +req.params.imageid;
-  const userId = req.user.id;
+  const userId = +req.user.id;
   const spot = await Spot.findOne({ where: { id: spotId } });
   const spotImage = await SpotImage.findOne({ where: { id: spotImageId } });
   // spot cant be found error handling
   if (!spot) {
     const err = new Error("Spot couldn't be found");
     err.status = 404;
-    next(err);
+    return next(err);
   }
   //authorization error handling
   if (userId !== spot.ownerId) {
     const err = new Error("Forbidden");
     err.status = 401;
-    next(err);
+    return next(err);
   }
-
+//handle spotImage not found error
+if(!spotImage){
+  const err = new Error ("Spot Image couldn't be found");
+  err.status = 404;
+  err.errors = ["You must provide a valid id for the spot's image"];
+  return next(err);
+}
   await spotImage.destroy();
 
   return res.json({
