@@ -441,7 +441,7 @@ router.get("/:id", async (req, res, next) => {
       //aggregate data functions begin here
       include: [
         [sequelize.fn("COUNT", sequelize.col("Reviews.stars")), "numReviews"],
-        [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
+        [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
       ],
     },
     group: [["Reviews.spotId"],["Spot.id"]],
@@ -457,6 +457,7 @@ console.log(spots);
   if (spots) {
     const spot = spots.toJSON()
     console.log(spot);
+    spot.avgStarRating = (+spot.avgStarRating).toFixed(1);
     const spotImages = await SpotImage.findAll({where: {spotId: spotId}, attributes: ['id', 'url', 'preview']})
   spot.SpotImages = spotImages;
 
