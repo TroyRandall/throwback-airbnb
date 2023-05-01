@@ -147,7 +147,7 @@ router.get("/currentuser/reviews", requireAuth, async (req, res, next) => {
       previewImage.length > 0 //validating if url exists. if not null
         ? previewImage[previewImage.length - 1].url
         : null;
-    review.spot = spot;
+    review.Spot = spot;
 
 
     resArray.push(review);
