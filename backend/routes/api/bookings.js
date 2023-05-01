@@ -79,6 +79,7 @@ router.put(
     }
     //checking endDate of booking has not already happened
     const now = new Date();
+    console.log(now);
     if (isBefore(parseISO(bookings.endDate), now)) {
       const err = new Error("Past bookings can't be modified");
       err.status = 403;

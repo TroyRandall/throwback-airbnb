@@ -21,7 +21,7 @@ router.delete('/:id/images/:imageid', requireAuth, async (req, res, next) => {
   const reviewId = +req.params.id;
   const reviewImageId = +req.params.imageid;
   const review = await Review.findOne({where: {id: reviewId}});
-  const reviewImage = await ReviewImage.findOne({where: {id: reviewImageId}});
+  const reviewImage = await RevImage.findOne({where: {id: reviewImageId}});
    //validating review exists
    if (!review) {
     const err = new Error("Review couldn't be found");
@@ -35,7 +35,7 @@ router.delete('/:id/images/:imageid', requireAuth, async (req, res, next) => {
     return next(err);
   }
 
-  await review.destroy();
+  await reviewImage.destroy();
   return res.json({
     message: "Successfully deleted",
     statusCode: 200
