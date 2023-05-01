@@ -91,7 +91,6 @@ router.get("/currentuser/bookings", requireAuth, async (req, res, next) => {
       const previewImage = await SpotImage.findAll({
         where: { spotId: booking.spotId, preview: true },
         attributes: ["url"],
-        raw: true,
       });
 
       spot.previewImage =
