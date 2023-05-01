@@ -444,7 +444,7 @@ router.get("/:id", async (req, res, next) => {
         [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgRating"],
       ],
     },
-    group: [["Reviews.spotId"],["Spot.id"]],
+    group: [["Reviews.spotId"]],
     include: [
       {
         model: Review, //needed for aggregate data to work properly
@@ -453,7 +453,7 @@ router.get("/:id", async (req, res, next) => {
     ],
   });
 
-
+console.log(spots);
   if (spots) {
     const spot = spots.toJSON()
     console.log(spot);
