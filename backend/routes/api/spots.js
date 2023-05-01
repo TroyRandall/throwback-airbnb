@@ -415,7 +415,7 @@ router.get("/currentuser", requireAuth, async (req, res, next) => {
       ],
       raw: true,
     });
-    spot.avgStarRating = AvgStarRating[0].avgStarRating;
+    spot.avgStarRating = (+AvgStarRating[0].avgStarRating).toFixed(2);
 
     const previewImage = await SpotImage.findAll({
       where: {
