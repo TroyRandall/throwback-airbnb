@@ -462,8 +462,7 @@ router.get("/:id", async (req, res, next) => {
 console.log(spots);
   if (spots) {
     const spot = spots.toJSON()
-    console.log(spot);
-    spot.avgStarRating = (+spot.avgStarRating).toFixed(1);
+    spot.avgStarRating = (+spot.avgStarRating).toFixed(2);
     const spotImages = await SpotImage.findAll({where: {spotId: spotId}, attributes: ['id', 'url', 'preview']})
   spot.SpotImages = spotImages;
 
@@ -525,7 +524,7 @@ router.get("/", async (req, res, next) => {
       ],
       raw: true,
     });
-    spot.avgStarRating = AvgStarRating[0].avgStarRating;
+    spot.avgStarRating = (+AvgStarRating[0].avgStarRating).toFixed(2);
 
     const previewImage = await SpotImage.findAll({
       where: {
