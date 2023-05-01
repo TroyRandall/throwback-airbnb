@@ -486,19 +486,19 @@ router.get("/", async (req, res, next) => {
     queries.where.lat = { [Op.lte]: maxLat };
   }
   if (minLat) {
-    where.lat = { [Op.gte]: minLat };
+    queries.where.lat = { [Op.gte]: minLat };
   }
   if (maxLng) {
-    where.lng = { [Op.lte]: maxLng };
+    queries.where.lng = { [Op.lte]: maxLng };
   }
   if (minLng) {
-    where.lng = { [Op.gte]: minLng };
+    queries.where.lng = { [Op.gte]: minLng };
   }
   if (minPrice) {
-    where.price = { [Op.gte]: minPrice };
+    queries.where.price = { [Op.gte]: minPrice };
   }
   if (maxPrice) {
-    where.price = { [Op.lte]: maxPrice };
+    queries.where.price = { [Op.lte]: maxPrice };
   } //end of building pagination object
 
   const spots = await Spot.findAll({
