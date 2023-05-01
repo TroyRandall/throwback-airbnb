@@ -54,11 +54,11 @@ router.post("/login", validateLogin, async (req, res, next) => {
     lastName: user.lastName,
     email: user.email,
     username: user.username,
-    token: ""
+    token: "",
   };
 
   await setTokenCookie(res, safeUser);
-safeUser.token = req.cookies.token
+  safeUser.token = req.cookies.token;
   return res.json({
     user: safeUser,
   });
@@ -78,33 +78,35 @@ router.get("/currentuser/bookings", requireAuth, async (req, res, next) => {
     },
     raw: true,
   });
+  if (!Bookings) {
+    return res.json({ Bookings: [] });
+  } else {
+    let resArray = [];
+    for (let i = 0; i < Bookings.length; i++) {
+      const booking = Bookings[i];
+      const spot = await Spot.findOne({
+        where: { id: booking.spotId },
+        raw: true,
+        attributes: { exclude: ["createdAt", "updatedAt"] },
+      });
+      const previewImage = await SpotImage.findOne({
+        where: { spotId: booking.spotId, preview: true },
+        attributes: ["url"],
+        raw: true,
+      });
 
-  let resArray = [];
-  for (let i = 0; i < Bookings.length; i++) {
-    const booking = Bookings[i];
-    const spot = await Spot.findOne({
-      where: { id: booking.spotId },
-      raw: true,
-      attributes: { exclude: ["createdAt", "updatedAt"] },
-    });
-    const previewImage = await SpotImage.findOne({
-      where: { spotId: booking.spotId, preview: true },
-      attributes: ["url"],
-      raw: true,
-    });
+      spot.previewImage =
+        previewImage.length > 0 //validating if url exists. if not null
+          ? previewImage[previewImage.length - 1].url
+          : null;
+      booking.spot = spot;
+      console.log(spot);
+      resArray.push(booking);
+    }
 
-    spot.previewImage =
-      previewImage.length > 0 //validating if url exists. if not null
-        ? previewImage[previewImage.length - 1].url
-        : null;
-    booking.spot = spot;
-    console.log(spot);
-    resArray.push(booking);
+    return res.json({ Bookings: resArray });
   }
-
-  return res.json({ Bookings: resArray });
 });
-
 
 //currentUser/reviews
 router.get("/currentuser/reviews", requireAuth, async (req, res, next) => {
@@ -148,7 +150,6 @@ router.get("/currentuser/reviews", requireAuth, async (req, res, next) => {
         ? previewImage[previewImage.length - 1].url
         : null;
     review.Spot = spot;
-
 
     resArray.push(review);
   }
@@ -202,7 +203,7 @@ router.get("/currentuser", requireAuth, async (req, res, next) => {
     };
 
     await setTokenCookie(res, safeUser);
-    safeUser.token = req.cookies.token
+    safeUser.token = req.cookies.token;
     return res.json({
       user: safeUser,
     });
