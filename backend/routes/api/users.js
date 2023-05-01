@@ -76,20 +76,19 @@ router.get("/currentuser/bookings", requireAuth, async (req, res, next) => {
     where: {
       userId: currentId,
     },
-    raw: true,
   });
+  console.log(Bookings)
   if (!Bookings) {
     return res.json({ Bookings: [] });
   } else {
     let resArray = [];
     for (let i = 0; i < Bookings.length; i++) {
-      const booking = Bookings[i];
+      const booking = Bookings[i].toJSON();
       const spot = await Spot.findOne({
         where: { id: booking.spotId },
-        raw: true,
         attributes: { exclude: ["createdAt", "updatedAt"] },
       });
-      const previewImage = await SpotImage.findOne({
+      const previewImage = await SpotImage.findAll({
         where: { spotId: booking.spotId, preview: true },
         attributes: ["url"],
         raw: true,
@@ -99,8 +98,7 @@ router.get("/currentuser/bookings", requireAuth, async (req, res, next) => {
         previewImage.length > 0 //validating if url exists. if not null
           ? previewImage[previewImage.length - 1].url
           : null;
-      booking.spot = spot;
-      console.log(spot);
+      booking.Spot = spot;
       resArray.push(booking);
     }
 
