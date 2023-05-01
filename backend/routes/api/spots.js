@@ -450,20 +450,19 @@ router.get("/:id", async (req, res, next) => {
         model: Review, //needed for aggregate data to work properly
         attributes: [],
       },
-      {
-        model: SpotImage,
-        attributes: ["SpotImages.id", "url", "preview"],
-      },
-      {
-        model: User,
-        as: "Owner",
-        attributes: ["Users.id", "firstName", "lastName"],
-      },
     ],
   });
 
+
   if (spots) {
-    return res.json(spots);
+    const spot = spots.toJSON()
+    console.log(spot);
+    const spotImages = await SpotImage.findAll({where: {spotId: spotId}, attributes: ['id', 'url', 'preview']})
+  spot.SpotImages = spotImages;
+
+  const owner = await User.findOne({where: {id: spot.ownerId }, attributes: ['id', 'firstName', 'lastName']})
+  spot.Owner = owner;
+    return res.json(spot);
   } else {
     //spot couldnt be found error handling
     const err = new Error("Spot couldn't be found");
