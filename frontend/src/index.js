@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { restoreCSRF, csrfFetch } from './store/csrf';
+import * as sessionThunks from "./store/session.js";
 
 import configureStore from './store';
 
@@ -16,16 +17,17 @@ if (process.env.NODE_ENV !== 'production') {
   restoreCSRF();
 
   window.csrfFetch = csrfFetch;
+  window.sessionActions=sessionThunks
   window.store = store;
 }
 
 function Root() {
   return (
+  <BrowserRouter>
     <Provider store={store}>
-      <BrowserRouter>
         <App />
-      </BrowserRouter>
     </Provider>
+  </BrowserRouter>
   );
 }
 
