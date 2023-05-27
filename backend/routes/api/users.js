@@ -77,7 +77,6 @@ router.get("/currentuser/bookings", requireAuth, async (req, res, next) => {
       userId: currentId,
     },
   });
-  console.log(Bookings)
   if (Bookings.length < 0) {
     return res.json({ Bookings: [] });
   } else {
@@ -161,7 +160,6 @@ router.get("/currentuser", requireAuth, async (req, res, next) => {
   if (req.user) {
     const userId = +req.user.id;
     const currentScope = User.scope("current");
-    console.log(req.cookies.token);
     const current = await currentScope.findByPk(userId);
     const { id, firstName, lastName, email, username } = current;
     return res.json({

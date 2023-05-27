@@ -26,5 +26,6 @@
   "homepage": "https://github.com/TroyRandall/throwback-airbnb#readme",
   "dependencies": {
     "dotenv": "^16.0.3"
-  }
+  },
+  "devDependencies": {}
 }

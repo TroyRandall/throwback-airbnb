@@ -386,7 +386,6 @@ router.get("/:id/reviews", async (req, res, next) => {
       },
     ],
   });
-  console.log(id + "---" + Reviews);
 
   if (!spot) {
     const err = new Error("Spot couldn't be found");
@@ -459,7 +458,6 @@ router.get("/:id", async (req, res, next) => {
     ],
   });
 
-console.log(spots);
   if (spots) {
     const spot = spots.toJSON()
     spot.avgStarRating = (+spot.avgStarRating).toFixed(2);
