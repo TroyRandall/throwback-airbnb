@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "render-postbuild": "npm run build --prefix frontend",
     "install": "npm --prefix backend install backend",
     "dotenv": "npm install dotenv",
     "dev:backend": "npm install --prefix backend start",
