@@ -16,6 +16,7 @@ const removeUser = () => {
   };
 };
 
+
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
   const response = await csrfFetch("/api/users/login", {
@@ -61,6 +62,8 @@ export const signup = (user) => async (dispatch) => {
   dispatch(removeUser());
   return response;
 };
+
+
 
 const initialState = { user: null };
 

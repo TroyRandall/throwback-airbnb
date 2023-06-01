@@ -1,0 +1,11 @@
+.prevSpots {
+    border: solid black;
+    height: 250px;
+    width: 250px;
+}
+
+.prevSpots:hover {
+    height: 300px;
+    width: 300px;
+    cursor: pointer;
+}

@@ -5,6 +5,8 @@ import LoginFormPage from "./components/loginFormPage";
 import SignupFormPage from "./components/signUpFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation"
+import AllSpotsPage from "./components/Spots"
+import SpotsById from "./components/SpotsById"
 
 
 function App() {
@@ -24,6 +26,12 @@ function App() {
       </Route>
       <Route path="/signup">
           <SignupFormPage />
+      </Route>
+      <Route exact path="/">
+        <AllSpotsPage />
+      </Route>
+      <Route path = "/spots/:id">
+        <SpotsById />:
       </Route>
     </Switch>
     </>
