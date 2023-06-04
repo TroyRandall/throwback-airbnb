@@ -12,7 +12,7 @@ const history = useHistory();
 
     return (
         <div className="prevSpots" onClick={redirect} key={spot.id}>
-          <img src={spot.prevImg} alt={spot.description}></img>
+          <img src={spot.previewImage} alt={spot.description}></img>
           <h5>
             {spot.state}, {spot.country}
           </h5>

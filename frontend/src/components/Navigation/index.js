@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+
+import CreateSpotButton from '../createSpotButton'
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
 
@@ -12,7 +14,9 @@ function Navigation({ isLoaded }){
     sessionLinks = (
       <li>
         <ProfileButton user={sessionUser} />
+        <CreateSpotButton />
       </li>
+
     );
   } else {
     sessionLinks = (

@@ -10,15 +10,12 @@ import PreviewSpot from "./previewSpot.js";
 function AllSpotsPage() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+const spots = useSelector((state) => state.spots.spots);
+
 
   useEffect(() => {
     dispatch(spotActions.getSpots()).then(() => setIsLoaded(true));
   }, [dispatch]);
-
-  const spots = useSelector((state) => state.spots.spot);
-
-
-
 
 
   return (

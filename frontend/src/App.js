@@ -7,6 +7,9 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation"
 import AllSpotsPage from "./components/Spots"
 import SpotsById from "./components/SpotsById"
+import CreateSpotPage from "./components/createSpotPage";
+import MyCollection from './components/myCollectionPage';
+import UpdateSpotPage from './components/updateSpotFormPage';
 
 
 function App() {
@@ -27,11 +30,20 @@ function App() {
       <Route path="/signup">
           <SignupFormPage />
       </Route>
-      <Route exact path="/">
-        <AllSpotsPage />
+      <Route path='/mycollection'>
+      <MyCollection />
+      </Route>
+      <Route path='/spots/update'>
+        <UpdateSpotPage />
+      </Route>
+      <Route path='/spots/create'>
+        <CreateSpotPage />
       </Route>
       <Route path = "/spots/:id">
         <SpotsById />:
+      </Route>
+        <Route exact path="/">
+        <AllSpotsPage />
       </Route>
     </Switch>
     </>
