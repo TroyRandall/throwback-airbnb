@@ -2,6 +2,7 @@
     height: 400px;
     width: 350px;
     border: solid black 2px;
+    border-radius: 25px;
     display: grid;
     grid-template-rows: 300px 50px 50px;
     margin: 5px;
@@ -23,14 +24,22 @@ img {
 .state_country {
     grid-row: 2/2;
     position: relative;
-    left: 3px;
+    left: 35px;
     top: 2px;
 }
 
 .starRating {
     grid-row: 2/2;
     position: relative;
-    left: 300px;
+    left: 285px;
     bottom: 30px;
 
+}
+
+
+.price {
+    grid-row: 3/3;
+    position: relative;
+    bottom: 45px;
+    left: 35px;
 }

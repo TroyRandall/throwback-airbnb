@@ -1,4 +1,8 @@
+body, header {
+    background-color: rgba(49,49,49,0.8);
+}
 .prevSpots {
+    background-color: white;
     border: solid black;
     height: 250px;
     width: 250px;

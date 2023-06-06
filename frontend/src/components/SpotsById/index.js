@@ -12,10 +12,9 @@ function SpotsById() {
     const dispatch = useDispatch();
     const[isLoaded, setIsLoaded] = useState(false);
     const { id } = useParams();
-  console.log('SpotByIdComponent')
-const spot = useSelector((state) => state.spots.spot);
-const sessionUser = useSelector((state) => state.session.user);
 
+const sessionUser = useSelector((state) => state.session.user);
+const spot = useSelector((state) => state.spots.spot);
 
     useEffect(() => {
         if (id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
@@ -30,7 +29,7 @@ const sessionUser = useSelector((state) => state.session.user);
         return <alert>This feature will be coming soon!</alert>
       }
 
-      if (isLoaded && (sessionUser.id === spot.ownerId)){
+      if ((isLoaded && sessionUser) && (sessionUser.id === spot.ownerId)) {
         return (
           <>
             <h1 className="spot_name">{spot.name}</h1> <DeleteSpotButton spotId={id} />

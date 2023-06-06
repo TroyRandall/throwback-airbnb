@@ -18,10 +18,10 @@ const history = useHistory();
           <img id='grow'src={spot.previewImage} alt={spot.description}></img>
           <div className='prev_spot_info' id='grow'>
             <h5 className='state_country' id='grow'>
-                {spot.state}, {spot.country}
+                🗺️{spot.state}, {spot.country}
           </h5>
           <h5 className='starRating' id='grow'>⭐{spot.avgStarRating}</h5>
-          <h5 className='price' id='grow'>{spot.price} per/night</h5>
+          <h5 className='price' id='grow'>💵{spot.price} per/night</h5>
             </div>
 
         </div>
