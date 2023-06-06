@@ -1,17 +1,17 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
 
 import * as spotActions from "../../store/spots.js";
 
-function Reviews() {
+function Reviews({ spotId }) {
     const dispatch= useDispatch();
     const[isLoaded, setIsLoaded] = useState(false);
-    const spotId = useParams();
 
+
+    console.log('review-component')
     useEffect(() => {
-        dispatch(spotActions.reviewsBySpotId(spotId)).then(() => setIsLoaded(true));
+        if (spotId) dispatch(spotActions.reviewsBySpotId(spotId)).then(() => setIsLoaded(true));
       }, [spotId, dispatch]);
 
       const reviews = useSelector((state) => state.spots.reviews);

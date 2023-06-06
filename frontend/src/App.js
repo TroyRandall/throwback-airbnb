@@ -33,7 +33,7 @@ function App() {
       <Route path='/mycollection'>
       <MyCollection />
       </Route>
-      <Route path='/spots/update'>
+      <Route path='/spots/:id/update'>
         <UpdateSpotPage />
       </Route>
       <Route path='/spots/create'>

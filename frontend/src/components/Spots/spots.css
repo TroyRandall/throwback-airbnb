@@ -4,8 +4,18 @@
     width: 250px;
 }
 
-.prevSpots:hover {
-    height: 300px;
-    width: 300px;
+
+
+#grow {
+    transition: all .2s ease-in-out;
+    }
+
+#grow:hover {
+    transform: scale(1.1);
     cursor: pointer;
+    }
+
+.spots-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
 }

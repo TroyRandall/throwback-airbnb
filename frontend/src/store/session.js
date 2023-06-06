@@ -2,7 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
-const OWNED_COLLECTION = 'session/ownedCollection';
+
 
 const setUser = (user) => {
   return {
@@ -17,12 +17,6 @@ const removeUser = () => {
   };
 };
 
-const ownedCollection = (spots) => {
-  return {
-    type: OWNED_COLLECTION,
-    payload: spots
-  }
-}
 
 
 export const login = (user) => async (dispatch) => {
@@ -71,18 +65,10 @@ export const signup = (user) => async (dispatch) => {
   return response;
 };
 
-export const spotsByUser = () => async (dispatch) => {
-  const response = await csrfFetch('/api/spots/currentuser', {
-    method: 'GET'
-  });
-  const data = await response.json();
-  dispatch(ownedCollection(data.Spots));
-  return data.Spots;
-}
 
 
 
-const initialState = { user: null, owned: null };
+const initialState = { user: null };
 
 const sessionReducer = (state = initialState, action) => {
   let newState;
@@ -94,10 +80,6 @@ const sessionReducer = (state = initialState, action) => {
     case REMOVE_USER:
       newState = Object.assign({}, state);
       newState.user = null;
-      return newState;
-    case OWNED_COLLECTION:
-      newState = Object.values({}, state);
-      newState.owned = action.payload;
       return newState;
     default:
       return state;

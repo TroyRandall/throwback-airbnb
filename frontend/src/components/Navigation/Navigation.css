@@ -1,3 +1,30 @@
 .hidden {
     display: none;
 }
+
+.nav{
+    /* position: sticky; */
+    height: 75px;
+    border-bottom: solid 2px darkred;
+    border-top: solid 2px darkred;
+    padding-bottom: 15px;
+    padding-top: 10px;
+}
+
+.navLinks {
+    height: 75px;
+    width: 400px;
+}
+
+.profileButton {
+    height: 65px;
+    width: 200px;
+    position: absolute;
+    top: 20px;
+    right: 10px;
+}
+
+.createSpotButton {
+    height: 65px;
+    width: 200px;
+}

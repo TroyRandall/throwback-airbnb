@@ -1,0 +1,36 @@
+.prevSpots {
+    height: 400px;
+    width: 350px;
+    border: solid black 2px;
+    display: grid;
+    grid-template-rows: 300px 50px 50px;
+    margin: 5px;
+}
+
+img {
+    width: 350px;
+    height: 300px;
+    position: relative;
+    top: 2px;
+    grid-row: 1/1;
+}
+
+.img:hover {
+    height:350px;
+    width: 400px;
+}
+
+.state_country {
+    grid-row: 2/2;
+    position: relative;
+    left: 3px;
+    top: 2px;
+}
+
+.starRating {
+    grid-row: 2/2;
+    position: relative;
+    left: 300px;
+    bottom: 30px;
+
+}

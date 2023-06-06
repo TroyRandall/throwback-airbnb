@@ -3,8 +3,8 @@ import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
 
-import PreviewUserSpot from '../Spots/previewSpot.js'
-import * as sessionActions from '../../store/session.js';
+import PreviewUserSpot from './previewUserSpot.js'
+import * as currentActions from '../../store/current.js';
 
 function MyCollection () {
     const dispatch = useDispatch();
@@ -14,20 +14,20 @@ function MyCollection () {
 
 
     useEffect(() => {
-        dispatch(sessionActions.spotsByUser()).then(() => setIsLoaded(true));
+        dispatch(currentActions.spotsByUser()).then(() => setIsLoaded(true));
       }, [ dispatch])
 
       if (!sessionUser && isLoaded) history.push('/')
 
-      const spots = useSelector((state) => state.session.owned);
+      const spots = useSelector((state) => state.current.current);
 
-      console.log(spots);
+ 
       return isLoaded && (
         <div>
-            {(Object.values(spots)).map(spot => {
-                return <PreviewUserSpot spot={spot} />
+            {spots.map(spot => {
+                return <PreviewUserSpot  key={spot.id} spot={spot} />
             })}
-            
+
             </div>
       )
 

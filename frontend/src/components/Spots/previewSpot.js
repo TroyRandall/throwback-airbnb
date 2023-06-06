@@ -1,6 +1,9 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
+import './previewSpot.css';
+
+
 function PreviewSpot ({ spot }) {
 
 const history = useHistory();
@@ -11,13 +14,16 @@ const history = useHistory();
 
 
     return (
-        <div className="prevSpots" onClick={redirect} key={spot.id}>
-          <img src={spot.previewImage} alt={spot.description}></img>
-          <h5>
-            {spot.state}, {spot.country}
+        <div className="prevSpots" id='grow' onClick={redirect} key={spot.id}>
+          <img id='grow'src={spot.previewImage} alt={spot.description}></img>
+          <div className='prev_spot_info' id='grow'>
+            <h5 className='state_country' id='grow'>
+                {spot.state}, {spot.country}
           </h5>
-          <h5>{spot.avgStarRating}</h5>
-          <h5>{spot.price} per/night</h5>
+          <h5 className='starRating' id='grow'>⭐{spot.avgStarRating}</h5>
+          <h5 className='price' id='grow'>{spot.price} per/night</h5>
+            </div>
+
         </div>
       );
 }

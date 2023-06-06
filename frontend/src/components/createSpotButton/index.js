@@ -9,7 +9,7 @@ function CreateSpotButton() {
     history.push("/spots/create");
   };
   return (
-    <button onClick={spotButton} className="create_spot_button">
+    <button onClick={spotButton} className='createSpotButton'>
       Create a Spot
     </button>
   );

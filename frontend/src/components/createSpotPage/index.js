@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import * as spotActions from '../../store/spots'
+import * as spotImageActions from '../../store/spotImages'
 
 function CreateSpotPage () {
     const [country, setCountry] = useState('');
@@ -31,16 +32,15 @@ function CreateSpotPage () {
         const spot = { name, city, state, country, address, description, price, lat, lng}
 
        const newSpot = await dispatch(spotActions.createSpotAction(spot))
+     await dispatch(spotImageActions.createSpotImageAction(image1, true, newSpot.id))
 
-     await dispatch(spotActions.createSpotImageAction(image1, true, newSpot.id))
+     if(image2 !== '') await dispatch(spotImageActions.createSpotImageAction(image2, newSpot.id))
 
-     if(image2 !== '') await dispatch(spotActions.createSpotImageAction(image2, newSpot))
+     if(image3 !== '') await dispatch(spotImageActions.createSpotImageAction(image3, newSpot.id))
 
-     if(image3 !== '') await dispatch(spotActions.createSpotImageAction(image3, newSpot))
+     if(image4 !== '') await dispatch(spotImageActions.createSpotImageAction(image4, newSpot.id))
 
-     if(image4 !== '') await dispatch(spotActions.createSpotImageAction(image4, newSpot))
-
-     if(image5 !== '') await dispatch(spotActions.createSpotImageAction(image5, newSpot))
+     if(image5 !== '') await dispatch(spotImageActions.createSpotImageAction(image5, newSpot.id))
 
 
         history.push(`/spots/${newSpot.id}`);

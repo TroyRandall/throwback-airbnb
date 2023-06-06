@@ -10,10 +10,10 @@ function PreviewUserSpot({ spot }) {
     e.preventDefault();
     history.push(`/spots/${spot.id}`);
   };
-  
+
   return (
     <div>
-      <div className="prevSpots" onClick={redirect} key={spot.id}>
+      <div className="prev-user-spots" onClick={redirect}>
         <img src={spot.previewImage} alt={spot.description}></img>
         <h5>
           {spot.state}, {spot.country}
@@ -22,7 +22,7 @@ function PreviewUserSpot({ spot }) {
         <h5>{spot.price} per/night</h5>
       </div>
         <UpdateSpotButton spotId={spot.id} />
-        <DeleteSpotButton spotId={spot.id} />
+        <DeleteSpotButton id={spot.id} />
     </div>
   );
 }

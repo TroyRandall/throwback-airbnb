@@ -3,6 +3,8 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import sessionReducer from "./session";
 import spotsReducer from './spots.js';
+import currentReducer from './current.js';
+import spotImagesReducer from './spotImages.js'
 
 let enhancer;
 
@@ -18,6 +20,8 @@ if (process.env.NODE_ENV === 'production') {
 const rootReducer = combineReducers({
   session: sessionReducer,
   spots: spotsReducer,
+  current: currentReducer,
+  spotImages: spotImagesReducer,
 });
 
 const configureStore = (preloadedState) => {

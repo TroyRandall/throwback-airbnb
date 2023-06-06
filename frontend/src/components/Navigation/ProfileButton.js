@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
 
 import * as sessionActions from '../../store/session';
-
+import './Navigation.css'
 
 function ProfileButton({ user }) {
 
@@ -46,7 +46,7 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
+      <button onClick={openMenu} className='profileButton'>
         <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>

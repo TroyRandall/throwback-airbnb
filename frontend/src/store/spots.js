@@ -3,7 +3,6 @@ import { csrfFetch } from "./csrf";
 const ALL_SPOTS = "spots/allSpots"
 const ALL_REVIEWS = "spots/allReviews"
 const CREATE_SPOT="spots/create"
-const CREATE_SPOT_IMAGE="spots/createimage"
 const DELETE_SPOT ="spots/delete"
 const SPOT_BY_ID = 'spots/spotsbyid'
 const UPDATE_SPOT = 'spots/update'
@@ -37,12 +36,6 @@ const singleSpot = (spot) => {
     }
   }
 
-  const createSpotImage = (spotImage) => {
-    return {
-        type: CREATE_SPOT_IMAGE,
-        payload: spotImage
-    }
-  }
 
   const deleteSpot = (spotId) => {
     return {
@@ -70,17 +63,17 @@ const singleSpot = (spot) => {
   }
 
   export const spotsById = (spotId) => async (dispatch) => {
-    const spotById = await csrfFetch(`/api/spots/${spotId.id}` , {
+    console.log(spotId + 'spotsById Thunk');
+    const spotById = await csrfFetch(`/api/spots/${spotId}` , {
       method: 'GET'
     })
     const data = await spotById.json();
-    console.log(data);
     dispatch(singleSpot(data));
     return spotById;
   }
 
   export const reviewsBySpotId = (spotId) => async (dispatch) => {
-    const reviews = await csrfFetch(`/api/spots/${spotId.id}/reviews`, {
+    const reviews = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'GET'
     })
     const data = await reviews.json();
@@ -123,24 +116,11 @@ const singleSpot = (spot) => {
     return data;
    };
 
-  export const createSpotImageAction = (image, preview = false, spotId) => async (dispatch) => {
-      const newImage = await csrfFetch(`/api/spots/${spotId}/images`, {
-          method: 'Post',
-          body: JSON.stringify({
-            preview: preview,
-            url: image
-          })
-        })
 
-        const data = await newImage.json();
-        dispatch(createSpotImage(data))
-        return newImage;
-      }
 
   export const updateSpotAction = (spot) => async (dispatch) => {
     const { name, description, city, state, country, address, price, lat, lng } = spot;
-
-    const updatedSpot = await csrfFetch('/api/spots/:id', {
+    const updatedSpot = await csrfFetch(`/api/spots/${spot.id}`, {
       method: 'PUT',
       body: JSON.stringify({
         name,
@@ -160,7 +140,7 @@ const singleSpot = (spot) => {
     return data;
   }
 
-  
+
   const initialState = { spot: null, reviews: null, spots: null };
 
   const spotsReducer = (state = initialState, action) => {

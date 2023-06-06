@@ -20,12 +20,14 @@ const spots = useSelector((state) => state.spots.spots);
 
   return (
     isLoaded && (
-      <>
+      <><div className='spots-container'>
         {(Object.values(spots)).map((spot) => {
           return (
             <PreviewSpot key = {spot.id} spot={spot} />
           );
         })}
+      </div>
+
       </>
     )
   );

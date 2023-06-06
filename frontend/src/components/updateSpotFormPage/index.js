@@ -7,17 +7,13 @@ import * as spotActions from '../../store/spots.js'
 
 
 function UpdateSpotPage  ()  {
+
+const spot = useSelector((state) => state.spots.spot);
 const dispatch = useDispatch();
 const history = useHistory();
 const spotId = useParams();
 const[isLoaded, setIsLoaded] = useState(false);
 const sessionUser = useSelector((state) => state.session.user)
-
-    useEffect(() => {
-        dispatch(spotActions.spotsById(spotId)).then(() => setIsLoaded(true));
-      }, [spotId, dispatch]);
-
-const spot = useSelector((state) => state.spots.spot);
 
 const [country, setCountry] = useState(spot.country);
 const [state, setState] = useState(spot.state);
@@ -28,32 +24,26 @@ const [lng, setLng] = useState(spot.lng);
 const [name, setName] = useState(spot.name);
 const [description, setDescription] = useState(spot.description);
 const [price, setPrice] = useState(spot.price);
-const [image1, setImage1] = useState(spot.SpotImages[0].url);
-const [image2, setImage2] = useState(spot.SpotImages[1].url || '');
-const [image3, setImage3] = useState(spot.SpotImages[2].url || '');
-const [image4, setImage4] = useState(spot.SpotImages[3].url || '');
-const [image5, setImage5] = useState(spot.SpotImages[4].url || '');
+
+
+    useEffect(() => {
+        dispatch(spotActions.spotsById(spotId.id)).then(() => setIsLoaded(true));
+      }, [dispatch, spotId.id]);
+
+
+
 
 
 
 if(sessionUser === null && isLoaded) history.push('/');
 
+
 const handleSubmit = async (e) => {
     e.preventDefault();
-    const updateSpot = { name, city, state, country, address, description, price, lat, lng}
+    const id = spotId.id;
+    const updateSpot = { id, name, city, state, country, address, description, price, lat, lng}
 
    const newSpot = await dispatch(spotActions.updateSpotAction(updateSpot))
-
- await dispatch(spotActions.updateSpotAction(image1, true, newSpot.id))
-
- if(image2 !== '') await dispatch(spotActions.updateSpotAction(image2, newSpot))
-
- if(image3 !== '') await dispatch(spotActions.updateSpotAction(image3, newSpot))
-
- if(image4 !== '') await dispatch(spotActions.updateSpotAction(image4, newSpot))
-
- if(image5 !== '') await dispatch(spotActions.updateSpotAction(image5, newSpot))
-
 
     history.push(`/spots/${newSpot.id}`);
 }
@@ -160,40 +150,6 @@ const handleSubmit = async (e) => {
 
         <hr/>
 
-        <h3>Liven up your spot with photos</h3>
-        <h5>submit at least one photo to publish your spot!</h5>
-
-        <input
-        type='text'
-        value={image1}
-        onChange={(e) => setImage1(e.target.value)}
-        placeholder='Preview image URL'
-        required
-        ></input>
-        <input
-        type='text'
-        value={image2}
-        onChange={(e) => setImage2(e.target.value)}
-        placeholder='Image URL'
-        ></input>
-                    <input
-        type='text'
-        value={image3}
-        onChange={(e) => setImage3(e.target.value)}
-        placeholder='Image URL'
-        ></input>
-                    <input
-        type='text'
-        value={image4}
-        onChange={(e) => setImage4(e.target.value)}
-        placeholder='Image URL'
-        ></input>
-                    <input
-        type='text'
-        value={image5}
-        onChange={(e) => setImage5( e.target.value)}
-        placeholder='Image URL'
-        ></input>
         <button onClick={handleSubmit}>submit</button>
     </div>
  )
