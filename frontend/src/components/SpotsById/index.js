@@ -21,7 +21,7 @@ const addImages = (spotImages = [], i = 0) => {
 
 
 while(spotImages.length < 5) {
-if(!spotImages[i]) spotImages.push(( {'id': i, 'url': 'https://reprospecialty.com/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png'}));
+if(!spotImages[i]) spotImages.push(( {'id': i + 100, 'url': 'https://reprospecialty.com/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png'}));
 i++ }
 return spotImages;
 }

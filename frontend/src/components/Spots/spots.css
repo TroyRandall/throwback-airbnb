@@ -24,9 +24,10 @@ body {
 
 .spots-container {
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns:repeat(auto-fit, minmax(min(100%/1, max(300px, 100%/4)), 1fr));
     margin-left: 175px;
     margin-right: 175px;
+    margin-bottom: 100px;
 }
 
 

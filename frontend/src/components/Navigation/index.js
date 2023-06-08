@@ -6,6 +6,7 @@ import CreateSpotButton from "../createSpotButton";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import LoginButton from '../loginButton';
+import logo from '../../assets/images.png';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
@@ -14,33 +15,35 @@ function Navigation({ isLoaded }) {
   if (sessionUser) {
     sessionLinks = (
       <div className="navLinks">
-         <li >
+         <div>
           <CreateSpotButton />
-        </li>
-        <li className='profileButton'>
+         </div>
+        <div className='profileButton'>
           <ProfileButton user={sessionUser}/>
-        </li>
+        </div>
 
       </div>
     );
   } else {
     sessionLinks = (
-      <li className="navLinks">
+      <div className="navLinks">
       <LoginButton />
         <NavLink to="/signup" className="signup">
           Sign Up
         </NavLink>
-      </li>
+      </div>
     );
   }
 
   return (
     <ul className="nav">
-      <li>
+      <div>
         <NavLink exact to="/">
-          Home
+          <img src={logo} alt='home-button' href='' className='logo'></img>
         </NavLink>
-      </li>
+      </div>
+
+
       {isLoaded && sessionLinks}
     </ul>
   );

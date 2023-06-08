@@ -26,6 +26,12 @@ module.exports = {
         spotId: 3,
         userId: 2,
         preview: false
+      },
+      {
+        url: 'https://lp-cms-production.imgix.net/2022-02/USA%20Santa%20Barbara%20George%20Rose%20GettyImages-534429536%20RM.jpg?auto=format&w=1440&h=810&fit=crop&q=75',
+        spotId: 3,
+        userId: 3,
+        preview: true
       }
     ], {});
   },

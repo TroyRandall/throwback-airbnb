@@ -9,6 +9,7 @@
     padding-bottom: 15px;
     padding-top: 10px;
     background-color: white;
+    display: flex;
 }
 
 .navLinks {
@@ -20,11 +21,19 @@
     height: 65px;
     width: 200px;
     position: absolute;
-    top: 20px;
+    top: 15px;
     right: 10px;
 }
 
 .createSpotButton {
     height: 65px;
     width: 200px;
+    position: relative;
+    left: 1350px;
+    top: 2px;
+}
+
+.logo {
+    height: 75px;
+    width: 75px;
 }
