@@ -17,14 +17,26 @@
     width: 400px;
 }
 
+#profile_button_container {
+    height: 180px;
+    width: 200px;
+    position: absolute;
+    top: 30px;
+    right: 10px;
+    display: grid;
+    grid-template-rows: auto;
+}
 .profileButton {
     height: 65px;
     width: 200px;
-    position: absolute;
-    top: 15px;
-    right: 10px;
+    grid-row: 1/2;
 }
 
+.profile-dropdown {
+    background-color: white;
+    border: solid black 2px;
+    grid-row: 2/3;
+}
 .createSpotButton {
     height: 65px;
     width: 200px;

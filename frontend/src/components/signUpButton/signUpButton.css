@@ -1,0 +1,26 @@
+.modal-signup-content {
+    z-index: 8;
+    position: fixed;
+    background-color: white;
+    border: solid black 2px;
+    border-radius: 25px;
+    height: 450px;
+    width: 450px;
+    left: 40vw;
+    top: 30vh;
+    text-align: center;
+    display: grid;
+    grid-template-rows: 25% 75%;
+}
+
+#sign_up_form {
+    display: grid;
+    grid-template-rows: auto;
+}
+
+.submit-button {
+    position: relative;
+    bottom: 15px;
+    max-width: 150px;
+    justify-self: center;
+}

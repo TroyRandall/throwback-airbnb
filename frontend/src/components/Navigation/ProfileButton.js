@@ -1,10 +1,12 @@
 
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from "react-router-dom";
 
 import * as sessionActions from '../../store/session';
 import './Navigation.css'
+import LoginButton from '../loginButton';
+import SignUpButton from '../signUpButton';
 
 function ProfileButton({ user }) {
 
@@ -12,6 +14,7 @@ function ProfileButton({ user }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
+    const sessionUser = useSelector((state) => state.session.user)
     const openMenu = () => {
       if (showMenu) return;
       setShowMenu(true);
@@ -44,10 +47,11 @@ function ProfileButton({ user }) {
 
 
   return (
-    <>
+    <><div id='profile_button_container'>
       <button onClick={openMenu} className='profileButton'>
         <i className="fas fa-user-circle" />
       </button>
+      {(sessionUser && (
       <ul className={ulClassName} ref={ulRef}>
         <li>{user.username}</li>
         <li>{user.firstName} {user.lastName}</li>
@@ -58,7 +62,18 @@ function ProfileButton({ user }) {
         <li>
           <button onClick={logout}>Log Out</button>
         </li>
-      </ul>
+      </ul>))}{(!sessionUser && (
+        <ul className={ulClassName} ref={ulRef}>
+          <li>
+            <LoginButton />
+          </li>
+          <li>
+            <SignUpButton />
+          </li>
+        </ul>
+
+      ))}
+      </div>
     </>
   );
 }
