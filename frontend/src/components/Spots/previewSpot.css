@@ -1,45 +1,65 @@
 .prevSpots {
-    height: 400px;
-    width: 350px;
-    border: solid black 2px;
+    height: 350px;
+    max-width: 300px;
+    border: solid rgb(255, 90, 95) 2px;
     border-radius: 25px;
     display: grid;
-    grid-template-rows: 300px 50px 50px;
+    grid-template-rows: 250px 50px 50px;
     margin: 5px;
 }
 
-img {
-    width: 350px;
-    height: 300px;
+.image-preview {
+     max-width: 300px;
+    height: 250px;
     position: relative;
-    top: 2px;
+    border-radius: 20px;
     grid-row: 1/1;
-}
-
-.img:hover {
-    height:350px;
-    width: 400px;
 }
 
 .state_country {
     grid-row: 2/2;
     position: relative;
-    left: 35px;
-    top: 2px;
+    left: 5px;
+    bottom: 15px;
+    font-size: 18px;
 }
 
 .starRating {
     grid-row: 2/2;
     position: relative;
-    left: 285px;
-    bottom: 30px;
-
+    left: 220px;
+    bottom: 115px;
+    font-size: 22px;
 }
 
 
 .price {
     grid-row: 3/3;
     position: relative;
-    bottom: 45px;
-    left: 35px;
+    bottom: 110px;
+    left: 10px;
+    font-size: 18px;
+}
+
+.prev-spot-info {
+    border: solid black 2px;
+    border-radius: 35px;
+    grid-row: 2/3;
+
+}
+
+.country {
+    grid-row: 2/2;
+    position: relative;
+    bottom: 40px;
+    left: 10px;
+}
+
+.reserve-button {
+    grid-row: 3/3;
+    position: relative;
+    bottom: 180px;
+    left: 200px;
+
+
 }

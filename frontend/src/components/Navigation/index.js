@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import CreateSpotButton from "../createSpotButton";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
+import LoginButton from '../loginButton';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
@@ -25,9 +26,7 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = (
       <li className="navLinks">
-        <NavLink to="/login" className="login">
-          Log In
-        </NavLink>
+      <LoginButton />
         <NavLink to="/signup" className="signup">
           Sign Up
         </NavLink>

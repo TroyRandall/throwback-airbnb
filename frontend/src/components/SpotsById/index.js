@@ -7,6 +7,7 @@ import * as spotActions from "../../store/spots.js";
 import SpotImages from "./spotImages.js"
 import Reviews from "./reviews.js"
 import DeleteSpotButton from '../deleteSpotButton';
+import './spotsById.css'
 
 function SpotsById() {
     const dispatch = useDispatch();
@@ -16,6 +17,14 @@ function SpotsById() {
 const sessionUser = useSelector((state) => state.session.user);
 const spot = useSelector((state) => state.spots.spot);
 
+const addImages = (spotImages = [], i = 0) => {
+
+
+while(spotImages.length < 5) {
+if(!spotImages[i]) spotImages.push(( {'id': i, 'url': 'https://reprospecialty.com/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png'}));
+i++ }
+return spotImages;
+}
     useEffect(() => {
         if (id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
       }, [id, dispatch]);
@@ -29,45 +38,36 @@ const spot = useSelector((state) => state.spots.spot);
         return <alert>This feature will be coming soon!</alert>
       }
 
-      if ((isLoaded && sessionUser) && (sessionUser.id === spot.ownerId)) {
-        return (
-          <>
-            <h1 className="spot_name">{spot.name}</h1> <DeleteSpotButton spotId={id} />
-            <h3 className="spot_location">{spot.city}, {spot.state}, {spot.country}</h3>
-            <SpotImages spotImages={spot.SpotImages} description={spot.description} />
+
+      return  (isLoaded && (
+          <div className='wholePage'>
+            <div id='title-box'>  <h1 id="spot_name">{spot.name}</h1>
+            <h3>🌎{spot.city}, {spot.state}, {spot.country}</h3>
+            <div id='spot-images-container'>
+               <SpotImages spotImages={addImages(spot.SpotImages)} description={spot.description} />
+            </div>
+            </div>
+          <hr />
+            <div id='description-box'>
             <h2 className="owner_info">Hosted By {spot.Owner.firstName} {spot.Owner.lastName}</h2>
-            <div>
-              <p>${spot.price}/night</p>
-              <p>⭐{spot.avgStarRating} - {spot.numReviews} reviews</p>
-              <button onClick={comingSoon}>Reserve</button>
+            <p id='description'>{spot.description}</p>
+            <div id='price-box'>
+              <p id='price'>💵{spot.price.toLocaleString("en-US")}/night</p>
+              <p id='rating'>⭐{spot.avgStarRating} - {spot.numReviews} reviews</p>
+              {(sessionUser &&(sessionUser.id === spot.ownerId)) ? <DeleteSpotButton spotId={id} /> :
+              <button id='reserve' onClick={comingSoon}>Reserve</button>}
+            </div>
             </div>
             <hr />
 
             <h3>⭐{spot.avgStarRating} - {spot.numReviews} reviews</h3>
             <Reviews spotId={id} />
-         </>
-          )
-      } else {
-         return  ( isLoaded && (
-      <>
-        <h1 className="spot_name">{spot.name}</h1>
-        <h3 className="spot_location">{spot.city}, {spot.state}, {spot.country}</h3>
-        <SpotImages spotImages={spot.SpotImages} description={spot.description} />
-        <h2 className="owner_info">Hosted By {spot.Owner.firstName} {spot.Owner.lastName}</h2>
-        <div>
-          <p>${spot.price}/night</p>
-          <p>⭐{spot.avgStarRating} - {spot.numReviews} reviews</p>
-          <button onClick={comingSoon}>Reserve</button>
-        </div>
-        <hr />
+         </div>
+          ))
 
-        <h3>⭐{spot.avgStarRating} - {spot.numReviews} reviews</h3>
-        <Reviews spotId={id}/>
-     </>
-      ))
       }
 
 
-}
+
 
 export default SpotsById;

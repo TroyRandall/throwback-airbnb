@@ -15,6 +15,8 @@ const spots = useSelector((state) => state.spots.spots);
 
   useEffect(() => {
     dispatch(spotActions.getSpots()).then(() => setIsLoaded(true));
+
+    
   }, [dispatch]);
 
 

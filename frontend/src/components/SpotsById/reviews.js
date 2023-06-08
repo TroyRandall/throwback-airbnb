@@ -9,7 +9,7 @@ function Reviews({ spotId }) {
     const[isLoaded, setIsLoaded] = useState(false);
 
 
-    console.log('review-component')
+
     useEffect(() => {
         if (spotId) dispatch(spotActions.reviewsBySpotId(spotId)).then(() => setIsLoaded(true));
       }, [spotId, dispatch]);

@@ -4,8 +4,7 @@ import { useHistory } from "react-router-dom";
 import './previewSpot.css';
 
 
-function PreviewSpot ({ spot }) {
-
+function PreviewSpot ({ spot, modal }) {
 const history = useHistory();
     const redirect = (e) => {
         e.preventDefault()
@@ -15,13 +14,15 @@ const history = useHistory();
 
     return (
         <div className="prevSpots" id='grow' onClick={redirect} key={spot.id}>
-          <img id='grow'src={spot.previewImage} alt={spot.description}></img>
-          <div className='prev_spot_info' id='grow'>
-            <h5 className='state_country' id='grow'>
-                🗺️{spot.state}, {spot.country}
-          </h5>
-          <h5 className='starRating' id='grow'>⭐{spot.avgStarRating}</h5>
-          <h5 className='price' id='grow'>💵{spot.price} per/night</h5>
+          <img src={spot.previewImage} alt={spot.description} className='image-preview'></img>
+          <div className='prev_spot_info' >
+            <h4 className='state_country' >
+                🗺️{spot.city}, {spot.state}
+          </h4>
+          <h6 className='country'>🌎{spot.country} </h6>
+          <h4 className='starRating' >⭐{spot.avgStarRating}</h4>
+          <h4 className='price' >💵${spot.price} per/night</h4>
+          <button className='reserve-button'>Reserve</button>
             </div>
 
         </div>

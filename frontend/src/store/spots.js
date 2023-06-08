@@ -63,7 +63,6 @@ const singleSpot = (spot) => {
   }
 
   export const spotsById = (spotId) => async (dispatch) => {
-    console.log(spotId + 'spotsById Thunk');
     const spotById = await csrfFetch(`/api/spots/${spotId}` , {
       method: 'GET'
     })
