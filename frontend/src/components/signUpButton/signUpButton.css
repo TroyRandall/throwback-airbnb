@@ -24,3 +24,12 @@
     max-width: 150px;
     justify-self: center;
 }
+
+.submit-button:disabled {
+    position: relative;
+    bottom: 15px;
+    max-width: 150px;
+    justify-self: center;
+    background-color: grey;
+    cursor:not-allowed;
+}

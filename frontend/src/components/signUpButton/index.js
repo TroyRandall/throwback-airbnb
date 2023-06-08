@@ -20,7 +20,25 @@ const [password, setPassword] = useState("");
 const [confirmPassword, setConfirmPassword] = useState("");
 const [errors, setErrors] = useState({});
 
-
+const checkInputs = () => {
+    if(!email) {
+        <button onClick={toggleSignUpModal} disabled='disabled'>Sign Up</button>
+    } else if (!username) {
+        <button onClick={toggleSignUpModal} disabled='disabled'>Sign Up</button>
+    } else if (!password) {
+        <button onClick={toggleSignUpModal} disabled='disabled'>Sign Up</button>
+    } else if (!firstName) {
+        <button onClick={toggleSignUpModal} disabled='disabled'>Sign Up</button>
+    } else if (!lastName) {
+        <button onClick={toggleSignUpModal} disabled='disabled'>Sign Up</button>
+    } else if (!email) {
+        <button onClick={toggleSignUpModal} disabled='disabled'>Sign Up</button>
+    } else if (!confirmPassword) {
+        <button onClick={toggleSignUpModal} disabled='disabled'>Sign Up</button>
+    } else {
+        <button onClick={toggleSignUpModal}>Sign Up</button>
+    }
+}
 
 const toggleSignUpModal = (e) => {
     e.preventDefault();
@@ -144,7 +162,7 @@ if(signUpModal === true) {
 }
     return (
         <>
-            <button onClick={toggleSignUpModal}>Sign Up</button>
+            <>{checkInputs()}</>
             <div>{checkSignUpModal()}</div>
         </>
     )

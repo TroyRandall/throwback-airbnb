@@ -25,7 +25,7 @@ useEffect(() => {
 
     return (
         <div className="prevSpots" id='grow' onClick={redirect} key={spot.id}>
-          <img src={spot.previewImage} alt={spot.description} id='image-preview' className='images'></img>
+          <img src={spot.previewImage || spot.SpotImages[0].url} alt={spot.description} id='image-preview' className='images'></img>
           <div id='prev_spot_info' >
             <h4 id='state_country' >
                 🗺️{spot.city}, {spot.state}
