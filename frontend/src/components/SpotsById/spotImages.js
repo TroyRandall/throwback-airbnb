@@ -1,5 +1,8 @@
 import React from "react";
 
+import './spotsById.css';
+
+
 function SpotImages ({ spotImages, description }) {
     console.log(spotImages);
 return (

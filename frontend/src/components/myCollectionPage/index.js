@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import PreviewUserSpot from './previewUserSpot.js'
 import * as currentActions from '../../store/current.js';
+import './myCollection.css';
 
 function MyCollection () {
     const dispatch = useDispatch();
@@ -21,9 +22,9 @@ function MyCollection () {
 
       const spots = useSelector((state) => state.current.current);
 
- 
+
       return isLoaded && (
-        <div>
+        <div className='user-spots-container'>
             {spots.map(spot => {
                 return <PreviewUserSpot  key={spot.id} spot={spot} />
             })}

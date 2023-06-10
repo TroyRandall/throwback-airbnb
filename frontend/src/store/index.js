@@ -5,6 +5,7 @@ import sessionReducer from "./session";
 import spotsReducer from './spots.js';
 import currentReducer from './current.js';
 import spotImagesReducer from './spotImages.js'
+import reviewsReducer from './reviews.js';
 
 let enhancer;
 
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   spots: spotsReducer,
   current: currentReducer,
   spotImages: spotImagesReducer,
+  reviews: reviewsReducer,
 });
 
 const configureStore = (preloadedState) => {

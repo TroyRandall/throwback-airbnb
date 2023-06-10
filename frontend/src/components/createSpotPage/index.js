@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import * as spotActions from '../../store/spots'
 import * as spotImageActions from '../../store/spotImages'
+import './createSpot.css'
 
 function CreateSpotPage () {
     const [country, setCountry] = useState('');
@@ -51,7 +52,7 @@ function CreateSpotPage () {
 
 
      return (
-        <div>
+        <div id='create-spot-form'>
             <h1 className="title">Create a Spot</h1>
             <h3>Where is your spot located?</h3>
             <h5>Guest's will only get your exact address once they have booked a reservation</h5>

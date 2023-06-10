@@ -64,7 +64,7 @@ function LoginButton() {
           <div className="overlay"></div>
           <div className="modal-content" ref={overlayRef}>
             <h2 id="header">Log In</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} id='login-form'>
               <div className="credential">
                 <label id="credential-label">
                   Username or Email
@@ -92,10 +92,11 @@ function LoginButton() {
 
               {errors.credential && <p>{errors.credential}</p>}
             </form>
-          </div>
-          <button type="submit" id="submit-button" ref={logInRef}>
+       <button type="submit" id="submit-button" ref={logInRef}>
             Log In
           </button>
+          </div>
+
         </div>
       );
     }

@@ -20,29 +20,20 @@ const [password, setPassword] = useState("");
 const [confirmPassword, setConfirmPassword] = useState("");
 const [errors, setErrors] = useState({});
 
-const checkInputs = () => {
-    if(!email) {
-        <button onClick={toggleSignUpModal} disabled='disabled'>Sign Up</button>
-    } else if (!username) {
-        <button onClick={toggleSignUpModal} disabled='disabled'>Sign Up</button>
-    } else if (!password) {
-        <button onClick={toggleSignUpModal} disabled='disabled'>Sign Up</button>
-    } else if (!firstName) {
-        <button onClick={toggleSignUpModal} disabled='disabled'>Sign Up</button>
-    } else if (!lastName) {
-        <button onClick={toggleSignUpModal} disabled='disabled'>Sign Up</button>
-    } else if (!email) {
-        <button onClick={toggleSignUpModal} disabled='disabled'>Sign Up</button>
-    } else if (!confirmPassword) {
-        <button onClick={toggleSignUpModal} disabled='disabled'>Sign Up</button>
-    } else {
-        <button onClick={toggleSignUpModal}>Sign Up</button>
-    }
-}
 
 const toggleSignUpModal = (e) => {
     e.preventDefault();
     setSignUpModal(true);
+}
+
+const checkValues = () => {
+  const values = [email, username, firstName, lastName, password, confirmPassword]
+  for(let i = 0; i < values.length; i++) {
+    if(values[i] === "" ){
+      return 'sign-up-button-disabled'
+    }
+  }
+  return 'sign-up-button-enabled';
 }
 
 useEffect(() => {
@@ -80,9 +71,12 @@ useEffect(() => {
             return () => document.removeEventListener('click', closeSignUpModal);
     }});
 
+
 if(sessionUser) history.push('/');
 const SUClassName = "overlay" + (signUpModal ? "" : "hidden");
 
+const buttonClassName = checkValues()
+console.log(buttonClassName);
 const checkSignUpModal = () => {
 if(signUpModal === true) {
     return (
@@ -94,65 +88,79 @@ if(signUpModal === true) {
       <form id='sign_up_form'>
         <label>
           Email
+          </label>
           <input
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            placeholder='Email required'
           />
-        </label>
+
         {errors.email && <p>{errors.email}</p>}
         <label>
           Username
+           </label>
           <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            placeholder='Username required'
           />
-        </label>
+
         {errors.username && <p>{errors.username}</p>}
         <label>
           First Name
+          </label>
           <input
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
+            placeholder='First name required'
           />
-        </label>
+
         {errors.firstName && <p>{errors.firstName}</p>}
         <label>
           Last Name
+          </label>
           <input
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
+            placeholder='Last name required'
           />
-        </label>
+
         {errors.lastName && <p>{errors.lastName}</p>}
         <label>
           Password
+          </label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            placeholder='Password required'
+            autoComplete='new-password'
           />
-        </label>
+
         {errors.password && <p>{errors.password}</p>}
         <label>
           Confirm Password
+          </label>
           <input
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            placeholder='Confirmed Password required'
+            autoComplete='new-password'
           />
-        </label>
+
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit" ref={signUpRef} className='submit-button'>Sign Up</button>
+        <button className={buttonClassName} ref={signUpRef}>Sign Up</button>
       </form>
       </div>
       </div>
@@ -162,7 +170,7 @@ if(signUpModal === true) {
 }
     return (
         <>
-            <>{checkInputs()}</>
+           <button type="submit" className='sign-up-button' onClick={toggleSignUpModal}>Sign Up</button>
             <div>{checkSignUpModal()}</div>
         </>
     )

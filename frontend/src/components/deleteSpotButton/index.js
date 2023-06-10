@@ -20,7 +20,7 @@ function DeleteSpotButton({ spotId }) {
       history.push("/");
     }
   };
-  return <button onClick={deleteSpot} id="delete_spot_button">Delete</button>;
+  return <button onClick={deleteSpot} id="delete_spot_button" className='delete_spot_button'>Delete</button>;
 }
 
 export default DeleteSpotButton;

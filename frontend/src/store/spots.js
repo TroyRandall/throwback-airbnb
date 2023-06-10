@@ -1,7 +1,6 @@
 import { csrfFetch } from "./csrf";
 
 const ALL_SPOTS = "spots/allSpots"
-const ALL_REVIEWS = "spots/allReviews"
 const CREATE_SPOT="spots/create"
 const DELETE_SPOT ="spots/delete"
 const SPOT_BY_ID = 'spots/spotsbyid'
@@ -12,13 +11,6 @@ const allSpots = (spots) => {
     return {
       type: ALL_SPOTS,
       payload: spots
-    }
-  }
-
-  const allReviews = (reviews) => {
-    return {
-        type: ALL_REVIEWS,
-        payload: reviews
     }
   }
 
@@ -69,15 +61,6 @@ const singleSpot = (spot) => {
     const data = await spotById.json();
     dispatch(singleSpot(data));
     return spotById;
-  }
-
-  export const reviewsBySpotId = (spotId) => async (dispatch) => {
-    const reviews = await csrfFetch(`/api/spots/${spotId}/reviews`, {
-        method: 'GET'
-    })
-    const data = await reviews.json();
-    dispatch(allReviews(data.Reviews))
-    return reviews;
   }
 
   export const deleteSpotById = (spotId) => async (dispatch) => {
@@ -148,10 +131,6 @@ const singleSpot = (spot) => {
         case ALL_SPOTS:
             newState = Object.assign({}, state);
             newState.spots = action.payload
-            return newState;
-        case ALL_REVIEWS:
-            newState = Object.assign({}, state);
-            newState.reviews = action.payload;
             return newState;
         case SPOT_BY_ID:
           newState = Object.assign({}, state);

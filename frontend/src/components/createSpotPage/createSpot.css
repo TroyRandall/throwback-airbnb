@@ -1,0 +1,6 @@
+#create-spot-form {
+    margin: auto;
+    width: 500px;
+    display: grid;
+    grid-template-rows: auto;
+}

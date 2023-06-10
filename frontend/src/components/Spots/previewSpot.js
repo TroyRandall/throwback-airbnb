@@ -30,7 +30,6 @@ useEffect(() => {
             <h4 id='state_country' >
                 🗺️{spot.city}, {spot.state}
           </h4>
-          <h6 id='country'>🌎{spot.country} </h6>
           <h4 id='starRating' >⭐{spot.avgStarRating}</h4>
           <h4 id='price-preview' >💵${spot.price} per/night</h4>
           <button id='reserve-button'>Reserve</button>

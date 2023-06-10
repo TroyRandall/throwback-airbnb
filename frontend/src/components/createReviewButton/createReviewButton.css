@@ -1,0 +1,117 @@
+.modal, .overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.overlay {
+    background-color: rgba(55,55,55,0.8);
+    z-index: 7;
+}
+
+.review-modal.hidden {
+    display: none;
+}
+
+.review-modal-content {
+    z-index: 8;
+    position: fixed;
+    background-color: white;
+    border: solid black 4px;
+    border-radius: 25px;
+    height: 350px;
+    width: 400px;
+    left: 40vw;
+    top: 30vh;
+    text-align: center;
+    display: grid;
+    grid-template-rows: repeat(5, 20%);
+    grid-template-columns: repeat(1, 100%);
+    padding: 10px;
+}
+
+#review-label {
+    grid-row: 1/2;
+    font-size: xx-large;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: cursive;
+}
+
+
+#review-submit {
+    grid-row: 5/6;
+    justify-self: center;
+    align-self: center;
+    width: 380px;
+    height: 55px;
+    box-shadow: 4px 4px black;
+    border: 2px solid black;
+
+}
+
+#review-input {
+    width: 380px;
+    height: 170px;
+    grid-row: 2/4;
+}
+
+.rating {
+    justify-self: center;
+    grid-row: 4/5;
+    grid-column: 1/1;
+    align-self: end;
+}
+
+input[type=radio] {
+display: none;
+}
+
+.rating:not(:checked) > label {
+    float: right;
+    cursor: pointer;
+    font-size: 45px;
+    color: #666;
+  }
+
+.rating:not(:checked) > label:before {
+    content: '★';
+  }
+
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #ffd901;
+    scale: 1.2;
+  }
+
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: #fcc81f;
+    scale: 1.2;
+  }
+
+.rating > input:checked ~ label {
+    color: #ffd901;
+  }
+
+input[type=textarea] {
+    background-color : #d1d1d1;
+}
+ #stars {
+    grid-row: 4/5;
+    grid-column: 1/1;
+    justify-self: right;
+  margin-right: 50px;
+  align-self: center;
+  font-size: 20px;
+  position: relative;
+  top: 8px;
+  font-family: cursive;
+ }

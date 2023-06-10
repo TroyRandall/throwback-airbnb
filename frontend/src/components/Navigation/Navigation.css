@@ -9,7 +9,8 @@
     padding-bottom: 15px;
     padding-top: 10px;
     background-color: white;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 33%);
 }
 
 .navLinks {
@@ -40,8 +41,9 @@
 .createSpotButton {
     height: 65px;
     width: 200px;
+    grid-column: 3/4;
+    justify-self: center;
     position: relative;
-    left: 1350px;
     top: 2px;
 }
 

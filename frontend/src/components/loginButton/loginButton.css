@@ -14,4 +14,74 @@
     z-index: 7;
 }
 
+#login-form {
+    align-self: center;
+    justify-self: center;
+}
+.modal, .overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
 
+.overlay {
+    background-color: rgba(55,55,55,0.8);
+    z-index: 7;
+}
+
+.modal-content {
+    z-index: 8;
+    position: fixed;
+    background-color: white;
+    border: solid black 2px;
+    border-radius: 25px;
+    left: 35vw;
+    top: 35vh;
+    height: 350px;
+    width: 350px;
+    display: grid;
+    grid-template-rows: repeat(4, 25%);
+    justify-items: center;
+    align-items: center;
+
+}
+
+.modalhidden {
+    display:none;
+}
+
+#credential-label {
+    position: relative;
+    font-size: 32px;
+    display: block;
+    text-align: center;
+    top: 25px;
+}
+
+#password-label {
+    position: relative;
+    top: 50px;
+    font-size: 32px;
+    display: block;
+    text-align: center;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#header {
+    position: relative;
+    display: block;
+    text-align: center;
+}
+ #submit-button {
+    display: block;
+    text-align: center;
+    height: 35px;
+    width: 85px;
+    z-index: 9;
+    grid-row: 4/5;
+ }
