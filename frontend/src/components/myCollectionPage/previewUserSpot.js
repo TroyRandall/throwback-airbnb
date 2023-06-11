@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import UpdateSpotButton from "../../components/updateSpotButton";
-import DeleteSpotButton from "../../components/deleteSpotButton";
+
 import "./previewUserSpot.css";
 
 function PreviewUserSpot({ spot }) {
+
+
+
   const history = useHistory();
   const redirect = (e) => {
     e.preventDefault();
@@ -40,8 +42,6 @@ function PreviewUserSpot({ spot }) {
           </h4>
           <h4 id="starRating">⭐{spot.avgStarRating}</h4>
           <h4 id="price-user">💵${spot.price} per/night</h4>
-          <UpdateSpotButton spotId={spot.id} />
-          <DeleteSpotButton key={spot.id} id={spot.id}/>
         </div>
       </div>
   );

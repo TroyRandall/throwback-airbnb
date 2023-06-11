@@ -56,3 +56,31 @@
     grid-row: 2/3;
     grid-column: 1/2;
 }
+
+#collection-container {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: 320px 1fr;
+    max-width: 250px;
+    justify-items: center;
+    align-items: center;
+}
+
+#delete_spot_button {
+    grid-row: 2/3;
+    grid-column: 2/3;
+    max-height: 30px;
+    max-width: 100px;
+    align-self: center;
+    margin: 10px;
+    box-shadow: 2px 2px black;
+}
+
+.update_spot_button {
+    grid-row: 2/3;
+    grid-column: 1/2;
+    max-height: 30px;
+    max-width: 100px;
+    align-self: center;
+    box-shadow: 2px 2px black;
+}

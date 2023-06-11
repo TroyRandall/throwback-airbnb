@@ -6,6 +6,8 @@ import { useHistory } from 'react-router-dom';
 import PreviewUserSpot from './previewUserSpot.js'
 import * as currentActions from '../../store/current.js';
 import './myCollection.css';
+import UpdateSpotButton from "../../components/updateSpotButton";
+import DeleteSpotButton from "../../components/deleteSpotButton";
 
 function MyCollection () {
     const dispatch = useDispatch();
@@ -26,7 +28,12 @@ function MyCollection () {
       return isLoaded && (
         <div className='user-spots-container'>
             {spots.map(spot => {
-                return <PreviewUserSpot  key={spot.id} spot={spot} />
+
+               return ( <div id='collection-container'>
+                 <PreviewUserSpot  key={spot.id} spot={spot} />
+                <UpdateSpotButton spotId={spot.id} />
+                <DeleteSpotButton key={spot.id} id={spot.id}/>
+                </div>)
             })}
 
             </div>
