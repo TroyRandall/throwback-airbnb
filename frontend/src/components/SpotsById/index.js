@@ -8,12 +8,12 @@ import SpotImages from "./spotImages.js";
 import Reviews from "./reviews.js";
 import "./spotsById.css";
 import CreateReviewButton from '../createReviewButton';
+import * as reviewActions from "../../store/reviews.js";
 
 function SpotsById() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const { id } = useParams();
-
   const spot = useSelector((state) => state.spots.spot);
 
   const addImages = (spotImages = [], i = 0) => {

@@ -18,11 +18,13 @@ const spots = useSelector((state) => state.spots.spots);
 
   }, [dispatch]);
 
-
+// let newArray = [];
+// while(spots.length >= 1) newArray.shift(spots.pop());
+// console.log(newArray)
   return (
     isLoaded && (
       <><div className='spots-container'>
-        {(Object.values(spots)).map((spot) => {
+        {(Object.values(spots)).reverse().map((spot) => {
           return (
             <PreviewSpot key = {spot.id} spot={spot} />
           );

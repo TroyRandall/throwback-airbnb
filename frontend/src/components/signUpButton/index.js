@@ -76,7 +76,6 @@ if(sessionUser) history.push('/');
 const SUClassName = "overlay" + (signUpModal ? "" : "hidden");
 
 const buttonClassName = checkValues()
-console.log(buttonClassName);
 const checkSignUpModal = () => {
 if(signUpModal === true) {
     return (

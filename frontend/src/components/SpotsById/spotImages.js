@@ -4,7 +4,6 @@ import './spotsById.css';
 
 
 function SpotImages ({ spotImages, description }) {
-    console.log(spotImages);
 return (
 
     spotImages.map(image => {
