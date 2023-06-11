@@ -36,7 +36,7 @@ function SpotsById() {
   };
 
   const checkNumReviews = (numReviews) => {
-    if(numReviews > 1) {
+    if(Number(numReviews) < 1) {
       return 'New';
     }
       if(numReviews > 1) {
