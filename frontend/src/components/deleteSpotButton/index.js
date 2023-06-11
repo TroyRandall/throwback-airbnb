@@ -1,5 +1,4 @@
 
-
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -23,7 +22,7 @@ function DeleteSpotButton({ id }) {
 console.log(deleteButtonRef, keepButtonRef, overlayRef)
       if ((deleteButtonRef.current).contains(e.target)) {
            dispatch(spotActions.deleteSpotById(id))
-            history.push('/')
+            history.push('/mycollection')
           }
          else if (
         overlayRef.current.contains(e.target) ||
@@ -47,7 +46,6 @@ console.log(deleteButtonRef, keepButtonRef, overlayRef)
   const deleteClassName = "delete-modal" + (deleteModal ? "" : "-hidden");
 
   const checkDeleteModal = () => {
-    console.log(deleteModal);
       return (
         <div id={deleteClassName} ref={overlayRef} >
           <div className='overlay-delete'></div>

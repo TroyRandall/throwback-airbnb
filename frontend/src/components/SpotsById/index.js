@@ -10,17 +10,19 @@ import "./spotsById.css";
 import CreateReviewButton from '../createReviewButton';
 
 
+
 function SpotsById() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const { id } = useParams();
   const spot = useSelector((state) => state.spots.spot);
   const newReview = useSelector((state) => state.reviews.newReview);
+  const reviews = useSelector((state) => state.reviews.review);
 
 
   useEffect(() => {
     if (id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
-  }, [id, dispatch, newReview]);
+  }, [id, dispatch, newReview, reviews]);
 
 
   const addImages = (spotImages = [], i = 0) => {

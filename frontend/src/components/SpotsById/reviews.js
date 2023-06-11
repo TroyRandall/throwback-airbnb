@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useParams } from 'react-router-dom';
 
 import * as reviewActions from "../../store/reviews.js";
+import DeleteReviewButton from '../deleteReviewButton';
 
 function Reviews() {
     const dispatch= useDispatch();
@@ -30,6 +31,7 @@ const checkReviews = () => {
                 <h5 id='firstName'>{review.User.firstName} ⭐{review.stars}</h5>
                 <h6 id='createdAt'>{review.createdAt.slice(0, 7)}</h6>
                 <p id='review'>{review.review}</p>
+                <label><DeleteReviewButton reviewId={review.id}  spotId={id}/></label>
              </div>
             })}
         </div> : <p>Be The First Person to Post Your Review!</p>
