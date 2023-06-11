@@ -8,13 +8,19 @@ import SpotImages from "./spotImages.js";
 import Reviews from "./reviews.js";
 import "./spotsById.css";
 import CreateReviewButton from '../createReviewButton';
-import * as reviewActions from "../../store/reviews.js";
+
 
 function SpotsById() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const { id } = useParams();
   const spot = useSelector((state) => state.spots.spot);
+
+
+  useEffect(() => {
+    if (id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
+  }, [id, dispatch, spot.avgStarRating, spot.numReviews]);
+
 
   const addImages = (spotImages = [], i = 0) => {
     while (spotImages.length < 5) {
@@ -29,19 +35,17 @@ function SpotsById() {
   };
 
   const checkNumReviews = (numReviews) => {
-    if(numReviews === 0.00) {
+    if(numReviews === 0) {
       return 'New';
     }
       if(numReviews > 1) {
-        return spot.numReviews + ' reviews';
+        return `${spot.avgStarRating} - ${spot.numReviews} reviews`;
       } else {
         return  `${spot.avgStarRating} - ${spot.numReviews} review`
       }
 
   }
-  useEffect(() => {
-    if (id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
-  }, [id, dispatch]);
+
 
   const comingSoon = (e) => {
     e.preventDefault();

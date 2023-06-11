@@ -7,7 +7,6 @@ import * as reviewActions from "../../store/reviews";
 import "./createReviewButton.css";
 
 function CreateReviewButton() {
-  const sessionUser = useSelector((state) => state.session.user);
   const newReview = useSelector((state) => state.reviews.newReview)
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
@@ -20,7 +19,7 @@ function CreateReviewButton() {
 
   const overlayRef = useRef();
   const createReviewRef = useRef();
-    let errorMessages;
+
   useEffect(() => {
     const closeReviewModal = (e) => {
       const reviewInfo = { review, stars };
