@@ -43,6 +43,7 @@ function CreateReviewButton() {
       }
     };
     if(newReview && (newReview.review === review)) {
+      dispatch(reviewActions.reviewsBySpotId(id))
         setStars(0);
         setReview('');
         setReviewModal(false);
