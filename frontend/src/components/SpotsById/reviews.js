@@ -26,7 +26,7 @@ const checkReviews = () => {
 }
 
       return isLoaded && (
-        (checkReviews()) ?  <div> {(Object.values(reviews)).reverse().map(review => {
+        (checkReviews()) ?  <div> {((Object.values(reviews)).reverse()).map(review => {
              return <div key ={review.id} className='reviews_container'>
                 <h5 id='firstName'>{review.User.firstName} ⭐{review.stars}</h5>
                 <h6 id='createdAt'>{review.createdAt.slice(0, 7)}</h6>
