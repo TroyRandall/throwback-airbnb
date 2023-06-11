@@ -15,11 +15,12 @@ function SpotsById() {
   const [isLoaded, setIsLoaded] = useState(false);
   const { id } = useParams();
   const spot = useSelector((state) => state.spots.spot);
-
+  const newReview = useSelector((state) => state.reviews.newReview);
+  
 
   useEffect(() => {
     if (id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
-  }, [id, dispatch, spot.avgStarRating, spot.numReviews]);
+  }, [id, dispatch, newReview]);
 
 
   const addImages = (spotImages = [], i = 0) => {
