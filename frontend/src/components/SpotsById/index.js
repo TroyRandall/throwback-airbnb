@@ -16,7 +16,7 @@ function SpotsById() {
   const { id } = useParams();
   const spot = useSelector((state) => state.spots.spot);
   const newReview = useSelector((state) => state.reviews.newReview);
-  
+
 
   useEffect(() => {
     if (id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
@@ -36,7 +36,7 @@ function SpotsById() {
   };
 
   const checkNumReviews = (numReviews) => {
-    if(numReviews === 0) {
+    if(numReviews > 1) {
       return 'New';
     }
       if(numReviews > 1) {
