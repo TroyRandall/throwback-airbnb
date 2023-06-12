@@ -9,21 +9,7 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     options.tableName = 'RevImages';
     await queryInterface.bulkInsert(options, [
-      {
-        url: 'thisIsAnImage.jpeg',
-        reviewId: 3,
-        userId: 1
-      },
-      {
-        url: 'thisIsAlsoAnImage.jpeg',
-        reviewId: 3,
-        userId: 2
-      },
-      {
-        url: 'Image.jpeg',
-        reviewId: 2,
-        userId: 1
-      },
+
     ], {});
   },
 
