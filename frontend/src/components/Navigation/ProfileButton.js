@@ -32,7 +32,10 @@ function ProfileButton({ user }) {
 
         document.addEventListener('click', closeMenu);
 
-        return () => document.removeEventListener("click", closeMenu);
+        return () => {
+          setShowMenu(false);
+          document.removeEventListener("click", closeMenu);
+        }
       }, [showMenu, sessionUser]);
 
   const logout = (e) => {
