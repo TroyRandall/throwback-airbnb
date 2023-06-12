@@ -71,9 +71,11 @@
     max-width: 100px;
     align-self: center;
     margin: 10px;
-    box-shadow: 2px 2px black;
-    z-index: 100;
+    box-shadow: 4px 4px black;
+    z-index: 0;
     justify-self: baseline;
+    background-color: rgb(102, 102, 102);
+    color: white;
 }
 
 .update_spot_button {
@@ -82,8 +84,15 @@
     max-height: 30px;
     max-width: 100px;
     align-self: center;
-    box-shadow: 2px 2px black;
-    z-index: 100;
+    box-shadow: 4px 4px black;
+    z-index: 0;
     justify-self: flex-start;
+    background-color: rgb(102, 102, 102);
+    color: white;
+}
 
+.update_spot_button:hover, #delete_spot_button:hover {
+scale: 1.2;
+cursor: pointer;
+z-index: 1000;
 }

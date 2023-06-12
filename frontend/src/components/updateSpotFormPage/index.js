@@ -55,7 +55,7 @@ const handleErrors = (newSpot) => {
 
         if(lng === "") newErrors.lng='Longitude is required'
     });
-
+      if((description.length < 30) && (!newErrors.description)) newErrors.description = 'Description must be at least 30 characters';
     return newErrors;
   };
 
@@ -73,9 +73,8 @@ const handleSubmit = async (e) => {
   );
 
   const allErrors = handleErrors(newSpot);
-  if (allErrors !== {}) {
-    return allErrors;
-  } else if (newSpot) history.push(`/spots/${newSpot.id}`);
+  if (Object.values(allErrors).length > 0) return allErrors;
+   else if (newSpot) return history.push(`/spots/${newSpot.id}`);
 };
 
 
@@ -93,7 +92,7 @@ const allErrors=handleErrors();
       </p>
 
       <label id="country-label"> Country</label>
-      <label id="errors-country">{allErrors.country}</label>
+      <label id="errors-country">{(allErrors==={}) ||  allErrors.country}</label>
       <input
         id="country-input"
         type="text"
@@ -104,7 +103,7 @@ const allErrors=handleErrors();
       ></input>
 
       <label id="address-label"> Street address</label>
-      <label id="errors-address">{allErrors.address}</label>
+      <label id="errors-address">{(allErrors==={}) || allErrors.address}</label>
       <input
         id="address-input"
         type="text"
@@ -115,7 +114,7 @@ const allErrors=handleErrors();
       ></input>
 
       <label id="state-label"> State</label>
-      <label id="errors-state">{allErrors.state}</label>
+      <label id="errors-state">{(allErrors==={}) || allErrors.state}</label>
       <input
         id="state-input"
         type="text"
@@ -127,7 +126,7 @@ const allErrors=handleErrors();
       <p id="state-city-comma">,</p>
 
       <label id="city-label"> City</label>
-      <label id="errors-city">{allErrors.city}</label>
+      <label id="errors-city">{(allErrors==={}) || allErrors.city}</label>
       <input
         id="city-input"
         type="text"
@@ -138,7 +137,7 @@ const allErrors=handleErrors();
       ></input>
 
       <label id="lat-label">Latitude</label>
-      <label id="errors-lat">{allErrors.lat}</label>
+      <label id="errors-lat">{(allErrors==={}) || allErrors.lat}</label>
       <input
         id="lat-input"
         type="text"
@@ -149,7 +148,7 @@ const allErrors=handleErrors();
       <p id="lat-lng-comma">,</p>
 
       <label id="lng-label">Longitude</label>
-      <label id="errors-lng">{allErrors.lng}</label>
+      <label id="errors-lng">{(allErrors==={}) || allErrors.lng}</label>
       <input
         id="lng-input"
         type="text"
@@ -172,12 +171,12 @@ const allErrors=handleErrors();
         placeholder="please write atleast 30 characters"
         required
       ></textarea>
-      <label className="errors-description">{allErrors.description}</label>
+      <label className="errors-description">{(allErrors==={}) || allErrors.description}</label>
 
       <hr id="line-break-two" />
 
       <h3 id="title-spot">Create a title for your spot</h3>
-      <label className="errors-name">{allErrors.name}</label>
+      <label className="errors-name">{(allErrors==={}) || allErrors.name}</label>
       <h5 id="title-description">
         catch guests attention with a spot title that highlights what makes your
         place special!
@@ -194,7 +193,7 @@ const allErrors=handleErrors();
       <hr id="line-break-three" />
 
       <h3 id="price-title">Set a base price for your spot</h3>
-      <label id="errors-price">{allErrors.price}</label>
+      <label id="errors-price">{(allErrors==={}) || allErrors.price}</label>
       <h5 id="price-description">
         competetive pricing can help your listing stand out and rank better in
         search results

@@ -10,9 +10,7 @@
     position: relative;
 }
 
-.prevSpots:hover{
-    z-index: 1000;
-}
+
 
 #image-preview {
     border-top-left-radius: 20px;
@@ -22,6 +20,7 @@
     justify-self: stretch;
     align-self: stretch;
 }
+
 #prev_spot_info {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;

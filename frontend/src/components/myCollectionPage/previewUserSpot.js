@@ -27,7 +27,7 @@ function PreviewUserSpot({ spot }) {
 
   return (
     <div className='tooltip-container'>
-      <div className="prev-user-spots" onClick={redirect}>
+      <div className="prev-user-spots" onClick={redirect} id='grow'>
         <span className='tooltip' id='tooltip-user-spots'>{spot.name}</span>
         <img
           className="images"

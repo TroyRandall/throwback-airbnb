@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import * as spotActions from "../../store/spots.js";
 import './deleteSpotButton.css';
+import * as currentActions from '../../store/current.js';
 
 
 function DeleteSpotButton({ id }) {
@@ -22,6 +23,8 @@ function DeleteSpotButton({ id }) {
 console.log(deleteButtonRef, keepButtonRef, overlayRef)
       if ((deleteButtonRef.current).contains(e.target)) {
            dispatch(spotActions.deleteSpotById(id))
+           dispatch(currentActions.spotsByUser())
+            setDeleteModal(false);
             history.push('/mycollection')
           }
          else if (

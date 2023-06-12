@@ -134,6 +134,8 @@ justify-self: center;
     justify-self: center;
     background-color: rgb(255, 90, 95);
     align-self: center;
+    position: relative;
+    bottom: 5px;
 }
 
 #reserve:hover {

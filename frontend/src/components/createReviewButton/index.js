@@ -143,7 +143,7 @@ const idForButton = 'review-submit' + (((review.length > 9) && (stars > 0)) ? ''
 
   return (
     <>
-      <button className={reviewClassName} onClick={toggleReviewModal}>
+      <button id="post-review-button" onClick={toggleReviewModal}>
         Post Your Review
       </button>
       <div>{checkReviewModal()}</div>
