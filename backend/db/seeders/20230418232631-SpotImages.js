@@ -32,23 +32,6 @@ module.exports = {
         spotId: 3,
         userId: 3,
         preview: true
-      },{
-        url: "https://picsum.photos/id/1/200/200",
-        spotId: 1,
-        userId: 1,
-        preview: false
-      },
-      {
-        url: "https://loveincorporated.blob.core.windows.net/contentimages/gallery/6ff52c16-0ec5-4725-b69c-a9d8ecd818e7-1.MichiganMansions.jpg",
-        spotId: 2,
-        userId: 2,
-        preview: false
-      },
-      {
-        url: "https://as1.ftcdn.net/v2/jpg/03/66/60/68/1000_F_366606804_WORN4uDdGawIa21yrtRAzQWoqtndKsXh.jpg",
-        spotId: 3,
-        userId: 2,
-        preview: false
       },
       {
         url: "https://www.boredpanda.com/blog/wp-content/uploads/2022/05/Victorian-house-in-Cleveland-60f624c056d86-62824be0ad08d__700.jpg",
@@ -81,7 +64,7 @@ module.exports = {
         preview: true
       },
       {
-        url: "https://i.insider.com/59e77f3f49e1cf37008b45eb?width=750&format=jpeg&auto=webp",
+        url: "https://loveincorporated.blob.core.windows.net/contentimages/gallery/6ff52c16-0ec5-4725-b69c-a9d8ecd818e7-1.MichiganMansions.jpg",
         spotId: 9,
         userId: 1,
         preview: true
