@@ -70,7 +70,7 @@ module.exports = {
         stars: 5
         },
         {
-        userId: 8,
+        userId: 2,
         spotId: 8,
         review: "The apartment was a bit small, but it was clean and well-furnished. The host was very friendly and helpful. I would definitely stay here again.",
         stars: 4
