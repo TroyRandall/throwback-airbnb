@@ -29,10 +29,10 @@ function MyCollection () {
         <div className='user-spots-container'>
             {spots.map(spot => {
 
-               return ( <div id='collection-container'>
+               return ( <div key={spot.id} id='collection-container'>
                  <PreviewUserSpot  key={spot.id} spot={spot} />
-                <UpdateSpotButton spotId={spot.id} />
-                <DeleteSpotButton key={spot.id} id={spot.id}/>
+                <UpdateSpotButton key={spot.id+50} spotId={spot.id} />
+                <DeleteSpotButton key={spot.id+100} id={spot.id}/>
                 </div>)
             })}
 

@@ -3,156 +3,218 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
 import * as spotActions from '../../store/spots.js'
-
+import './updateSpot.css'
 
 
 function UpdateSpotPage  ()  {
 
-const spot = useSelector((state) => state.spots.spot);
+
 const dispatch = useDispatch();
 const history = useHistory();
 const spotId = useParams();
 const[isLoaded, setIsLoaded] = useState(false);
 const sessionUser = useSelector((state) => state.session.user)
-
-const [country, setCountry] = useState(spot.country);
-const [state, setState] = useState(spot.state);
-const [city, setCity] = useState(spot.city);
-const [address, setAddress] = useState(spot.address);
-const [lat, setLat] = useState(spot.lat);
-const [lng, setLng] = useState(spot.lng);
-const [name, setName] = useState(spot.name);
-const [description, setDescription] = useState(spot.description);
-const [price, setPrice] = useState(spot.price);
-
+const spot = useSelector((state) => state.spots.spot);
 
     useEffect(() => {
-        dispatch(spotActions.spotsById(spotId.id)).then(() => setIsLoaded(true));
-      }, [dispatch, spotId.id]);
+        if(spotId) dispatch(spotActions.spotsById(spotId.id)).then(() => setIsLoaded(true));
+      }, [dispatch, spotId]);
 
 
+const [country, setCountry] = useState(spot ? spot.country : '');
+const [state, setState] = useState(spot ? spot.state : '');
+const [city, setCity] = useState(spot ? spot.city : '');
+const [address, setAddress] = useState(spot ? spot.address : '');
+const [lat, setLat] = useState(spot ? spot.lat : '');
+const [lng, setLng] = useState(spot ? spot.lng : '');
+const [name, setName] = useState(spot ? spot.name : '');
+const [description, setDescription] = useState(spot ? spot.description: '');
+const [price, setPrice] = useState(spot ? spot.price : '');
+const [errors, setErrors] = useState({});
 
+console.log(spot);
 
 
 
 if(sessionUser === null && isLoaded) history.push('/');
+const handleErrors = (newSpot) => {
+    let newErrors = {};
+    Object.values(errors).forEach((error) => {
+      if (error.includes("Name")) newErrors.name = error;
+      else if (error.includes("State")) newErrors.state = error;
+      else if (error.includes("Country")) newErrors.country = error;
+      else if (error.includes("City")) newErrors.city = error;
+      else if (error.includes("address")) newErrors.address = error;
+      else if (error.includes("Description")) newErrors.description = error;
+      else if (error.includes("Price")) newErrors.price = error;
+      else if (error.includes("Invalid") && newErrors.lat)
+        newErrors.lng = error;
+      else if (error.includes("Invalid")) newErrors.lat = error;
 
+        if(lat === "") newErrors.lat='Latitude is required'
+
+        if(lng === "") newErrors.lng='Longitude is required'
+    });
+
+    return newErrors;
+  };
 
 const handleSubmit = async (e) => {
     e.preventDefault();
     const id = spotId.id;
     const updateSpot = { id, name, city, state, country, address, description, price, lat, lng}
 
-   const newSpot = await dispatch(spotActions.updateSpotAction(updateSpot))
+    setErrors({})
+   const newSpot = await dispatch(spotActions.updateSpotAction(updateSpot)).catch(
+    async (res) => {
+      const data = await res.json();
+      if (data) setErrors({ ...errors, ...data.errors });
+    }
+  );
 
-    history.push(`/spots/${newSpot.id}`);
-}
+  const allErrors = handleErrors(newSpot);
+  if (allErrors !== {}) {
+    return allErrors;
+  } else if (newSpot) history.push(`/spots/${newSpot.id}`);
+};
 
 
 
+const allErrors=handleErrors();
 
 
- return  isLoaded && (
+ return (spot && (isLoaded && (
     <div>
-        <h1 className="title">Update your Spot</h1>
-        <h3>Where is your spot located?</h3>
-        <h5>Guest's will only get your exact address once they have booked a reservation</h5>
+         <div id="create-spot-form">
+      <h1 className="title">Update your Spot</h1>
+      <p id="title-info">Where is your spot located?</p>
+      <p id="explain-spot-form">
+        Guest's will only get your exact address once they book a reservation
+      </p>
 
-        <label> country</label>
-        <input
-        type='text'
+      <label id="country-label"> Country</label>
+      <label id="errors-country">{allErrors.country}</label>
+      <input
+        id="country-input"
+        type="text"
         value={country}
         onChange={(e) => setCountry(e.target.value)}
-        placeholder='country'
-        required >
-        </input>
+        placeholder="country"
+        required
+      ></input>
 
-        <label> Address</label>
-        <input
-        type='text'
+      <label id="address-label"> Street address</label>
+      <label id="errors-address">{allErrors.address}</label>
+      <input
+        id="address-input"
+        type="text"
         value={address}
         onChange={(e) => setAddress(e.target.value)}
-        placeholder='Address'
-        required >
-        </input>
+        placeholder="Address"
+        required
+      ></input>
 
-        <label> State</label>
-        <input
-        type='text'
+      <label id="state-label"> State</label>
+      <label id="errors-state">{allErrors.state}</label>
+      <input
+        id="state-input"
+        type="text"
         value={state}
         onChange={(e) => setState(e.target.value)}
-        placeholder='State'
-        required >
-        </input>
+        placeholder="State"
+        required
+      ></input>
+      <p id="state-city-comma">,</p>
 
-        <label> city</label>
-        <input
-        type='text'
+      <label id="city-label"> City</label>
+      <label id="errors-city">{allErrors.city}</label>
+      <input
+        id="city-input"
+        type="text"
         value={city}
         onChange={(e) => setCity(e.target.value)}
-        placeholder='City'
-        required >
-        </input>
+        placeholder="City"
+        required
+      ></input>
 
-        <label>Latitude</label>
-        <input
-        type='text'
-        value = {lat}
+      <label id="lat-label">Latitude</label>
+      <label id="errors-lat">{allErrors.lat}</label>
+      <input
+        id="lat-input"
+        type="text"
+        value={lat}
         onChange={(e) => setLat(e.target.value)}
-        placeholder='Latitude'
-        ></input>
+        placeholder="Latitude"
+      ></input>
+      <p id="lat-lng-comma">,</p>
 
-        <label>Longitude</label>
-        <input
-        type='text'
+      <label id="lng-label">Longitude</label>
+      <label id="errors-lng">{allErrors.lng}</label>
+      <input
+        id="lng-input"
+        type="text"
         value={lng}
         onChange={(e) => setLng(e.target.value)}
-        placeholder='Longitude'
-        ></input>
-        <hr/>
+        placeholder="Longitude"
+      ></input>
+      <hr id="line-break-one" />
 
-        <h3>Describe your place to guests</h3>
-        <h5>Mention the best features about your space, any special amenities like fast wifi and parking, and what you love about the neighborhood!</h5>
+      <h3 id="description-title">Describe your place to guests</h3>
+      <h5 id="description">
+        Mention the best features about your space, any special amenities like
+        fast wifi and parking, and what you love about the neighborhood!
+      </h5>
 
-        <label>Description</label>
-        <input
-            type='textarea'
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder='please write atleast 30 characters'
-            required
-        >
-        </input>
+      <textarea
+        id="description-input"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        placeholder="please write atleast 30 characters"
+        required
+      ></textarea>
+      <label className="errors-description">{allErrors.description}</label>
 
-        <hr/>
+      <hr id="line-break-two" />
 
-        <h3>Create a title for your spot</h3>
-        <h5>catch guests attention with a spot title that highlights what makes your place special!</h5>
-        <input
-        type='text'
+      <h3 id="title-spot">Create a title for your spot</h3>
+      <label className="errors-name">{allErrors.name}</label>
+      <h5 id="title-description">
+        catch guests attention with a spot title that highlights what makes your
+        place special!
+      </h5>
+      <input
+        id="title-input"
+        type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder='Title'
-        required>
-        </input>
+        placeholder="Name of Your Spot"
+        required
+      ></input>
 
-        <hr/>
+      <hr id="line-break-three" />
 
-        <h3>Set a base price for your spot</h3>
-        <h5>competetive pricing can help your listing stand out and rank better in search results</h5>
-        <input
-        type='text'
+      <h3 id="price-title">Set a base price for your spot</h3>
+      <label id="errors-price">{allErrors.price}</label>
+      <h5 id="price-description">
+        competetive pricing can help your listing stand out and rank better in
+        search results
+      </h5>
+      <p id="Money-sign">💲</p>
+      <input
+        id="price-input"
+        type="text"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
-        placeholder='Price per night($)'
+        placeholder="Price per night($)"
         required
-        ></input>
+      ></input>
 
-        <hr/>
+      <hr id="line-break-four" />
 
-        <button onClick={handleSubmit}>submit</button>
+        <button id='submit-update-spot' onClick={handleSubmit}>Update Spot</button>
     </div>
- )
+    </div>
+ )))
 };
 
 export default UpdateSpotPage;

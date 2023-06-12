@@ -19,6 +19,7 @@ const { id } = spotId;
 
 let newArray;
 const checkReviews = () => {
+  console.log(Object.values(reviews).reverse);
   if(isLoaded)  newArray = Object.values(reviews);
  if(newArray.length > 0) {
   return true;
@@ -26,13 +27,14 @@ const checkReviews = () => {
 }
 
       return isLoaded && (
-        (checkReviews()) ?  <div> {((Object.values(reviews)).reverse()).map(review => {
-             return <div key ={review.id} className='reviews_container'>
+        (checkReviews()) ?  <div> {(Object.values(reviews).reverse()).map(review => {
+             return (
+             <div key ={review.id} className='reviews_container'>
                 <h5 id='firstName'>{review.User.firstName} ⭐{review.stars}</h5>
                 <h6 id='createdAt'>{review.createdAt.slice(0, 7)}</h6>
                 <p id='review'>{review.review}</p>
-                <label><DeleteReviewButton reviewId={review.id}  spotId={id}/></label>
-             </div>
+                <label id='delete-review' ><DeleteReviewButton reviewId={review.id}  spotId={id}/></label>
+             </div>)
             })}
         </div> : <p>Be The First Person to Post Your Review!</p>
 
