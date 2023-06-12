@@ -31,7 +31,7 @@ function CreateSpotPage() {
   const handleErrors = (newSpot) => {
     let newErrors = {};
     Object.values(errors).forEach((error) => {
-      if (error.includes("Name")) newErrors.name = error;
+      if (error.includes("Name")) newErrors.title = error;
       else if (error.includes("State")) newErrors.state = error;
       else if (error.includes("Country")) newErrors.country = error;
       else if (error.includes("City")) newErrors.city = error;
@@ -61,8 +61,13 @@ function CreateSpotPage() {
         if(lat === "") newErrors.lat='Latitude is required'
 
         if(lng === "") newErrors.lng='Longitude is required'
-    });
 
+
+         if((description.length < 30) && (!newErrors.description)) newErrors.description = 'Description needs a minimun of 30 characters'
+        if((description.length > 240) && (!newErrors.description)) newErrors.description = 'Description must be below 240 characters'
+
+
+    });
     return newErrors;
   };
 
@@ -133,6 +138,7 @@ function CreateSpotPage() {
             const data = await res.json();
             if (data) setErrors({ ...errors, image5: data });
           }))};
+
 
     const allErrors = handleErrors(newSpot);
     if (allErrors !== {}) {
@@ -235,7 +241,7 @@ const allErrors = handleErrors();
       <hr id="line-break-two" />
 
       <h3 id="title-spot">Create a title for your spot</h3>
-      <label className="errors-name">{allErrors.name}</label>
+      <label className="errors-name">{allErrors.title}</label>
       <h5 id="title-description">
         catch guests attention with a spot title that highlights what makes your
         place special!
@@ -318,7 +324,8 @@ const allErrors = handleErrors();
 
       <hr id="line-break-five" />
 
-      <button onClick={handleSubmit} id="submit-create-spot">
+      <button onClick={handleSubmit}
+      id="submit-create-spot">
         Create Spot
       </button>
     </div>
