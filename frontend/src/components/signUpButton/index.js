@@ -75,6 +75,20 @@ useEffect(() => {
 if(sessionUser) history.push('/');
 const SUClassName = "overlay" + (signUpModal ? "" : "hidden");
 
+const checkErrors = () => {
+  let newErrors;
+  if(errors === {}) return null;
+  Object.values(errors).forEach(error => {
+    if(error.includes('Firstname')) errors.firstname = error;
+    if(error.includes('Lastname')) errors.lastname = error;
+    if(error.includes('Username' || 'username' )) errors.username = error;
+    if(error.includes('Password')) errors.password = error;
+    if(error.includes('email')) errors.email = error;
+  })
+  return newErrors
+}
+
+const allErrors = checkErrors();
 const buttonClassName = checkValues()
 const checkSignUpModal = () => {
 if(signUpModal === true) {
@@ -83,12 +97,17 @@ if(signUpModal === true) {
         <div className={SUClassName} >
           <div className="overlay"></div>
           <div className="modal-signup-content" ref={modalRef}>
-        <h1>Sign Up</h1>
-      <form id='sign_up_form'>
-        <label>
-          Email
-          </label>
-          <input
+        <h1 id='sign-up-title'>Sign Up</h1>
+        <label id='errors-sign-up'>{allErrors && allErrors.firstname}{allErrors && allErrors.lastname}{allErrors && allErrors.username}{allErrors && allErrors.password}{allErrors && allErrors.email}</label>
+{errors.password && <p id='errors-password'>{errors.password}</p>}
+  {errors.email && <p id='errors-email'>{errors.email}</p>}
+{errors.username && <p id='errors-username'>{errors.username}</p>}
+ {errors.firstName && <p id='errors-firstname'>{errors.firstName}</p>}
+ {errors.lastName && <p id='errors-lastname'>{errors.lastName}</p>}
+{errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+
+            <input
+          id='email-input'
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -96,11 +115,9 @@ if(signUpModal === true) {
             placeholder='Email required'
           />
 
-        {errors.email && <p>{errors.email}</p>}
-        <label>
-          Username
-           </label>
+
           <input
+          id='username-input'
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -108,11 +125,9 @@ if(signUpModal === true) {
             placeholder='Username required'
           />
 
-        {errors.username && <p>{errors.username}</p>}
-        <label>
-          First Name
-          </label>
+
           <input
+          id='firstname-input'
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
@@ -120,11 +135,10 @@ if(signUpModal === true) {
             placeholder='First name required'
           />
 
-        {errors.firstName && <p>{errors.firstName}</p>}
-        <label>
-          Last Name
-          </label>
+
+
           <input
+          id='lastname-input'
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
@@ -132,11 +146,10 @@ if(signUpModal === true) {
             placeholder='Last name required'
           />
 
-        {errors.lastName && <p>{errors.lastName}</p>}
-        <label>
-          Password
-          </label>
+
+
           <input
+          id='password-input-signup'
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -145,11 +158,10 @@ if(signUpModal === true) {
             autoComplete='new-password'
           />
 
-        {errors.password && <p>{errors.password}</p>}
-        <label>
-          Confirm Password
-          </label>
+
+
           <input
+          id='confirm-password-input'
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
@@ -158,9 +170,8 @@ if(signUpModal === true) {
             autoComplete='new-password'
           />
 
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button className={buttonClassName} ref={signUpRef}>Sign Up</button>
-      </form>
+
+        <button className={buttonClassName} ref={signUpRef} id='sign-up-button'>Sign Up</button>
       </div>
       </div>
       </>

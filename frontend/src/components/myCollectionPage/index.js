@@ -16,6 +16,7 @@ function MyCollection () {
     const sessionUser = useSelector((state) => state.session.user)
 
 
+
     useEffect(() => {
         dispatch(currentActions.spotsByUser()).then(() => setIsLoaded(true));
       }, [ dispatch])
