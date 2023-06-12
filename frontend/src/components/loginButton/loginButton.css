@@ -17,6 +17,8 @@
 #login-form {
     align-self: center;
     justify-self: center;
+    grid-row: 2/3;
+    grid-column: 1/2;
 }
 .modal, .overlay {
     width: 100vw;
@@ -39,12 +41,13 @@
     background-color: white;
     border: solid black 2px;
     border-radius: 25px;
-    left: 35vw;
+    left: 40vw;
     top: 35vh;
     height: 350px;
     width: 350px;
     display: grid;
     grid-template-rows: repeat(4, 25%);
+    grid-template-columns: repeat(1, 350px);
     justify-items: center;
     align-items: center;
 
@@ -59,12 +62,12 @@
     font-size: 32px;
     display: block;
     text-align: center;
-    top: 25px;
+    width: 330px;
+    left: 40px;
 }
 
 #password-label {
     position: relative;
-    top: 50px;
     font-size: 32px;
     display: block;
     text-align: center;
@@ -76,6 +79,17 @@
     position: relative;
     display: block;
     text-align: center;
+    grid-row: 1/2;
+    grid-column: 1/2;
+}
+
+#errors-login {
+    grid-row: 1/2;
+    color: red;
+    font-size: 16px;
+    font-family: cursive;
+    position: relative;
+    bottom: 5px;
 }
  #submit-button {
     display: block;
@@ -83,5 +97,59 @@
     height: 35px;
     width: 85px;
     z-index: 9;
+    width: 330px;
+    z-index: 9;
+    box-shadow: 4px 4px black;
+    background-color: rgb(255, 90, 95);
+    color: white;
+    font-size: 16px;
+    grid-row: 3/4;
+ }
+
+#credential-input {
+width: 330px;
+width: 330px;
+position: relative;
+border: 3px solid black;
+  background-color: rgb(206, 222, 255);
+  border-radius: 5px;
+}
+
+#password-input {
+width: 330px;
+position: relative;
+border: 3px solid black;
+background-color: rgb(206, 222, 255);
+border-radius: 5px;
+height: 30px;
+
+}
+
+#submit-button-disabled {
+        background-color: darkgrey;
+        cursor: not-allowed;
+        display: block;
+        text-align: center;
+        height: 35px;
+        width: 85px;
+        z-index: 9;
+        width: 330px;
+        z-index: 9;
+        box-shadow: 4px 4px black;
+        font-size: 16px;
+        grid-row: 3/4;
+ }
+
+ #demo-user-sign-in {
     grid-row: 4/5;
+    align-self: center;
+    font-family: cursive;
+    text-decoration: underline;
+    color: rgb(0, 139, 81);
+    font-size: 26px;
+ }
+
+ #demo-user-sign-in:hover {
+    cursor: pointer;
+    scale: 1.2;
  }

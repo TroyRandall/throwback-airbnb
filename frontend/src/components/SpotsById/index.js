@@ -74,8 +74,6 @@ function SpotsById() {
   }
 
 
-  console.log(checkReviewOwner());
-
   return (
     isLoaded && (
       <div className="wholePage">

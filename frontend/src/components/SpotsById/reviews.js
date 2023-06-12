@@ -40,7 +40,7 @@ const checkReviewOwner = useCallback((review) => {
         (checkReviews()) ?  (<div> {(Object.values(reviews).reverse()).map(review => {
              return (
              <div key ={review.id} className='reviews_container'>
-                <h5 id='firstName'>{review.User.firstName} ⭐{review.stars}</h5>
+                <h5 id='firstName'>{review.User.firstName}</h5>
                 <h6 id='createdAt'>{review.createdAt.slice(0, 7)}</h6>
                 <p id='review'>{review.review}</p>
                 <label id='delete-review' >{checkReviewOwner(review) ? <DeleteReviewButton reviewId={review.id}  spotId={id}/> : null}</label>

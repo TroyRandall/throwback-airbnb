@@ -246,12 +246,15 @@ hr {
     grid-row: 6/7;
     position: relative;
     bottom: 80px;
+    width: 60px;
  }
+
 
  #delete_review_button {
     background-color: rgb(102, 102, 102);
     box-shadow: 4px 4px black;
-    color: white
+    color: white;
+    width: 60px;
  }
 
  #delete_review_button:hover {

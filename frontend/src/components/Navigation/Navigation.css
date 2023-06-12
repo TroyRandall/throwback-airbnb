@@ -18,14 +18,19 @@
     width: 400px;
 }
 
+button:hover {
+    cursor: pointer;
+}
+
 #profile_button_container {
     height: 180px;
     width: 200px;
     position: absolute;
-    top: 30px;
-    right: 10px;
+    top: 35px;
+    right: 30px;
     display: grid;
     grid-template-rows: auto;
+    z-index: 1000;
 }
 .profileButton {
     height: 65px;
@@ -33,21 +38,63 @@
     grid-row: 1/2;
 }
 
+.profileButton:hover {
+    cursor: pointer;
+}
+
 .profile-dropdown {
     background-color: white;
     border: solid black 2px;
     grid-row: 2/3;
 }
+
 .createSpotButton {
-    height: 65px;
-    width: 200px;
-    grid-column: 3/4;
-    justify-self: center;
-    position: relative;
-    top: 2px;
+      height: 65px;
+      width: 200px;
+      grid-column: 8/9;
+      justify-self: center;
+      position: absolute;
+      top: 35px;
+      right: 240px;
+}
+
+.createSpotButton:hover {
+    cursor: pointer;
 }
 
 .logo {
     height: 75px;
     width: 75px;
+}
+
+#manage-spots-button {
+    margin-top: 5px;
+    background-color: rgb(102, 102, 102);
+    color: white;
+}
+
+#manage-spots-button:hover {
+    cursor: pointer;
+}
+
+#log-out-button {
+    margin-top: 5px;
+    background-color: rgb(102, 102, 102);
+    color: white;
+}
+
+#log-out-button:hover {
+    cursor: pointer;
+}
+
+#login-button {
+    margin-top: 10px;
+    background-color: rgb(102, 102, 102);
+    color: white;
+}
+
+.sign-up-button {
+    margin-top: 10px;
+    background-color: rgb(102, 102, 102);
+    color: white;
 }

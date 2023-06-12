@@ -10,7 +10,8 @@ import logo from '../../assets/images.png';
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
-  return (
+
+     return (
     <ul className="nav">
         <NavLink exact to="/">
           <img src={logo} alt="home-button" href="" className="logo"></img>

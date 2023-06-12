@@ -17,7 +17,7 @@ function LoginButton() {
 
   const sessionUser = useSelector((state) => state.session.user);
 
-  if (sessionUser) history.push("/");
+  if (sessionUser)  history.push("/");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,10 +37,13 @@ function LoginButton() {
         return dispatch(sessionActions.login({ credential, password })).catch(
           async (res) => {
             const data = await res.json();
-            if (data && data.errors) setErrors(data.errors);
+            if (data) setErrors(data);
           }
         );
       } else if (!overlayRef.current.contains(e.target)) {
+        setCredential('')
+        setPassword('')
+        setErrors({})
         setModal(false);
       }
     };
@@ -51,10 +54,35 @@ function LoginButton() {
     }
   }, [modal, credential, dispatch, password]);
 
+  const checkInputs = () => {
+    if((password.length > 5) && (credential.length > 3)) return true;
+    else return false;
+  }
+
   const toggleModal = (e) => {
     e.preventDefault();
     setModal(true);
   };
+
+  const demoUserSignin = () => {
+    return dispatch(sessionActions.login({
+      credential: 'Demo-lition',
+      password: 'password'
+    }))
+  }
+
+  const checkErrors = () => {
+    console.log(errors)
+     let newErrors = {};
+    newErrors=errors.message;
+    return (newErrors && (newErrors));
+ }
+
+
+
+  const submitId = 'submit-button' + (checkInputs() ? '' : '-disabled')
+
+  const allErrors = checkErrors();
 
   const UlClassName = "overlay" + (modal ? "" : "hidden");
   const checkModal = () => {
@@ -63,38 +91,35 @@ function LoginButton() {
         <div className={UlClassName} onClick={toggleModal}>
           <div className="overlay"></div>
           <div className="modal-content" ref={overlayRef}>
-            <h2 id="header">Log In</h2>
+            <h2 id="header">Log In</h2><label id='errors-login'>{allErrors}</label>
             <form onSubmit={handleSubmit} id='login-form'>
-              <div className="credential">
                 <label id="credential-label">
-                  Username or Email
                   <input
                     id="credential-input"
                     type="text"
                     value={credential}
                     onChange={(e) => setCredential(e.target.value)}
                     required
+                    placeholder='Username or Email'
                   />
                 </label>
-              </div>
-              <div className="password">
                 <label id="password-label">
-                  Password
                   <input
                     id="password-input"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    placeholder='Password'
                   />
                 </label>
-              </div>
 
               {errors.credential && <p>{errors.credential}</p>}
             </form>
-       <button type="submit" id="submit-button" ref={logInRef}>
+       <button type="submit" id={submitId} ref={logInRef}>
             Log In
           </button>
+          <label id='demo-user-sign-in' onClick={demoUserSignin}>Demo User</label>
           </div>
 
         </div>
@@ -104,7 +129,7 @@ function LoginButton() {
 
   return (
     <>
-      <button onClick={toggleModal}>Log In</button>
+      <button onClick={toggleModal} id='login-button'>Log In</button>
       <div>{checkModal()}</div>
     </>
   );

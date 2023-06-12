@@ -12,9 +12,10 @@ function ProfileButton({ user }) {
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
     const sessionUser = useSelector((state) => state.session.user)
+    const [showMenu, setShowMenu] = useState(false);
+
     const openMenu = () => {
       if (showMenu) return;
       setShowMenu(true);
@@ -27,12 +28,12 @@ function ProfileButton({ user }) {
             if (!(ulRef.current.contains(e.target))) {
               setShowMenu(false);
             }
-          };
+      };
 
         document.addEventListener('click', closeMenu);
 
         return () => document.removeEventListener("click", closeMenu);
-      }, [showMenu]);
+      }, [showMenu, sessionUser]);
 
   const logout = (e) => {
     e.preventDefault();
@@ -45,7 +46,6 @@ function ProfileButton({ user }) {
   }
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
-
   return (
     <><div id='profile_button_container'>
       <button onClick={openMenu} className='profileButton'>
@@ -57,10 +57,10 @@ function ProfileButton({ user }) {
         <li>{user.firstName} {user.lastName}</li>
         <li>{user.email}</li>
         <li>
-          <button onClick={redirect}>Manage Spots</button>
+          <button onClick={redirect} id='manage-spots-button'>Manage Spots</button>
         </li>
         <li>
-          <button onClick={logout}>Log Out</button>
+          <button onClick={logout} id='log-out-button'>Log Out</button>
         </li>
       </ul>))}{(!sessionUser && (
         <ul className={ulClassName} ref={ulRef}>
