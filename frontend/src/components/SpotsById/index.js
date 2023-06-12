@@ -18,6 +18,7 @@ function SpotsById() {
   const spot = useSelector((state) => state.spots.spot);
   const newReview = useSelector((state) => state.reviews.newReview);
   const reviews = useSelector((state) => state.reviews.review);
+  const [reserve, setReserve] = useState(false);
 
 
   useEffect(() => {
@@ -50,10 +51,10 @@ function SpotsById() {
   }
 
 
-  const comingSoon = (e) => {
-    e.preventDefault();
-    return <alert>This feature will be coming soon!</alert>;
-  };
+  const displayText = () => {
+    setReserve(!reserve);
+  }
+
 
   return (
     isLoaded && (
@@ -76,15 +77,16 @@ function SpotsById() {
           <h2 className="owner_info">
             Hosted By {spot.Owner.firstName} {spot.Owner.lastName}
           </h2>
-          <p id="description">{spot.description}</p>
+          <p id="description-spot-by-id">{spot.description}</p>
           <div id="price-box">
             <p id="price">💵{spot.price.toLocaleString("en-US")}/night</p>
             <p id="rating">
               ⭐{checkNumReviews(spot.numReviews)}
             </p>
-            <button id="reserve" onClick={comingSoon}>
+            <button id="reserve" onClick={displayText}>
               Reserve
             </button>
+            <label id='reserve-alert' hidden={reserve ? "" : 'hidden'}>This Feature Coming Soon!</label>
           </div>
         </div>
         <hr />

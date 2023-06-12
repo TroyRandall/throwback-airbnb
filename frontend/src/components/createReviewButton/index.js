@@ -33,7 +33,7 @@ function CreateReviewButton() {
             if (data && (data.message)) {
               setErrors({...errors,  message: data.message});
             }
-          })}
+          }).then(() => dispatch(reviewActions.reviewsBySpotId(id)))}
       }
       else if (overlayRef.current.contains(e.target)) {
         setReviewModal(false);

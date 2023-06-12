@@ -10,8 +10,6 @@
 .prevSpots {
     height: 350px;
     max-width: 300px;
-    /* border: solid rgb(255, 90, 95) 2px;
-    border-radius: 25px; */
     display: grid;
     grid-template-rows: repeat(5, 20%);
     grid-template-columns: repeat(2, 50%);
@@ -74,6 +72,8 @@
     align-self: center;
     margin: 10px;
     box-shadow: 2px 2px black;
+    z-index: 100;
+    justify-self: baseline;
 }
 
 .update_spot_button {
@@ -83,4 +83,7 @@
     max-width: 100px;
     align-self: center;
     box-shadow: 2px 2px black;
+    z-index: 100;
+    justify-self: flex-start;
+
 }

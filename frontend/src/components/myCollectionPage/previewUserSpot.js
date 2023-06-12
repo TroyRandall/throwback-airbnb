@@ -26,7 +26,9 @@ function PreviewUserSpot({ spot }) {
   });
 
   return (
+    <div className='tooltip-container'>
       <div className="prev-user-spots" onClick={redirect}>
+        <span className='tooltip' id='tooltip-user-spots'>{spot.name}</span>
         <img
           className="images"
           id="image-preview"
@@ -43,6 +45,7 @@ function PreviewUserSpot({ spot }) {
           <h4 id="starRating">⭐{spot.avgStarRating}</h4>
           <h4 id="price-user">💵${spot.price} per/night</h4>
         </div>
+      </div>
       </div>
   );
 }
