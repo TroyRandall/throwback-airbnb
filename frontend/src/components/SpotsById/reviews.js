@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react"
 import { useParams } from 'react-router-dom';
@@ -11,6 +11,7 @@ function Reviews() {
     const[isLoaded, setIsLoaded] = useState(false);
 const reviews = useSelector((state) => state.reviews.review);
 const newReview = useSelector((state) => state.reviews.newReview)
+const sessionUser = useSelector((state) => state.session.user);
 const spotId  = useParams();
 const { id } = spotId;
     useEffect(() => {
@@ -26,19 +27,28 @@ const checkReviews = () => {
 } else return false;
 }
 
+const checkReviewOwner = useCallback((review) => {
+  if(sessionUser !== null) {
+     if(review.userId === sessionUser.id){
+    return true;
+  } else return false;
+} return false;
+  }, [sessionUser])
+
+
       return isLoaded && (
-        (checkReviews()) ?  <div> {(Object.values(reviews).reverse()).map(review => {
+        (checkReviews()) ?  (<div> {(Object.values(reviews).reverse()).map(review => {
              return (
              <div key ={review.id} className='reviews_container'>
                 <h5 id='firstName'>{review.User.firstName} ⭐{review.stars}</h5>
                 <h6 id='createdAt'>{review.createdAt.slice(0, 7)}</h6>
                 <p id='review'>{review.review}</p>
-                <label id='delete-review' ><DeleteReviewButton reviewId={review.id}  spotId={id}/></label>
+                <label id='delete-review' >{checkReviewOwner(review) ? <DeleteReviewButton reviewId={review.id}  spotId={id}/> : null}</label>
              </div>)
             })}
-        </div> : <p>Be The First Person to Post Your Review!</p>
+        </div>) : <p>Be The First Person to Post Your Review!</p>
 
       )
-};
+}
 
 export default Reviews;

@@ -40,7 +40,7 @@ function App() {
         <CreateSpotPage />
       </Route>
       <Route path = "/spots/:id">
-        <SpotsById />:
+        <SpotsById />
       </Route>
         <Route exact path="/">
         <AllSpotsPage />

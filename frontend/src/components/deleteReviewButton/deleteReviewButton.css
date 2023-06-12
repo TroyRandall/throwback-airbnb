@@ -58,6 +58,11 @@
     font-family: cursive;
 }
 
+#confirm-delete-button:hover {
+    scale: 1.2;
+    cursor: pointer;
+}
+
 #deny-delete-button {
     grid-row: 4/6;
     align-self: end;
@@ -70,4 +75,9 @@
     font-family: cursive;
     position: relative;
     bottom: 10px;
+}
+
+#deny-delete-button:hover {
+    scale: 1.2;
+    cursor: pointer;
 }

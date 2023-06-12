@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -19,11 +19,28 @@ function SpotsById() {
   const newReview = useSelector((state) => state.reviews.newReview);
   const reviews = useSelector((state) => state.reviews.review);
   const [reserve, setReserve] = useState(false);
+  const sessionUser = useSelector((state) => state.session.user);
+
+  const checkReviewOwner = useCallback(() => {
+
+    if((sessionUser) && (reviews !== null)) {
+      if((spot.ownerId !== null) &&(spot.ownerId === sessionUser.id)) return false
+
+
+    const reviewsArray = Object.values(reviews)
+    for(let i = 0; i <reviewsArray.length; i++) {
+      if(reviewsArray[i].userId === sessionUser.id) return false;
+    }
+    return true
+  }
+  return false
+
+  }, [reviews, sessionUser])
 
 
   useEffect(() => {
     if (id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
-  }, [id, dispatch, newReview, reviews]);
+  }, [id, dispatch, newReview, reviews, checkReviewOwner]);
 
 
   const addImages = (spotImages = [], i = 0) => {
@@ -51,16 +68,18 @@ function SpotsById() {
   }
 
 
+
   const displayText = () => {
     setReserve(!reserve);
   }
 
 
+  console.log(checkReviewOwner());
+
   return (
     isLoaded && (
       <div className="wholePage">
         <div id="title-box">
-          {" "}
           <h1 id="spot_name">{spot.name}</h1>
           <h3>
             🌎{spot.city}, {spot.state}, {spot.country}
@@ -95,7 +114,7 @@ function SpotsById() {
           ⭐{checkNumReviews(spot.numReviews)}
         </h3>
         <h3>
-          <CreateReviewButton />
+          {checkReviewOwner() ? <CreateReviewButton /> :  null}
         </h3>
         <Reviews spotId={id} />
       </div>
@@ -104,7 +123,7 @@ function SpotsById() {
 
 
     )
-  );
+  )
 }
 
 export default SpotsById;

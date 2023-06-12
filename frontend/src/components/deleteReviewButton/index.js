@@ -47,7 +47,7 @@ function DeleteReviewButton({ reviewId, spotId}) {
         <div className="delete-modal-content">
           <h1 id="confirm-delete-title">Confirm Delete</h1>
           <h3 id="confirm-delete-info">
-            Are you sure you want to remove this spot from the listings?
+            Are you sure you want to delete this review?
           </h3>
           <button id="confirm-delete-button" ref={deleteButtonRef}>
             Yes ( Delete Spot )
@@ -70,7 +70,7 @@ function DeleteReviewButton({ reviewId, spotId}) {
     >
       Delete
     </button>
-    <div>{checkDeleteModal()}</div>;
+    <div>{checkDeleteModal()}</div>
   </>
   )
 }
