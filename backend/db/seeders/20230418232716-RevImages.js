@@ -11,7 +11,7 @@ module.exports = {
     await queryInterface.bulkInsert(options, [
       {
         url: 'thisIsAnImage.jpeg',
-        reviewId: 1,
+        reviewId: 3,
         userId: 1
       },
       {
