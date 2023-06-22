@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
@@ -7,7 +7,6 @@ import * as reviewActions from "../../store/reviews";
 import "./createReviewButton.css";
 
 function CreateReviewButton() {
-  const newReview = useSelector((state) => state.reviews.newReview)
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
   const [errors, setErrors] = useState({});
@@ -21,19 +20,20 @@ function CreateReviewButton() {
   const createReviewRef = useRef();
 
   useEffect(() => {
+    let newReview;
     const closeReviewModal = (e) => {
       const reviewInfo = { review, stars };
       if (createReviewRef.current.contains(e.target)) {
         if (review && stars) {
           setErrors({});
-          return dispatch(
+         newReview =  dispatch(
             reviewActions.createReviewAction( reviewInfo, id )
           ).catch(async (res) => {
             const data = await res.json();
             if (data && (data.message)) {
               setErrors({...errors,  message: data.message});
             }
-          }).then(() => dispatch(reviewActions.reviewsBySpotId(id)))}
+          })}
       }
       else if (overlayRef.current.contains(e.target)) {
         setReviewModal(false);
@@ -43,10 +43,6 @@ function CreateReviewButton() {
       }
     };
     if(newReview && (newReview.review === review)) {
-      dispatch(reviewActions.reviewsBySpotId(id))
-        setStars(0);
-        setReview('');
-        setReviewModal(false);
         history.push(`/spots/${id}`)
     }
 
@@ -57,7 +53,7 @@ function CreateReviewButton() {
 
       return () => document.removeEventListener("click", closeReviewModal);
     }
-  }, [dispatch, id, newReview, review, reviewModal, stars, history, errors]);
+  }, [dispatch, id, review, reviewModal, stars, history, errors]);
 
   const toggleReviewModal = () => {
     setReviewModal(true);

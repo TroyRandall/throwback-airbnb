@@ -1,4 +1,4 @@
-import React, { useCallback} from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -15,13 +15,12 @@ function SpotsById() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   const { id } = useParams();
-  const spot = useSelector((state) => state.spots.spot);
-  const newReview = useSelector((state) => state.reviews.newReview);
-  const reviews = useSelector((state) => state.reviews.review);
+  const spot = useSelector((state) => state.spots[id]);
+  const reviews = useSelector((state) => state.reviews);
   const [reserve, setReserve] = useState(false);
   const sessionUser = useSelector((state) => state.session.user);
 
-  const checkReviewOwner = useCallback(() => {
+  const checkReviewOwner = () => {
 
     if((sessionUser) && (reviews !== null)) {
       if((spot.ownerId !== null) &&(spot.ownerId === sessionUser.id)) return false
@@ -35,12 +34,12 @@ function SpotsById() {
   }
   return false
 
-  }, [reviews, sessionUser])
+  }
 
 
   useEffect(() => {
     if (id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
-  }, [id, dispatch, newReview, reviews, checkReviewOwner]);
+  }, [id, dispatch, reviews, ]);
 
 
   const addImages = (spotImages = [], i = 0) => {

@@ -123,22 +123,22 @@ const singleSpot = (spot) => {
   }
 
 
-  const initialState = { spot: null, reviews: null, spots: null };
+  const initialState = { spots: null };
 
   const spotsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case ALL_SPOTS:
             newState = Object.assign({}, state);
-            newState.spots = action.payload
+            newState = action.payload
             return newState;
         case SPOT_BY_ID:
           newState = Object.assign({}, state);
-          newState.spot = action.payload;
+          newState[action.payload.id] = action.payload;
           return newState;
         case CREATE_SPOT:
             newState = Object.assign({}, state);
-            newState.spots = action.payload;
+            newState[action.payload.id] = action.payload;
             return newState;
         case DELETE_SPOT:
             newState = Object.assign({}, state);

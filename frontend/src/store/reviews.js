@@ -46,7 +46,11 @@ export const createReviewAction = (reviewInfo, spotId) => async (dispatch) => {
     })
 
     const data = await newReview.json();
-    dispatch(createReview(data));
+    let reviewsArray = {};
+    data.forEach(review => {
+        reviewsArray[review.id] = review;
+    })
+    dispatch(createReview(reviewsArray));
     return data;
 }
 
@@ -62,7 +66,7 @@ export const deleteReviewAction = (reviewId) => async (dispatch) => {
 
 
 
-const initialState = { review: null, newReview: null };
+const initialState = { review: null};
 
 
 const reviewsReducer = (state = initialState, action) => {
@@ -70,11 +74,11 @@ const reviewsReducer = (state = initialState, action) => {
     switch (action.type) {
         case ALL_REVIEWS:
             newState = Object.assign({}, state);
-            newState.review = action.payload;
+            newState = action.payload;
             return newState;
         case CREATE_REVIEW:
             newState = Object.assign({}, state);
-            newState.newReview = action.payload;
+            newState[action.payload.id] = action.payload;
             return newState;
         case DELETE_REVIEW:
             newState = Object.assign({}, state);

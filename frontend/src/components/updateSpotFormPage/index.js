@@ -14,7 +14,7 @@ const history = useHistory();
 const spotId = useParams();
 const[isLoaded, setIsLoaded] = useState(false);
 const sessionUser = useSelector((state) => state.session.user)
-const spot = useSelector((state) => state.spots.spot);
+const spot = useSelector((state) => state.spots[spotId.id]);
 
     useEffect(() => {
         if(spotId) dispatch(spotActions.spotsById(spotId.id)).then(() => setIsLoaded(true));

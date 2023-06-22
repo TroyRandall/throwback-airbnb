@@ -9,14 +9,13 @@ import DeleteReviewButton from '../deleteReviewButton';
 function Reviews() {
     const dispatch= useDispatch();
     const[isLoaded, setIsLoaded] = useState(false);
-const reviews = useSelector((state) => state.reviews.review);
-const newReview = useSelector((state) => state.reviews.newReview)
+const reviews = useSelector((state) => state.reviews);
 const sessionUser = useSelector((state) => state.session.user);
 const spotId  = useParams();
 const { id } = spotId;
     useEffect(() => {
         if (id) dispatch(reviewActions.reviewsBySpotId(id)).then(() => setIsLoaded(true));
-      }, [id, dispatch, newReview]);
+      }, [id, dispatch]);
 
 let newArray;
 const checkReviews = () => {

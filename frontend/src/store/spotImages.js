@@ -20,7 +20,7 @@ const deleteSpotImage = (spotImage) => {
 
   export const createSpotImageAction = (image, preview = false, spotId) => async (dispatch) => {
     const newImage = await csrfFetch(`/api/spots/${spotId}/images`, {
-        method: 'Post',
+        method: 'POST',
         body: JSON.stringify({
           preview: preview,
           url: image

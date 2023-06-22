@@ -16,7 +16,7 @@ function DeleteSpotButton({ id }) {
   const deleteButtonRef = useRef();
   const keepButtonRef = useRef();
   const [deleteModal, setDeleteModal] = useState(false);
-  const spot = useSelector((state) => state.spots.spot);
+  const spot = useSelector((state) => state.spots[id]);
 
   useEffect(() => {
     const closeDeleteModal = (e) => {
