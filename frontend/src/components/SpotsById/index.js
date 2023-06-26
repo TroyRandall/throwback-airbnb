@@ -50,9 +50,20 @@ function SpotsById() {
           url: "https://reprospecialty.com/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png",
         });
       i++;
+    }   let newImages = [];
+    for(let i = 0; i < spotImages.length; i++){
+        const image = spotImages[i]
+        console.log(image);
+        if(!image.preview || image.preview===null){
+        image.id = i + 1;
     }
-    return spotImages;
-  };
+    newImages[i]=image;
+}
+    console.log(newImages);
+    return newImages;
+}
+
+
 
   const checkNumReviews = (numReviews) => {
     if(Number(numReviews) < 1) {
@@ -65,7 +76,6 @@ function SpotsById() {
       }
 
   }
-
 
 
   const displayText = () => {
@@ -83,7 +93,7 @@ function SpotsById() {
           </h3>
           <div id="spot-images-container">
             <SpotImages
-              spotImages={addImages(spot.SpotImages)}
+              spotImages={addImages(Object.values(spot.SpotImages))}
               description={spot.description}
             />
           </div>

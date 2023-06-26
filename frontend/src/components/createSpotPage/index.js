@@ -39,8 +39,8 @@ function CreateSpotPage() {
     // if (description === "") newErrors.description = "Description is required";
     // if (price === "") newErrors.price = "Price is required";
     // if (address === "") newErrors.address = "Street address is required";
-
-    Object.values(errors).forEach((error) => {
+if(Object.values(errors).length > 0){
+  Object.values(errors).forEach((error) => {
       if (error.includes("Name")) newErrors.title = error;
       else if (error.includes("State")) newErrors.state = error;
       else if (error.includes("Country")) newErrors.country = error;
@@ -75,6 +75,8 @@ function CreateSpotPage() {
     });
     return newErrors;
   };
+}
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -111,7 +113,7 @@ function CreateSpotPage() {
         if (image2 !== "") {
           if (newSpot) {
             await dispatch(
-              spotImageActions.createSpotImageAction(image2, newSpot.id)
+              spotImageActions.createSpotImageAction(image2, false, newSpot.id)
             ).catch(async (res) => {
               const data = await res.json();
               if (data) setErrors({ ...errors, image2: data });
@@ -122,7 +124,7 @@ function CreateSpotPage() {
         if (image3 !== "") {
           if (newSpot) {
             await dispatch(
-              spotImageActions.createSpotImageAction(image3, newSpot.id)
+              spotImageActions.createSpotImageAction(image3, false, newSpot.id)
             ).catch(async (res) => {
               const data = await res.json();
               if (data) setErrors({ ...errors, image3: data });
@@ -133,7 +135,7 @@ function CreateSpotPage() {
         if (image4 !== "") {
           if (newSpot) {
             await dispatch(
-              spotImageActions.createSpotImageAction(image4, newSpot.id)
+              spotImageActions.createSpotImageAction(image4, false, newSpot.id)
             ).catch(async (res) => {
               const data = await res.json();
               if (data) setErrors({ ...errors, image4: data });
@@ -144,7 +146,7 @@ function CreateSpotPage() {
         if (image5 !== "") {
           if (newSpot) {
             await dispatch(
-              spotImageActions.createSpotImageAction(image5, newSpot.id)
+              spotImageActions.createSpotImageAction(image5, false, newSpot.id)
             ).catch(async (res) => {
               const data = await res.json();
               if (data) setErrors({ ...errors, image5: data });
@@ -154,7 +156,7 @@ function CreateSpotPage() {
       }
 
       const allErrors = handleErrors(newSpot);
-      if (Object.values(allErrors).length > 0) return allErrors;
+      if ((allErrors) && (Object.values(allErrors).length > 0)) return allErrors;
       else if (image1 === "") return allErrors;
       else return history.push(`/spots/${newSpot.id}`);
 
@@ -171,7 +173,7 @@ function CreateSpotPage() {
         </p>
 
         <label id="country-label"> Country</label>
-        <label id="errors-country">{allErrors.country}</label>
+        <label id="errors-country">{allErrors?.country}</label>
         <input
           id="country-input-create"
           type="text"
@@ -182,7 +184,7 @@ function CreateSpotPage() {
         ></input>
 
         <label id="address-label"> Street address</label>
-        <label id="errors-address">{allErrors.address}</label>
+        <label id="errors-address">{allErrors?.address}</label>
         <input
           id="address-input-create"
           type="text"
@@ -193,7 +195,7 @@ function CreateSpotPage() {
         ></input>
 
         <label id="state-label"> State</label>
-        <label id="errors-state">{allErrors.state}</label>
+        <label id="errors-state">{allErrors?.state}</label>
         <input
           id="state-input-create"
           type="text"
@@ -205,7 +207,7 @@ function CreateSpotPage() {
         <p id="state-city-comma">,</p>
 
         <label id="city-label"> City</label>
-        <label id="errors-city">{allErrors.city}</label>
+        <label id="errors-city">{allErrors?.city}</label>
         <input
           id="city-input-create"
           type="text"
@@ -216,7 +218,7 @@ function CreateSpotPage() {
         ></input>
 
         <label id="lat-label">Latitude</label>
-        <label id="errors-lat">{allErrors.lat}</label>
+        <label id="errors-lat">{allErrors?.lat}</label>
         <input
           id="lat-input-create"
           type="text"
@@ -227,7 +229,7 @@ function CreateSpotPage() {
         <p id="lat-lng-comma">,</p>
 
         <label id="lng-label">Longitude</label>
-        <label id="errors-lng">{allErrors.lng}</label>
+        <label id="errors-lng">{allErrors?.lng}</label>
         <input
           id="lng-input-create"
           type="text"
@@ -250,12 +252,12 @@ function CreateSpotPage() {
           placeholder="please write atleast 30 characters"
           required
         ></textarea>
-        <label className="errors-description">{allErrors.description}</label>
+        <label className="errors-description">{allErrors?.description}</label>
 
         <hr id="line-break-two" />
 
         <h3 id="title-spot">Create a title for your spot</h3>
-        <label className="errors-name">{allErrors.title}</label>
+        <label className="errors-name">{allErrors?.title}</label>
         <h5 id="title-description">
           catch guests attention with a spot title that highlights what makes
           your place special!
@@ -272,7 +274,7 @@ function CreateSpotPage() {
         <hr id="line-break-three" />
 
         <h3 id="price-title">Set a base price for your spot</h3>
-        <label id="errors-price">{allErrors.price}</label>
+        <label id="errors-price">{allErrors?.price}</label>
         <h5 id="price-description">
           competetive pricing can help your listing stand out and rank better in
           search results
@@ -302,7 +304,7 @@ function CreateSpotPage() {
           placeholder="Preview image URL"
           required
         ></input>
-        <label id="errors-image1">{allErrors.image1}</label>
+        <label id="errors-image1">{allErrors?.image1}</label>
         <input
           id="photo-input-2-create"
           type="text"
@@ -310,7 +312,7 @@ function CreateSpotPage() {
           onChange={(e) => setImage2(e.target.value)}
           placeholder="Image URL"
         ></input>
-        <label id="errors-image2">{allErrors.image2}</label>
+        <label id="errors-image2">{allErrors?.image2}</label>
         <input
           id="photo-input-3-create"
           type="text"
@@ -318,7 +320,7 @@ function CreateSpotPage() {
           onChange={(e) => setImage3(e.target.value)}
           placeholder="Image URL"
         ></input>
-        <label id="errors-image3">{allErrors.image3}</label>
+        <label id="errors-image3">{allErrors?.image3}</label>
         <input
           id="photo-input-4-create"
           type="text"
@@ -326,7 +328,7 @@ function CreateSpotPage() {
           onChange={(e) => setImage4(e.target.value)}
           placeholder="Image URL"
         ></input>
-        <label id="errors-image4">{allErrors.image4}</label>
+        <label id="errors-image4">{allErrors?.image4}</label>
         <input
           id="photo-input-5-create"
           type="text"
@@ -334,7 +336,7 @@ function CreateSpotPage() {
           onChange={(e) => setImage5(e.target.value)}
           placeholder="Image URL"
         ></input>
-        <label id="errors-image5">{allErrors.image5}</label>
+        <label id="errors-image5">{allErrors?.image5}</label>
 
         <hr id="line-break-five" />
 
