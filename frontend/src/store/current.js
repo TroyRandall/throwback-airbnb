@@ -27,7 +27,7 @@ const ownedCollection = (spots) => {
     let newState;
     switch (action.type) {
         case OWNED_COLLECTION:
-            newState = Object.values({}, state);
+            newState = Object.assign({}, state);
             newState.current = action.payload;
             return newState;
         default:

@@ -14,21 +14,22 @@ function MyCollection () {
     const history = useHistory();
     const[isLoaded, setIsLoaded] = useState(false);
     const sessionUser = useSelector((state) => state.session.user)
+    const spots = useSelector((state) => state.spots)
 
 
 
     useEffect(() => {
         dispatch(currentActions.spotsByUser()).then(() => setIsLoaded(true));
-      }, [ dispatch])
+      }, [ dispatch, spots])
 
       if (!sessionUser && isLoaded) history.push('/')
 
-      const spots = useSelector((state) => state.current.current);
+      const userSpots = useSelector((state) => state.current.current);
 
 
       return isLoaded && (
         <div className='user-spots-container'>
-            {spots.map(spot => {
+            {userSpots.map(spot => {
 
                return ( <div key={spot.id} id='collection-container'>
                  <PreviewUserSpot  key={spot.id} spot={spot} />

@@ -72,7 +72,6 @@ function LoginButton() {
   }
 
   const checkErrors = () => {
-    console.log(errors)
      let newErrors = {};
     newErrors=errors.message;
     return (newErrors && (newErrors));

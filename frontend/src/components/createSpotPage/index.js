@@ -63,7 +63,6 @@ function CreateSpotPage() {
         if (image5 !== "" && !image5.endsWith("jpg", "png", ".jpeg"))
           newErrors.image5 = "Image URL must end in .png, .jpg, or .jpeg";
       }
-      console.log(image1);
 
       if (lat === "") newErrors.lat = "Latitude is required";
 
@@ -155,11 +154,10 @@ function CreateSpotPage() {
       }
 
       const allErrors = handleErrors(newSpot);
-      console.log(allErrors);
       if (Object.values(allErrors).length > 0) return allErrors;
       else if (image1 === "") return allErrors;
       else return history.push(`/spots/${newSpot.id}`);
-    
+
     }}
 
     const allErrors = handleErrors();
@@ -175,7 +173,7 @@ function CreateSpotPage() {
         <label id="country-label"> Country</label>
         <label id="errors-country">{allErrors.country}</label>
         <input
-          id="country-input"
+          id="country-input-create"
           type="text"
           value={country}
           onChange={(e) => setCountry(e.target.value)}
@@ -186,7 +184,7 @@ function CreateSpotPage() {
         <label id="address-label"> Street address</label>
         <label id="errors-address">{allErrors.address}</label>
         <input
-          id="address-input"
+          id="address-input-create"
           type="text"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
@@ -197,7 +195,7 @@ function CreateSpotPage() {
         <label id="state-label"> State</label>
         <label id="errors-state">{allErrors.state}</label>
         <input
-          id="state-input"
+          id="state-input-create"
           type="text"
           value={state}
           onChange={(e) => setState(e.target.value)}
@@ -209,7 +207,7 @@ function CreateSpotPage() {
         <label id="city-label"> City</label>
         <label id="errors-city">{allErrors.city}</label>
         <input
-          id="city-input"
+          id="city-input-create"
           type="text"
           value={city}
           onChange={(e) => setCity(e.target.value)}
@@ -220,7 +218,7 @@ function CreateSpotPage() {
         <label id="lat-label">Latitude</label>
         <label id="errors-lat">{allErrors.lat}</label>
         <input
-          id="lat-input"
+          id="lat-input-create"
           type="text"
           value={lat}
           onChange={(e) => setLat(e.target.value)}
@@ -231,7 +229,7 @@ function CreateSpotPage() {
         <label id="lng-label">Longitude</label>
         <label id="errors-lng">{allErrors.lng}</label>
         <input
-          id="lng-input"
+          id="lng-input-create"
           type="text"
           value={lng}
           onChange={(e) => setLng(e.target.value)}
@@ -246,7 +244,7 @@ function CreateSpotPage() {
         </h5>
 
         <textarea
-          id="description-input"
+          id="description-input-create"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="please write atleast 30 characters"
@@ -263,7 +261,7 @@ function CreateSpotPage() {
           your place special!
         </h5>
         <input
-          id="title-input"
+          id="title-input-create"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -281,7 +279,7 @@ function CreateSpotPage() {
         </h5>
         <p id="Money-sign">💲</p>
         <input
-          id="price-input"
+          id="price-input-create"
           type="text"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
@@ -297,7 +295,7 @@ function CreateSpotPage() {
         </h5>
 
         <input
-          id="photo-input-1"
+          id="photo-input-1-create"
           type="text"
           value={image1}
           onChange={(e) => setImage1(e.target.value)}
@@ -306,7 +304,7 @@ function CreateSpotPage() {
         ></input>
         <label id="errors-image1">{allErrors.image1}</label>
         <input
-          id="photo-input-2"
+          id="photo-input-2-create"
           type="text"
           value={image2}
           onChange={(e) => setImage2(e.target.value)}
@@ -314,7 +312,7 @@ function CreateSpotPage() {
         ></input>
         <label id="errors-image2">{allErrors.image2}</label>
         <input
-          id="photo-input-3"
+          id="photo-input-3-create"
           type="text"
           value={image3}
           onChange={(e) => setImage3(e.target.value)}
@@ -322,7 +320,7 @@ function CreateSpotPage() {
         ></input>
         <label id="errors-image3">{allErrors.image3}</label>
         <input
-          id="photo-input-4"
+          id="photo-input-4-create"
           type="text"
           value={image4}
           onChange={(e) => setImage4(e.target.value)}
@@ -330,7 +328,7 @@ function CreateSpotPage() {
         ></input>
         <label id="errors-image4">{allErrors.image4}</label>
         <input
-          id="photo-input-5"
+          id="photo-input-5-create"
           type="text"
           value={image5}
           onChange={(e) => setImage5(e.target.value)}

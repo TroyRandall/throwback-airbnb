@@ -20,7 +20,6 @@ function DeleteSpotButton({ id }) {
 
   useEffect(() => {
     const closeDeleteModal = (e) => {
-console.log(deleteButtonRef, keepButtonRef, overlayRef)
       if ((deleteButtonRef.current).contains(e.target)) {
            dispatch(spotActions.deleteSpotById(id))
            dispatch(currentActions.spotsByUser())

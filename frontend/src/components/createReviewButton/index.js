@@ -62,7 +62,6 @@ function CreateReviewButton() {
   const handleErrors = () => {
     let newErrors = {};
      newErrors.message = errors.message
-    console.log(newErrors);
    return (newErrors.message && <p id='errors-create-review'>{newErrors.message}</p>)
 
     }

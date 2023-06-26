@@ -57,8 +57,7 @@ function ProfileButton({ user }) {
       </button>
       {(sessionUser && (
       <ul className={ulClassName} ref={ulRef}>
-        <li>{user.username}</li>
-        <li>{user.firstName} {user.lastName}</li>
+        <li>Hello, {user.firstName}</li>
         <li>{user.email}</li>
         <li>
           <button onClick={redirect} id='manage-spots-button'>Manage Spots</button>

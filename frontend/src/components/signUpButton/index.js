@@ -18,7 +18,7 @@ const [firstName, setFirstName] = useState("");
 const [lastName, setLastName] = useState("");
 const [password, setPassword] = useState("");
 const [confirmPassword, setConfirmPassword] = useState("");
-const [errors, setErrors] = useState({});
+const [errors, setErrors] = useState([]);
 
 
 const toggleSignUpModal = (e) => {
@@ -27,13 +27,15 @@ const toggleSignUpModal = (e) => {
 }
 
 const checkValues = () => {
-  const values = [email, username, firstName, lastName, password, confirmPassword]
+  let values = [email, username, firstName, lastName, password, confirmPassword]
+  let empty = false;
   for(let i = 0; i < values.length; i++) {
+    console.log(values[i]);
     if(values[i] === "" ){
-      return 'sign-up-button-disabled'
+      empty = true;
     }
   }
-  return 'sign-up-button-enabled';
+  return 'sign-up-button' + (empty ? '-enabled' : '-disabled');
 }
 
 useEffect(() => {
@@ -87,6 +89,7 @@ const checkErrors = () => {
   })
   return newErrors
 }
+
 
 const allErrors = checkErrors();
 const buttonClassName = checkValues()

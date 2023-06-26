@@ -19,7 +19,6 @@ const { id } = spotId;
 
 let newArray;
 const checkReviews = () => {
-  console.log(Object.values(reviews).reverse);
   if(isLoaded)  newArray = Object.values(reviews);
  if(newArray.length > 0) {
   return true;

@@ -32,7 +32,6 @@ const [description, setDescription] = useState(spot ? spot.description: '');
 const [price, setPrice] = useState(spot ? spot.price : '');
 const [errors, setErrors] = useState({});
 
-console.log(spot);
 
 
 
