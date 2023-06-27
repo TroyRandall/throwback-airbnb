@@ -53,13 +53,11 @@ function SpotsById() {
     }   let newImages = [];
     for(let i = 0; i < spotImages.length; i++){
         const image = spotImages[i]
-        console.log(image);
         if(!image.preview || image.preview===null){
         image.id = i + 1;
     }
     newImages[i]=image;
 }
-    console.log(newImages);
     return newImages;
 }
 

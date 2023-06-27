@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import "./createSpot.css";
 
 import * as spotActions from "../../store/spots";
 import * as spotImageActions from "../../store/spotImages";
-import "./createSpot.css";
+
+
 
 function CreateSpotPage() {
   const [country, setCountry] = useState("");
@@ -22,23 +24,16 @@ function CreateSpotPage() {
   const [image4, setImage4] = useState("");
   const [image5, setImage5] = useState("");
   const [errors, setErrors] = useState({});
+  const [toggle, setToggle] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
+  let allErrors;
 
   if (!sessionUser) history.push("/");
   const handleErrors = (newSpot) => {
     let newErrors = {};
-
-    // if (lat === "") newErrors.lat = "Latitude is required";
-    // if (lng === "") newErrors.lng = "Longitude is required";
-    // if (name === "") newErrors.title = "Name is required";
-    // if (country === "") newErrors.country = "Country is required";
-    // if (state === "") newErrors.state = "State is required";
-    // if (description === "") newErrors.description = "Description is required";
-    // if (price === "") newErrors.price = "Price is required";
-    // if (address === "") newErrors.address = "Street address is required";
 if(Object.values(errors).length > 0){
   Object.values(errors).forEach((error) => {
       if (error.includes("Name")) newErrors.title = error;
@@ -51,7 +46,9 @@ if(Object.values(errors).length > 0){
       else if (error.includes("Invalid") && newErrors.lat)
         newErrors.lng = error;
       else if (error.includes("Invalid")) newErrors.lat = error;
-      if (image1 === "") newErrors.image1 = "Preview Image is required";
+  })}
+
+      // if (image1 === "") newErrors.image1 = "Preview Image is required";
 
       if (newSpot) {
         if (image2 !== "" && !image2.endsWith("jpg", "png", ".jpeg"))
@@ -63,7 +60,14 @@ if(Object.values(errors).length > 0){
         if (image5 !== "" && !image5.endsWith("jpg", "png", ".jpeg"))
           newErrors.image5 = "Image URL must end in .png, .jpg, or .jpeg";
       }
-
+      if(toggle){
+              if (name === "") newErrors.title="Name is required"
+      if (country === "") newErrors.country="Country is required"
+      if(state==="") newErrors.state = "State is required";
+      if(city==="") newErrors.city = "City is required";
+      if(address==="") newErrors.address = "Address is required";
+      if(description==="") newErrors.description = "Description is required";
+      if(price==="") newErrors.price = "Price is required";
       if (lat === "") newErrors.lat = "Latitude is required";
 
       if (lng === "") newErrors.lng = "Longitude is required";
@@ -72,10 +76,12 @@ if(Object.values(errors).length > 0){
         newErrors.description = "Description needs a minimun of 30 characters";
       if (description.length > 240 && !newErrors.description)
         newErrors.description = "Description must be below 240 characters";
-    });
+
+      }
+if(!(newErrors))setToggle(false);
     return newErrors;
   };
-}
+
 
 
   const handleSubmit = async (e) => {
@@ -92,6 +98,10 @@ if(Object.values(errors).length > 0){
       lng,
     };
     setErrors({});
+    setToggle(true);
+    allErrors = await handleErrors();
+    console.log(allErrors, toggle);
+    if(toggle) {
 
 
       let newSpot = await dispatch(spotActions.createSpotAction(spot)).catch(
@@ -101,14 +111,14 @@ if(Object.values(errors).length > 0){
         }
       );
 
-    if (!(image1 === "")) {
+    if ((!(image1 === "")) && (newSpot)) {
       await dispatch(
         spotImageActions.createSpotImageAction(image1, true, newSpot.id)
       ).catch(async (res) => {
         const data = await res.json();
         if (data) setErrors({ ...errors, image1: data.errors });
       });
-
+    }
       if (image1 !== "") {
         if (image2 !== "") {
           if (newSpot) {
@@ -155,14 +165,16 @@ if(Object.values(errors).length > 0){
         }
       }
 
-      const allErrors = handleErrors(newSpot);
+      setToggle(true);
+      allErrors = handleErrors(newSpot);
       if ((allErrors) && (Object.values(allErrors).length > 0)) return allErrors;
       else if (image1 === "") return allErrors;
       else return history.push(`/spots/${newSpot.id}`);
+ }}
 
-    }}
 
-    const allErrors = handleErrors();
+allErrors=handleErrors();
+
 
     return (
       <div id="create-spot-form">
