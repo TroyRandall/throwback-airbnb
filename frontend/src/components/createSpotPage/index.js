@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./createSpot.css";
@@ -25,32 +25,45 @@ function CreateSpotPage() {
   const [image5, setImage5] = useState("");
   const [errors, setErrors] = useState({});
   const [toggle, setToggle] = useState(false);
+  const [backendToggle, setBackendToggle] = useState(false);
+  const [newSpot, setNewSpot] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
-  let allErrors;
 
+  //if there is no user return to homepage
   if (!sessionUser) history.push("/");
-  const handleErrors = (newSpot) => {
-    let newErrors = {};
-if(Object.values(errors).length > 0){
-  Object.values(errors).forEach((error) => {
-      if (error.includes("Name")) newErrors.title = error;
-      else if (error.includes("State")) newErrors.state = error;
-      else if (error.includes("Country")) newErrors.country = error;
-      else if (error.includes("City")) newErrors.city = error;
-      else if (error.includes("address")) newErrors.address = error;
-      else if (error.includes("Description")) newErrors.description = error;
-      else if (error.includes("Price")) newErrors.price = error;
-      else if (error.includes("Invalid") && newErrors.lat)
-        newErrors.lng = error;
-      else if (error.includes("Invalid")) newErrors.lat = error;
-  })}
 
-      // if (image1 === "") newErrors.image1 = "Preview Image is required";
+  useEffect(() => {
 
+    //frontend validation checks on input fields
+
+    if(toggle) {
+        let newErrors = {};
+    if (name === "") newErrors.title="Name is required"
+    if (country === "") newErrors.country="Country is required"
+    if(state==="") newErrors.state = "State is required";
+    if(city==="") newErrors.city = "City is required";
+    if(address==="") newErrors.address = "Address is required";
+    if(description==="") newErrors.description = "Description is required";
+    if(price==="") newErrors.price = "Price is required";
+    if (lat === "") newErrors.lat = "Latitude is required";
+
+    if (lng === "") newErrors.lng = "Longitude is required";
+    if (image1 === "") newErrors.image1 = "Preview Image is required";
+    if (description.length < 30 && !newErrors.description)
+      newErrors.description = "Description needs a minimun of 30 characters";
+    if (description.length > 240 && !newErrors.description)
+      newErrors.description = "Description must be below 240 characters";
+      if((!(isFinite(lat) && Math.abs(lat) <= 90)) && !newErrors.lat) newErrors.lat = 'Latitude is invalid';
+      if((!(isFinite(lng) && Math.abs(lng) <= 180)) && !newErrors.lng) newErrors.lng = 'Longitude is invalid';
+    setErrors({...newErrors})
+if(Object.values(newErrors).length === 0) {
+  setBackendToggle(true)};
+    }
       if (newSpot) {
+        let newErrors = {};
         if (image2 !== "" && !image2.endsWith("jpg", "png", ".jpeg"))
           newErrors.image2 = "Image URL must end in .png, .jpg, or .jpeg";
         if (image3 !== "" && !image3.endsWith("jpg", "png", ".jpeg"))
@@ -60,27 +73,12 @@ if(Object.values(errors).length > 0){
         if (image5 !== "" && !image5.endsWith("jpg", "png", ".jpeg"))
           newErrors.image5 = "Image URL must end in .png, .jpg, or .jpeg";
       }
-      if(toggle){
-              if (name === "") newErrors.title="Name is required"
-      if (country === "") newErrors.country="Country is required"
-      if(state==="") newErrors.state = "State is required";
-      if(city==="") newErrors.city = "City is required";
-      if(address==="") newErrors.address = "Address is required";
-      if(description==="") newErrors.description = "Description is required";
-      if(price==="") newErrors.price = "Price is required";
-      if (lat === "") newErrors.lat = "Latitude is required";
+  }, [ image2, image3, image4, image5, newSpot, name, address, city, state, country, description, image1, lat, lng, price, toggle])
 
-      if (lng === "") newErrors.lng = "Longitude is required";
-      if (image1 === "") newErrors.image1 = "Preview Image is required";
-      if (description.length < 30 && !newErrors.description)
-        newErrors.description = "Description needs a minimun of 30 characters";
-      if (description.length > 240 && !newErrors.description)
-        newErrors.description = "Description must be below 240 characters";
 
-      }
-if(!(newErrors))setToggle(false);
-    return newErrors;
-  };
+
+  //validating backend response for error messages before returning to user
+ 
 
 
 
@@ -97,26 +95,25 @@ if(!(newErrors))setToggle(false);
       lat,
       lng,
     };
-    setErrors({});
+
     setToggle(true);
-    allErrors = await handleErrors();
-    console.log(allErrors, toggle);
-    if(toggle) {
+    if(backendToggle) {
 
-
+      //submit backend requests using thunks, with error catching built into it
+      let newErrors = {};
       let newSpot = await dispatch(spotActions.createSpotAction(spot)).catch(
         async (res) => {
           const data = await res.json();
-          if (data) setErrors({ ...errors, ...data.errors });
+          if (data && data.errors) newErrors.title = data.errors[0];
         }
       );
-
-    if ((!(image1 === "")) && (newSpot)) {
+        if(newSpot && newSpot?.id) setNewSpot(true);
+    if ((!(image1 === "")) && (newSpot?.id)) {
       await dispatch(
         spotImageActions.createSpotImageAction(image1, true, newSpot.id)
       ).catch(async (res) => {
         const data = await res.json();
-        if (data) setErrors({ ...errors, image1: data.errors });
+        if (data) newErrors.image1 = data.errors;
       });
     }
       if (image1 !== "") {
@@ -126,7 +123,7 @@ if(!(newErrors))setToggle(false);
               spotImageActions.createSpotImageAction(image2, false, newSpot.id)
             ).catch(async (res) => {
               const data = await res.json();
-              if (data) setErrors({ ...errors, image2: data });
+              if (data) newErrors.image2 = data.errors;
             });
           }
         }
@@ -137,7 +134,7 @@ if(!(newErrors))setToggle(false);
               spotImageActions.createSpotImageAction(image3, false, newSpot.id)
             ).catch(async (res) => {
               const data = await res.json();
-              if (data) setErrors({ ...errors, image3: data });
+              if (data) newErrors.image3 = data.errors;
             });
           }
         }
@@ -148,7 +145,7 @@ if(!(newErrors))setToggle(false);
               spotImageActions.createSpotImageAction(image4, false, newSpot.id)
             ).catch(async (res) => {
               const data = await res.json();
-              if (data) setErrors({ ...errors, image4: data });
+              if (data) newErrors.image4 = data.errors;
             });
           }
         }
@@ -159,21 +156,21 @@ if(!(newErrors))setToggle(false);
               spotImageActions.createSpotImageAction(image5, false, newSpot.id)
             ).catch(async (res) => {
               const data = await res.json();
-              if (data) setErrors({ ...errors, image5: data });
+              if (data) newErrors.image5 = data.errors;
             });
           }
         }
       }
-
-      setToggle(true);
-      allErrors = handleErrors(newSpot);
-      if ((allErrors) && (Object.values(allErrors).length > 0)) return allErrors;
-      else if (image1 === "") return allErrors;
+          console.log(newErrors);
+          setErrors({...newErrors})
+          console.log(errors);
+          // handleBackendErrors(newSpot);
+          // console.log(`${errors} ---- after handleBackendErrors`);
+      if ((errors) && (Object.values(newErrors).length > 0)) return errors;
       else return history.push(`/spots/${newSpot.id}`);
- }}
+ }
+}
 
-
-allErrors=handleErrors();
 
 
     return (
@@ -185,7 +182,7 @@ allErrors=handleErrors();
         </p>
 
         <label id="country-label"> Country</label>
-        <label id="errors-country">{allErrors?.country}</label>
+        <label id="errors-country">{errors?.country}</label>
         <input
           id="country-input-create"
           type="text"
@@ -196,7 +193,7 @@ allErrors=handleErrors();
         ></input>
 
         <label id="address-label"> Street address</label>
-        <label id="errors-address">{allErrors?.address}</label>
+        <label id="errors-address">{errors?.address}</label>
         <input
           id="address-input-create"
           type="text"
@@ -207,7 +204,7 @@ allErrors=handleErrors();
         ></input>
 
         <label id="state-label"> State</label>
-        <label id="errors-state">{allErrors?.state}</label>
+        <label id="errors-state">{errors?.state}</label>
         <input
           id="state-input-create"
           type="text"
@@ -219,7 +216,7 @@ allErrors=handleErrors();
         <p id="state-city-comma">,</p>
 
         <label id="city-label"> City</label>
-        <label id="errors-city">{allErrors?.city}</label>
+        <label id="errors-city">{errors?.city}</label>
         <input
           id="city-input-create"
           type="text"
@@ -230,7 +227,7 @@ allErrors=handleErrors();
         ></input>
 
         <label id="lat-label">Latitude</label>
-        <label id="errors-lat">{allErrors?.lat}</label>
+        <label id="errors-lat">{errors?.lat}</label>
         <input
           id="lat-input-create"
           type="text"
@@ -241,7 +238,7 @@ allErrors=handleErrors();
         <p id="lat-lng-comma">,</p>
 
         <label id="lng-label">Longitude</label>
-        <label id="errors-lng">{allErrors?.lng}</label>
+        <label id="errors-lng">{errors?.lng}</label>
         <input
           id="lng-input-create"
           type="text"
@@ -264,12 +261,12 @@ allErrors=handleErrors();
           placeholder="please write atleast 30 characters"
           required
         ></textarea>
-        <label className="errors-description">{allErrors?.description}</label>
+        <label className="errors-description">{errors?.description}</label>
 
         <hr id="line-break-two" />
 
         <h3 id="title-spot">Create a title for your spot</h3>
-        <label className="errors-name">{allErrors?.title}</label>
+        <label className="errors-name">{errors?.title}</label>
         <h5 id="title-description">
           catch guests attention with a spot title that highlights what makes
           your place special!
@@ -286,7 +283,7 @@ allErrors=handleErrors();
         <hr id="line-break-three" />
 
         <h3 id="price-title">Set a base price for your spot</h3>
-        <label id="errors-price">{allErrors?.price}</label>
+        <label id="errors-price">{errors?.price}</label>
         <h5 id="price-description">
           competetive pricing can help your listing stand out and rank better in
           search results
@@ -316,7 +313,7 @@ allErrors=handleErrors();
           placeholder="Preview image URL"
           required
         ></input>
-        <label id="errors-image1">{allErrors?.image1}</label>
+        <label id="errors-image1">{errors?.image1}</label>
         <input
           id="photo-input-2-create"
           type="text"
@@ -324,7 +321,7 @@ allErrors=handleErrors();
           onChange={(e) => setImage2(e.target.value)}
           placeholder="Image URL"
         ></input>
-        <label id="errors-image2">{allErrors?.image2}</label>
+        <label id="errors-image2">{errors?.image2}</label>
         <input
           id="photo-input-3-create"
           type="text"
@@ -332,7 +329,7 @@ allErrors=handleErrors();
           onChange={(e) => setImage3(e.target.value)}
           placeholder="Image URL"
         ></input>
-        <label id="errors-image3">{allErrors?.image3}</label>
+        <label id="errors-image3">{errors?.image3}</label>
         <input
           id="photo-input-4-create"
           type="text"
@@ -340,7 +337,7 @@ allErrors=handleErrors();
           onChange={(e) => setImage4(e.target.value)}
           placeholder="Image URL"
         ></input>
-        <label id="errors-image4">{allErrors?.image4}</label>
+        <label id="errors-image4">{errors?.image4}</label>
         <input
           id="photo-input-5-create"
           type="text"
@@ -348,7 +345,7 @@ allErrors=handleErrors();
           onChange={(e) => setImage5(e.target.value)}
           placeholder="Image URL"
         ></input>
-        <label id="errors-image5">{allErrors?.image5}</label>
+        <label id="errors-image5">{errors?.image5}</label>
 
         <hr id="line-break-five" />
 
