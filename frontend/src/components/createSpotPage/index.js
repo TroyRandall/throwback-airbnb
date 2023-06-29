@@ -31,7 +31,6 @@ function CreateSpotPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
-  let allErrors;
 
   //if there is no user return to homepage
   if (!sessionUser) history.push("/");
@@ -98,9 +97,7 @@ if(Object.values(newErrors).length === 0) {
     };
 
     setToggle(true);
-    allErrors = await handleErrors();
-    console.log(allErrors, toggle);
-    if(toggle) {
+    if(backendToggle) {
 
       //submit backend requests using thunks, with error catching built into it
       let newErrors = {};
@@ -174,7 +171,6 @@ if(Object.values(newErrors).length === 0) {
  }}
 
 
-allErrors=handleErrors();
 
 
     return (
