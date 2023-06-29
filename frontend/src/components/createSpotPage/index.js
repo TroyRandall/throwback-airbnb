@@ -25,20 +25,46 @@ function CreateSpotPage() {
   const [image5, setImage5] = useState("");
   const [errors, setErrors] = useState({});
   const [toggle, setToggle] = useState(false);
-  const [newSpot, setNewSpot] = useState({});
+  const [backendToggle, setBackendToggle] = useState(false);
+  const [newSpot, setNewSpot] = useState(false);
 
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
+  let allErrors;
 
+  //if there is no user return to homepage
+  if (!sessionUser) history.push("/");
 
   useEffect(() => {
 
+    //frontend validation checks on input fields
+
     if(toggle) {
-         let newErrors = {};
+        let newErrors = {};
+    if (name === "") newErrors.title="Name is required"
+    if (country === "") newErrors.country="Country is required"
+    if(state==="") newErrors.state = "State is required";
+    if(city==="") newErrors.city = "City is required";
+    if(address==="") newErrors.address = "Address is required";
+    if(description==="") newErrors.description = "Description is required";
+    if(price==="") newErrors.price = "Price is required";
+    if (lat === "") newErrors.lat = "Latitude is required";
 
-
-      if (Object.values(newSpot).length > 0) {
+    if (lng === "") newErrors.lng = "Longitude is required";
+    if (image1 === "") newErrors.image1 = "Preview Image is required";
+    if (description.length < 30 && !newErrors.description)
+      newErrors.description = "Description needs a minimun of 30 characters";
+    if (description.length > 240 && !newErrors.description)
+      newErrors.description = "Description must be below 240 characters";
+      if((!(isFinite(lat) && Math.abs(lat) <= 90)) && !newErrors.lat) newErrors.lat = 'Latitude is invalid';
+      if((!(isFinite(lng) && Math.abs(lng) <= 180)) && !newErrors.lng) newErrors.lng = 'Longitude is invalid';
+    setErrors({...newErrors})
+if(Object.values(newErrors).length === 0) {
+  setBackendToggle(true)};
+    }
+      if (newSpot) {
+        let newErrors = {};
         if (image2 !== "" && !image2.endsWith("jpg", "png", ".jpeg"))
           newErrors.image2 = "Image URL must end in .png, .jpg, or .jpeg";
         if (image3 !== "" && !image3.endsWith("jpg", "png", ".jpeg"))
@@ -48,32 +74,13 @@ function CreateSpotPage() {
         if (image5 !== "" && !image5.endsWith("jpg", "png", ".jpeg"))
           newErrors.image5 = "Image URL must end in .png, .jpg, or .jpeg";
       }
-
-      if(toggle){
-        if (name === "") newErrors.title="Name is required"
- if (country === "") newErrors.country="Country is required"
-if(state==="") newErrors.state = "State is required";
-if(city==="") newErrors.city = "City is required";
-if(address==="") newErrors.address = "Address is required";
-if(description==="") newErrors.description = "Description is required";
-if(price==="") newErrors.price = "Price is required";
-if (lat === "") newErrors.lat = "Latitude is required";
-
-if (lng === "") newErrors.lng = "Longitude is required";
-if (image1 === "") newErrors.image1 = "Preview Image is required";
-if (description.length < 30 && !newErrors.description)
-  newErrors.description = "Description needs a minimun of 30 characters";
-if (description.length > 240 && !newErrors.description)
-  newErrors.description = "Description must be below 240 characters";
-}
-setErrors({...errors, ...newErrors})
-if(Object.values(errors).length > 0) setToggle(false);
+  }, [ image2, image3, image4, image5, newSpot, name, address, city, state, country, description, image1, lat, lng, price, toggle])
 
 
 
-  };
-    }, [address, city, state, country, description, image1, image2, image3, image4, image5, lat, lng, name, newSpot, price, toggle])
-  if (!sessionUser) history.push("/");
+  //validating backend response for error messages before returning to user
+
+
 
 
   const handleSubmit = async (e) => {
@@ -89,42 +96,27 @@ if(Object.values(errors).length > 0) setToggle(false);
       lat,
       lng,
     };
-    setErrors({});
+
     setToggle(true);
-
-    let newErrors = {};
-    if(Object.values(errors).length > 0){
-      Object.values(errors).forEach((error) => {
-          if (error.includes("Name")) newErrors.title = error;
-          else if (error.includes("State")) newErrors.state = error;
-          else if (error.includes("Country")) newErrors.country = error;
-          else if (error.includes("City")) newErrors.city = error;
-          else if (error.includes("address")) newErrors.address = error;
-          else if (error.includes("Description")) newErrors.description = error;
-          else if (error.includes("Price")) newErrors.price = error;
-          else if (error.includes("Invalid") && newErrors.lat)
-            newErrors.lng = error;
-          else if (error.includes("Invalid")) newErrors.lat = error;
-      })}
-      setErrors({...errors, ...newErrors});
-
-
+    allErrors = await handleErrors();
+    console.log(allErrors, toggle);
     if(toggle) {
 
-
-      const createSpot = await dispatch(spotActions.createSpotAction(spot)).catch(
+      //submit backend requests using thunks, with error catching built into it
+      let newErrors = {};
+      let newSpot = await dispatch(spotActions.createSpotAction(spot)).catch(
         async (res) => {
           const data = await res.json();
-          if (data) setErrors({ ...errors, ...data.errors });
+          if (data && data.errors) newErrors.title = data.errors[0];
         }
       );
-        if(createSpot) setNewSpot(createSpot)
-    if ((!(image1 === "")) && (newSpot)) {
+        if(newSpot && newSpot?.id) setNewSpot(true);
+    if ((!(image1 === "")) && (newSpot?.id)) {
       await dispatch(
         spotImageActions.createSpotImageAction(image1, true, newSpot.id)
       ).catch(async (res) => {
         const data = await res.json();
-        if (data) setErrors({ ...errors, image1: data.errors });
+        if (data) newErrors.image1 = data.errors;
       });
     }
       if (image1 !== "") {
@@ -134,7 +126,7 @@ if(Object.values(errors).length > 0) setToggle(false);
               spotImageActions.createSpotImageAction(image2, false, newSpot.id)
             ).catch(async (res) => {
               const data = await res.json();
-              if (data) setErrors({ ...errors, image2: data });
+              if (data) newErrors.image2 = data.errors;
             });
           }
         }
@@ -145,7 +137,7 @@ if(Object.values(errors).length > 0) setToggle(false);
               spotImageActions.createSpotImageAction(image3, false, newSpot.id)
             ).catch(async (res) => {
               const data = await res.json();
-              if (data) setErrors({ ...errors, image3: data });
+              if (data) newErrors.image3 = data.errors;
             });
           }
         }
@@ -156,7 +148,7 @@ if(Object.values(errors).length > 0) setToggle(false);
               spotImageActions.createSpotImageAction(image4, false, newSpot.id)
             ).catch(async (res) => {
               const data = await res.json();
-              if (data) setErrors({ ...errors, image4: data });
+              if (data) newErrors.image4 = data.errors;
             });
           }
         }
@@ -167,20 +159,22 @@ if(Object.values(errors).length > 0) setToggle(false);
               spotImageActions.createSpotImageAction(image5, false, newSpot.id)
             ).catch(async (res) => {
               const data = await res.json();
-              if (data) setErrors({ ...errors, image5: data });
+              if (data) newErrors.image5 = data.errors;
             });
           }
         }
       }
-
-      if ((Object.values(errors).length > 0)) return errors;
+          console.log(newErrors);
+          setErrors({...newErrors})
+          console.log(errors);
+          // handleBackendErrors(newSpot);
+          // console.log(`${errors} ---- after handleBackendErrors`);
+      if ((errors) && (Object.values(newErrors).length > 0)) return errors;
       else return history.push(`/spots/${newSpot.id}`);
- }
- }
+ }}
 
 
-
-
+allErrors=handleErrors();
 
 
     return (
