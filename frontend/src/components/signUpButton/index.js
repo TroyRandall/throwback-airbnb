@@ -91,7 +91,7 @@ const checkErrors = () => {
 }
 
 
-const allErrors = checkErrors();
+
 const buttonClassName = checkValues()
 const checkSignUpModal = () => {
 if(signUpModal === true) {
@@ -101,13 +101,8 @@ if(signUpModal === true) {
           <div className="overlay"></div>
           <div className="modal-signup-content" ref={modalRef}>
         <h1 id='sign-up-title'>Sign Up</h1>
-        <label id='errors-sign-up'>{allErrors && allErrors.firstname}{allErrors && allErrors.lastname}{allErrors && allErrors.username}{allErrors && allErrors.password}{allErrors && allErrors.email}</label>
-{errors.password && <p id='errors-password'>{errors.password}</p>}
-  {errors.email && <p id='errors-email'>{errors.email}</p>}
-{errors.username && <p id='errors-username'>{errors.username}</p>}
- {errors.firstName && <p id='errors-firstname'>{errors.firstName}</p>}
- {errors.lastName && <p id='errors-lastname'>{errors.lastName}</p>}
-{errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+{errors.password && <p id='errors-errors'>{errors?.errors}</p>}
+
 
             <input
           id='email-input'

@@ -1,6 +1,8 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
+import './createSpotButton.css';
+
 function CreateSpotButton() {
   const history = useHistory();
 
@@ -10,7 +12,7 @@ function CreateSpotButton() {
   };
   return (
     <button onClick={spotButton} className='createSpotButton'>
-      Create a Spot
+      <span>Create a Spot</span><i></i>
     </button>
   );
 }

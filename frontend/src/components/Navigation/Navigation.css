@@ -13,6 +13,12 @@
     grid-template-columns: repeat(3, 33%);
 }
 
+#nav-link {
+        height: 75px;
+        width: 75px;
+
+}
+
 .navLinks {
     height: 75px;
     width: 400px;

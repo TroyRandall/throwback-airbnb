@@ -28,12 +28,8 @@ function CreateReviewButton() {
           setErrors({});
          newReview =  dispatch(
             reviewActions.createReviewAction( reviewInfo, id )
-          ).catch(async (res) => {
-            const data = await res.json();
-            if (data && (data.message)) {
-              setErrors({...errors,  message: data.message});
-            }
-          })}
+          )
+          }
       }
       else if (overlayRef.current.contains(e.target)) {
         setReviewModal(false);
@@ -43,6 +39,7 @@ function CreateReviewButton() {
       }
     };
     if(newReview && (newReview.review === review)) {
+      dispatch(reviewActions.reviewsBySpotId(newReview.spotId))
         history.push(`/spots/${id}`)
     }
 

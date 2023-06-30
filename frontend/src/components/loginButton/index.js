@@ -72,9 +72,15 @@ function LoginButton() {
   }
 
   const checkErrors = () => {
-     let newErrors = {};
-    newErrors=errors.message;
+     let newErrors = [];
+     if(Object.values(errors).length > 0) {
+          Object.values(errors.errors).forEach(error => {
+      if(error.includes('email' || 'Email')) newErrors = [...newErrors, ...error]
+      if(error.includes('password' || 'Password')) newErrors = [...newErrors, ...error]
+     })
     return (newErrors && (newErrors));
+     }
+
  }
 
 
@@ -115,7 +121,7 @@ function LoginButton() {
 
               {errors.credential && <p>{errors.credential}</p>}
             </form>
-       <button type="submit" id={submitId} ref={logInRef}>
+       <button type="submit" disabled={(checkInputs() ? true : false)} id={submitId} ref={logInRef}>
             Log In
           </button>
           <label id='demo-user-sign-in' onClick={demoUserSignin}>Demo User</label>

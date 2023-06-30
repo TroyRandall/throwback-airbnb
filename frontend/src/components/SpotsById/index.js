@@ -28,7 +28,7 @@ function SpotsById() {
 
     const reviewsArray = Object.values(reviews)
     for(let i = 0; i <reviewsArray.length; i++) {
-      if(reviewsArray[i].userId === sessionUser.id) return false;
+      if(reviewsArray[i]?.userId === sessionUser.id) return false;
     }
     return true
   }

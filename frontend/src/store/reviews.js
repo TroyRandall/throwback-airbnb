@@ -29,8 +29,15 @@ export const reviewsBySpotId = (spotId) => async (dispatch) => {
     const reviews = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'GET'
     })
+
     const data = await reviews.json();
-    dispatch(allReviews(data.Reviews))
+    let reviewsParsed = data.Reviews
+     console.log(reviews);
+    let reviewsArray = {};
+    reviewsParsed.forEach(review => {
+        reviewsArray[review.id] = review;
+    })
+    dispatch(allReviews(reviewsArray))
     return reviews;
   }
 
@@ -45,12 +52,10 @@ export const createReviewAction = (reviewInfo, spotId) => async (dispatch) => {
         })
     })
 
+
     const data = await newReview.json();
-    let reviewsArray = {};
-    data.forEach(review => {
-        reviewsArray[review.id] = review;
-    })
-    dispatch(createReview(reviewsArray));
+
+    dispatch(createReview(data));
     return data;
 }
 

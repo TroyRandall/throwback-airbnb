@@ -4,13 +4,13 @@
     background-color: white;
     border: solid black 2px;
     border-radius: 25px;
-    height: 450px;
+    max-height: 500px;
     width: 450px;
     left: 40vw;
     top: 10vh;
     text-align: center;
     display: grid;
-    grid-template-rows: repeat(11, 40px);
+    grid-template-rows: repeat(8, 35px);
     grid-template-columns: repeat(1, 350px);
     padding: 10px;
     justify-content: center;
@@ -29,9 +29,10 @@
     max-width: 150px;
     justify-self: center;
     background-color: rgb(255, 90, 95);
-    grid-row: 11/12;
     top: 10px;
     box-shadow: 4px 4px black;
+    grid-column: 1/2;
+    height: 30px;
 }
 
 .sign-up-button-disabled {
@@ -56,7 +57,6 @@ input[type="text"], input[type='password'], textarea {
     border-radius: 5px;
     width: 200px;
     justify-self: center;
-    margin: 0px;
   }
 
   input[type="text"] {
@@ -69,55 +69,50 @@ input[type="text"], input[type='password'], textarea {
   }
 
   #email-input {
-    grid-row: 5/6;
     grid-column: 1/2;
     width: 300px;
     justify-self: center;
-    margin-top: 5px;
+    margin: 5px;
   }
 
   #username-input {
-    grid-row: 6/7;
     grid-column: 1/2;
     width: 300px;
     justify-self: center;
-    margin-top: 5px;
+    margin: 5px;
   }
 
   #firstname-input {
-    grid-row: 7/8;
     grid-column: 1/2;
     width: 300px;
     justify-self: center;
-    margin-top: 5px;
+    margin: 5px;
   }
 
   #lastname-input {
-    grid-row: 8/9;
     grid-column: 1/2;
     width: 300px;
     justify-self: center;
-    margin-top: 5px;
+    margin: 5px;
   }
 
   #password-input-signup {
-    grid-row: 9/10;
     grid-column: 1/2;
     width: 300px;
     justify-self: center;
-    margin-top: 5px;
+    height: 30px;
+    margin: 5px;
   }
 
   #confirm-password-input {
-    grid-row: 10/11;
     grid-column: 1/2;
     width: 300px;
     justify-self: center;
-    margin-top: 5px;
+    height: 30px;
+    margin: 5px;
   }
 
   #sign-up-title {
-    grid-row: 1/2;
     grid-column: 1/2;
     justify-self: center;
     align-self: flex-end;
@@ -125,10 +120,9 @@ input[type="text"], input[type='password'], textarea {
   top: 10px;
   }
 
-#errors-label {
+/* #errors-label {
     font-size: 14px;
     font-family: cursive;
-    grid-row: 1/2;
     grid-column: 1/2;
     justify-self: center;
     position: relative;
@@ -140,7 +134,6 @@ input[type="text"], input[type='password'], textarea {
 #errors-email {
     font-size: 14px;
     font-family: cursive;
-    grid-row: 2/3;
     grid-column: 1/2;
     justify-self: center;
     color: red;
@@ -150,7 +143,6 @@ input[type="text"], input[type='password'], textarea {
 #errors-username {
     font-size: 14px;
     font-family: cursive;
-    grid-row: 3/4;
     grid-column: 1/2;
     justify-self: center;
     color: red;
@@ -160,7 +152,6 @@ input[type="text"], input[type='password'], textarea {
 #errors-firstname {
     font-size: 14px;
     font-family: cursive;
-    grid-row: 4/5;
     grid-column: 1/2;
     justify-self: center;
     color: red;
@@ -185,4 +176,4 @@ input[type="text"], input[type='password'], textarea {
     top: 15px;
     color: red;
     align-self: start;
-}
+} */

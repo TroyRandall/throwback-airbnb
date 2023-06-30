@@ -13,7 +13,7 @@ function Navigation({ isLoaded }) {
 
      return (
     <ul className="nav">
-        <NavLink exact to="/">
+        <NavLink exact to="/" id='nav-link'>
           <img src={logo} alt="home-button" href="" className="logo"></img>
         </NavLink>
         {(sessionUser && <CreateSpotButton />)}
