@@ -62,6 +62,11 @@ function CreateReviewButton() {
    return (newErrors.message && <p id='errors-create-review'>{newErrors.message}</p>)
 
     }
+
+  const checkInputs = () => {
+    if((review.length > 9) && (stars > 0)) return true;
+    else return false;
+  }
 const idForButton = 'review-submit' + (((review.length > 9) && (stars > 0)) ? '' : '-disabled')
 
   const checkReviewModal = () => {
@@ -122,7 +127,7 @@ const idForButton = 'review-submit' + (((review.length > 9) && (stars > 0)) ? ''
               <label htmlFor="star1" title="text"></label>
             </div>
             <h3 id="stars">stars</h3>
-            <button ref={createReviewRef} id={idForButton}>
+            <button disabled = {checkInputs() ? false : true} ref={createReviewRef} id={idForButton}>
               Submit Your Review
             </button>
           </div>

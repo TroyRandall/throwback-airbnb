@@ -31,6 +31,7 @@ function LoginButton() {
   };
 
   useEffect(() => {
+    console.log(credential, password);
     const closeModal = (e) => {
       if (logInRef.current.contains(e.target)) {
         setErrors({});
@@ -121,7 +122,7 @@ function LoginButton() {
 
               {errors.credential && <p>{errors.credential}</p>}
             </form>
-       <button type="submit" disabled={(checkInputs() ? true : false)} id={submitId} ref={logInRef}>
+       <button type="submit" disabled={(checkInputs() ? false : true)} id={submitId} ref={logInRef}>
             Log In
           </button>
           <label id='demo-user-sign-in' onClick={demoUserSignin}>Demo User</label>

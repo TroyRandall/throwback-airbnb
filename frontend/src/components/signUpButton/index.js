@@ -26,21 +26,12 @@ const toggleSignUpModal = (e) => {
     setSignUpModal(true);
 }
 
-const checkValues = () => {
-  let values = [email, username, firstName, lastName, password, confirmPassword]
-  let empty = false;
-  for(let i = 0; i < values.length; i++) {
-    console.log(values[i]);
-    if(values[i] === "" ){
-      empty = true;
-    }
-  }
-  return 'sign-up-button' + (empty ? '-enabled' : '-disabled');
-}
+
 
 useEffect(() => {
 
     const closeSignUpModal = (e) => {
+      console.log(errors);
         if(signUpRef.current.contains(e.target)) {
             if (password === confirmPassword) {
                 setErrors({});
@@ -64,6 +55,13 @@ useEffect(() => {
               });
             } else if(!(modalRef.current.contains(e.target))) {
                 setSignUpModal(false);
+                setUsername('');
+                setEmail('');
+                setFirstName('');
+                setLastName('');
+                setPassword('');
+                setConfirmPassword('');
+                setErrors({});
             }
         };
 
@@ -77,22 +75,18 @@ useEffect(() => {
 if(sessionUser) history.push('/');
 const SUClassName = "overlay" + (signUpModal ? "" : "hidden");
 
-const checkErrors = () => {
-  let newErrors;
-  if(errors === {}) return null;
-  Object.values(errors).forEach(error => {
-    if(error.includes('Firstname')) errors.firstname = error;
-    if(error.includes('Lastname')) errors.lastname = error;
-    if(error.includes('Username' || 'username' )) errors.username = error;
-    if(error.includes('Password')) errors.password = error;
-    if(error.includes('email')) errors.email = error;
-  })
-  return newErrors
+
+const checkInputs = () => {
+  if(email.length === 0) return false;
+  if(username.length === 0) return false;
+  if(firstName.length === 0) return false;
+  if(lastName.length === 0) return false;
+  if(password.length === 0) return false;
+  if(confirmPassword.length === 0) return false;
+  return true;
 }
 
 
-
-const buttonClassName = checkValues()
 const checkSignUpModal = () => {
 if(signUpModal === true) {
     return (
@@ -101,7 +95,7 @@ if(signUpModal === true) {
           <div className="overlay"></div>
           <div className="modal-signup-content" ref={modalRef}>
         <h1 id='sign-up-title'>Sign Up</h1>
-{errors.password && <p id='errors-errors'>{errors?.errors}</p>}
+{<p id='errors-errors'>{Object.values(errors).map(error => <li>{error}</li>)}</p>}
 
 
             <input
@@ -169,7 +163,7 @@ if(signUpModal === true) {
           />
 
 
-        <button className={buttonClassName} ref={signUpRef} id='sign-up-button'>Sign Up</button>
+        <button id={checkInputs() ? 'sign-up-button-enabled' : 'sign-up-button-disabled'} disabled = {checkInputs() ? false : true} ref={signUpRef} >Sign Up</button>
       </div>
       </div>
       </>

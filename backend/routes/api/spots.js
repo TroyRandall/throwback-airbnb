@@ -235,7 +235,19 @@ router.post(
         stars: stars,
       });
 
-      return res.json(newReview);
+      const newReviewUpdated = await Review.findOne({
+        where: {
+          review: review,
+        },
+        include: [
+          {
+            model: User,
+            attributes: ["id", "firstName", "lastName"],
+          }
+        ]
+        })
+
+      return res.json(newReviewUpdated);
     }
   );
 
@@ -312,12 +324,30 @@ if(lat.toString() === lat){
   return next(err);
 }
 
+if(!(isFinite(lat) && Math.abs(lat) <= 90)) {
+  const err = new Error('Validation Error');
+  err.status = 400;
+  err.errors = [
+    'Latitude is invalid'
+  ]
+  return next(err);
+}
+
 if(lng.toString() === lng) {
   const err = new Error('Validation Error');
   err.status = 400;
   err.errors = [
     "longitude is invalid"
   ];
+  return next(err);
+}
+
+if(!(isFinite(lng) && Math.abs(lng) <= 180)) {
+  const err = new Error('Validation Error');
+  err.status = 400;
+  err.errors = [
+    'Longitude is invalid'
+  ]
   return next(err);
 }
     const newSpot = await Spot.create({
