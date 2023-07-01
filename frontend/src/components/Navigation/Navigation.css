@@ -87,11 +87,14 @@ button:hover {
     margin-top: 5px;
     background-color: rgb(102, 102, 102);
     color: white;
+    height: 25px;
+    width: 100px;
 }
 
 #log-out-button:hover {
     cursor: pointer;
 }
+
 
 #login-button {
     margin-top: 10px;

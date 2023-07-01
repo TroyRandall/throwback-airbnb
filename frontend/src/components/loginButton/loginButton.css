@@ -40,7 +40,7 @@
     position: fixed;
     background-color: white;
     border: solid black 2px;
-    border-radius: 25px;
+    border-radius: 14px;
     left: 40vw;
     top: 35vh;
     height: 350px;
@@ -50,8 +50,61 @@
     grid-template-columns: repeat(1, 350px);
     justify-items: center;
     align-items: center;
-
+    overflow: hidden;
 }
+
+.bg {
+    display: grid;
+    grid-template-rows: repeat(4, 25%);
+    grid-template-columns: repeat(1, 350px);
+    justify-items: center;
+    align-items: center;
+    top: 14vh;
+    height: 340px;
+    width: 340px;
+    background: rgba(255, 255, 255, .95);
+    backdrop-filter: blur(24px);
+    border-radius: 10px;
+    overflow: hidden;
+    outline: 2px solid white;
+    position: relative;
+    z-index: 2000;
+}
+
+  .blob {
+    position: relative;
+    z-index: -1000;
+    top: 150px;
+    left: 50%;
+    width: 250px;
+    height: 250px;
+    background-color: #ff0000;
+    opacity: 1;
+    filter: blur(12px);
+    animation: blob-bounce 4s infinite ease
+  }
+
+  @keyframes blob-bounce {
+    0% {
+      transform: translate(-100%, -100%) translate3d(0, 0, 0);
+    }
+
+    25% {
+      transform: translate(-100%, -100%) translate3d(100%, 0, 0);
+    }
+
+    50% {
+      transform: translate(-100%, -100%) translate3d(100%, 100%, 0);
+    }
+
+    75% {
+      transform: translate(-100%, -100%) translate3d(0, 100%, 0);
+    }
+
+    100% {
+      transform: translate(-100%, -100%) translate3d(0, 0, 0);
+    }
+  }
 
 .modalhidden {
     display:none;
@@ -62,7 +115,7 @@
     font-size: 32px;
     display: block;
     text-align: center;
-    width: 330px;
+    width: 320px;
     left: 40px;
 }
 
@@ -107,8 +160,7 @@
  }
 
 #credential-input {
-width: 330px;
-width: 330px;
+width: 320px;
 position: relative;
 border: 3px solid black;
   background-color: rgb(206, 222, 255);
@@ -116,7 +168,7 @@ border: 3px solid black;
 }
 
 #password-input {
-width: 330px;
+width: 320px;
 position: relative;
 border: 3px solid black;
 background-color: rgb(206, 222, 255);

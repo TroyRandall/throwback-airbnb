@@ -50,10 +50,11 @@ function DeleteReviewButton({ reviewId, spotId}) {
             Are you sure you want to delete this review?
           </h3>
           <button id="confirm-delete-button" ref={deleteButtonRef}>
-            Yes ( Delete Spot )
+            <span>Yes ( Delete Review )</span><i></i>
+
           </button>
           <button id="deny-delete-button" ref={keepButtonRef}>
-            No ( Keep Spot )
+            No ( Keep Review )
           </button>
         </div>
       </div>
@@ -64,12 +65,12 @@ function DeleteReviewButton({ reviewId, spotId}) {
 
   return (
     <>
-    <button
-      onClick={toggleDeleteModal}
-      id="delete_review_button"
-    >
+    <div  onClick={toggleDeleteModal} className="del">
+      <div>
       Delete
-    </button>
+      </div>
+    </div>
+
     <div>{checkDeleteModal()}</div>
   </>
   )

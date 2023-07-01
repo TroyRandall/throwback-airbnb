@@ -68,9 +68,9 @@ function SpotsById() {
       return 'New';
     }
       if(numReviews > 1) {
-        return `${spot.avgStarRating} - ${spot.numReviews} reviews`;
+        return `${spot.avgStarRating} · ${spot.numReviews} reviews`;
       } else {
-        return  `${spot.avgStarRating} - ${spot.numReviews} review`
+        return  `${spot.avgStarRating} · ${spot.numReviews} review`
       }
 
   }

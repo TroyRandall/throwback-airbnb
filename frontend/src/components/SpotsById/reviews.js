@@ -33,13 +33,20 @@ const checkReviewOwner = useCallback((review) => {
 } return false;
   }, [sessionUser])
 
+const formatDate = (date) => {
+  const newDate = date.split('-');
+  console.log(newDate);
+  const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+  return `${months[+newDate[1]]} ${newDate[0]}`
+}
+
 
       return isLoaded && (
         (checkReviews()) ?  (<div> {(Object.values(reviews).reverse()).map(review => {
              return (
              <div key ={review.id} className='reviews_container'>
                 <h5 id='firstName'>{review.User.firstName}</h5>
-                <h6 id='createdAt'>{review.createdAt.slice(0, 7)}</h6>
+                <h6 id='createdAt'>{formatDate(review.createdAt.slice(0, 7))}</h6>
                 <p id='review'>{review.review}</p>
                 <label id='delete-review' >{checkReviewOwner(review) ? <DeleteReviewButton reviewId={review.id}  spotId={id}/> : null}</label>
              </div>)

@@ -63,7 +63,7 @@ function ProfileButton({ user }) {
           <button onClick={redirect} id='manage-spots-button'>Manage Spots</button>
         </li>
         <li>
-          <button onClick={logout} id='log-out-button'>Log Out</button>
+          <button onClick={logout} id='log-out-button'><span>Log Out</span><i></i></button>
         </li>
       </ul>))}{(!sessionUser && (
         <ul className={ulClassName} ref={ulRef}>

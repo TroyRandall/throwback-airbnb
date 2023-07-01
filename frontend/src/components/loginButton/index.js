@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import * as sessionActions from "../../store/session";
-import './loginButton.css';
+import "./loginButton.css";
 
 function LoginButton() {
   const [modal, setModal] = useState(false);
@@ -17,7 +17,7 @@ function LoginButton() {
 
   const sessionUser = useSelector((state) => state.session.user);
 
-  if (sessionUser)  history.push("/");
+  if (sessionUser) history.push("/");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,9 +42,9 @@ function LoginButton() {
           }
         );
       } else if (!overlayRef.current.contains(e.target)) {
-        setCredential('')
-        setPassword('')
-        setErrors({})
+        setCredential("");
+        setPassword("");
+        setErrors({});
         setModal(false);
       }
     };
@@ -56,9 +56,9 @@ function LoginButton() {
   }, [modal, credential, dispatch, password]);
 
   const checkInputs = () => {
-    if((password.length > 5) && (credential.length > 3)) return true;
+    if (password.length > 5 && credential.length > 3) return true;
     else return false;
-  }
+  };
 
   const toggleModal = (e) => {
     e.preventDefault();
@@ -66,27 +66,28 @@ function LoginButton() {
   };
 
   const demoUserSignin = () => {
-    return dispatch(sessionActions.login({
-      credential: 'Demo-lition',
-      password: 'password'
-    }))
-  }
+    return dispatch(
+      sessionActions.login({
+        credential: "Demo-lition",
+        password: "password",
+      })
+    );
+  };
 
   const checkErrors = () => {
-     let newErrors = [];
-     if(Object.values(errors).length > 0) {
-          Object.values(errors.errors).forEach(error => {
-      if(error.includes('email' || 'Email')) newErrors = [...newErrors, ...error]
-      if(error.includes('password' || 'Password')) newErrors = [...newErrors, ...error]
-     })
-    return (newErrors && (newErrors));
-     }
+    let newErrors = [];
+    if (Object.values(errors).length > 0) {
+      Object.values(errors.errors).forEach((error) => {
+        if (error.includes("email" || "Email"))
+          newErrors = [...newErrors, ...error];
+        if (error.includes("password" || "Password"))
+          newErrors = [...newErrors, ...error];
+      });
+      return newErrors && newErrors;
+    }
+  };
 
- }
-
-
-
-  const submitId = 'submit-button' + (checkInputs() ? '' : '-disabled')
+  const submitId = "submit-button" + (checkInputs() ? "" : "-disabled");
 
   const allErrors = checkErrors();
 
@@ -97,8 +98,10 @@ function LoginButton() {
         <div className={UlClassName} onClick={toggleModal}>
           <div className="overlay"></div>
           <div className="modal-content" ref={overlayRef}>
-            <h2 id="header">Log In</h2><label id='errors-login'>{allErrors}</label>
-            <form onSubmit={handleSubmit} id='login-form'>
+            <div className="bg">
+              <h2 id="header">Log In</h2>
+              <label id="errors-login">{allErrors}</label>
+              <form onSubmit={handleSubmit} id="login-form">
                 <label id="credential-label">
                   <input
                     id="credential-input"
@@ -106,7 +109,7 @@ function LoginButton() {
                     value={credential}
                     onChange={(e) => setCredential(e.target.value)}
                     required
-                    placeholder='Username or Email'
+                    placeholder="Username or Email"
                   />
                 </label>
                 <label id="password-label">
@@ -116,16 +119,25 @@ function LoginButton() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    placeholder='Password'
+                    placeholder="Password"
                   />
                 </label>
 
-              {errors.credential && <p>{errors.credential}</p>}
-            </form>
-       <button type="submit" disabled={(checkInputs() ? false : true)} id={submitId} ref={logInRef}>
-            Log In
-          </button>
-          <label id='demo-user-sign-in' onClick={demoUserSignin}>Demo User</label>
+                {errors.credential && <p>{errors.credential}</p>}
+              </form>
+              <button
+                type="submit"
+                disabled={checkInputs() ? false : true}
+                id={submitId}
+                ref={logInRef}
+              >
+                Log In
+              </button>
+              <label id="demo-user-sign-in" onClick={demoUserSignin}>
+                Demo User
+              </label>
+            </div>
+             <div className="blob"></div>
           </div>
 
         </div>
@@ -135,7 +147,9 @@ function LoginButton() {
 
   return (
     <>
-      <button onClick={toggleModal} id='login-button'>Log In</button>
+      <button onClick={toggleModal} id="login-button">
+        Log In
+      </button>
       <div>{checkModal()}</div>
     </>
   );
