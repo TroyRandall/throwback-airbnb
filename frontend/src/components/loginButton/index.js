@@ -37,8 +37,11 @@ function LoginButton() {
         setErrors({});
         return dispatch(sessionActions.login({ credential, password })).catch(
           async (res) => {
+
             const data = await res.json();
+            console.log(data.errors)
             if (data) setErrors(data);
+
           }
         );
       } else if (!overlayRef.current.contains(e.target)) {
@@ -74,22 +77,11 @@ function LoginButton() {
     );
   };
 
-  const checkErrors = () => {
-    let newErrors = [];
-    if (Object.values(errors).length > 0) {
-      Object.values(errors.errors).forEach((error) => {
-        if (error.includes("email" || "Email"))
-          newErrors = [...newErrors, ...error];
-        if (error.includes("password" || "Password"))
-          newErrors = [...newErrors, ...error];
-      });
-      return newErrors && newErrors;
-    }
-  };
+
 
   const submitId = "submit-button" + (checkInputs() ? "" : "-disabled");
 
-  const allErrors = checkErrors();
+
 
   const UlClassName = "overlay" + (modal ? "" : "hidden");
   const checkModal = () => {
@@ -100,7 +92,7 @@ function LoginButton() {
           <div className="modal-content" ref={overlayRef}>
             <div className="bg">
               <h2 id="header">Log In</h2>
-              <label id="errors-login">{allErrors}</label>
+              <label id="errors-login">{errors?.errors}</label>
               <form onSubmit={handleSubmit} id="login-form">
                 <label id="credential-label">
                   <input
@@ -123,7 +115,6 @@ function LoginButton() {
                   />
                 </label>
 
-                {errors.credential && <p>{errors.credential}</p>}
               </form>
               <button
                 type="submit"

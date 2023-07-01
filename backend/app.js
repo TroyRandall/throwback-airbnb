@@ -127,7 +127,9 @@ app.use((err, _req, res, _next) => {
     console.error(err);
     return res.json({
       message: err.message,
-      statusCode: err.status
+      statusCode: err.status,
+      errors: (err.errors ? err.errors : null)
+
     })
   }
 
