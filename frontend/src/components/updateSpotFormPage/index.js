@@ -87,7 +87,7 @@ const handleSubmit = async (e) => {
 
       //submit backend requests using thunks, with error catching built into it
       let newErrors = {};
-      let newSpot = await dispatch(spotActions.createSpotAction(spot)).catch(
+      let newSpot = await dispatch(spotActions.updateSpotAction(spot)).catch(
         async (res) => {
           const data = await res.json();
           if (data && data.errors) newErrors.title = data.errors[0];
