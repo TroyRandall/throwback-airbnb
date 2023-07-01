@@ -72,12 +72,14 @@ if(Object.values(newErrors).length === 0) {
           newErrors.image4 = "Image URL must end in .png, .jpg, or .jpeg";
         if (image5 !== "" && !image5.endsWith("jpg", "png", ".jpeg"))
           newErrors.image5 = "Image URL must end in .png, .jpg, or .jpeg";
+          setErrors({...newErrors})
       }
+
   }, [ image2, image3, image4, image5, newSpot, name, address, city, state, country, description, image1, lat, lng, price, toggle])
 
 
 
-  //validating backend response for error messages before returning to user
+
 
 
 
@@ -161,11 +163,8 @@ if(Object.values(newErrors).length === 0) {
           }
         }
       }
-          console.log(newErrors);
+      
           setErrors({...newErrors})
-          console.log(errors);
-          // handleBackendErrors(newSpot);
-          // console.log(`${errors} ---- after handleBackendErrors`);
       if ((errors) && (Object.values(newErrors).length > 0)) return errors;
       else return history.push(`/spots/${newSpot.id}`);
  }}

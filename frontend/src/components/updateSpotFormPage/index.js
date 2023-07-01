@@ -31,54 +31,77 @@ const [name, setName] = useState(spot ? spot.name : '');
 const [description, setDescription] = useState(spot ? spot.description: '');
 const [price, setPrice] = useState(spot ? spot.price : '');
 const [errors, setErrors] = useState({});
-
+const [toggle, setToggle] = useState(false);
+const [backendToggle, setBackendToggle] = useState(false);
 
 
 
 if(sessionUser === null && isLoaded) history.push('/');
-const handleErrors = (newSpot) => {
-    let newErrors = {};
-    Object.values(errors).forEach((error) => {
-      if (error.includes("Name")) newErrors.name = error;
-      else if (error.includes("State")) newErrors.state = error;
-      else if (error.includes("Country")) newErrors.country = error;
-      else if (error.includes("City")) newErrors.city = error;
-      else if (error.includes("address")) newErrors.address = error;
-      else if (error.includes("Description")) newErrors.description = error;
-      else if (error.includes("Price")) newErrors.price = error;
-      else if (error.includes("Invalid") && newErrors.lat)
-        newErrors.lng = error;
-      else if (error.includes("Invalid")) newErrors.lat = error;
 
-        if(lat === "") newErrors.lat='Latitude is required'
+useEffect(() => {
 
-        if(lng === "") newErrors.lng='Longitude is required'
-    });
-      if((description.length < 30) && (!newErrors.description)) newErrors.description = 'Description must be at least 30 characters';
-    return newErrors;
-  };
+      //frontend validation checks on input fields
+
+      if(toggle) {
+        let newErrors = {};
+    if (name === "") newErrors.title="Name is required"
+    if (country === "") newErrors.country="Country is required"
+    if(state==="") newErrors.state = "State is required";
+    if(city==="") newErrors.city = "City is required";
+    if(address==="") newErrors.address = "Address is required";
+    if(description==="") newErrors.description = "Description is required";
+    if(price==="") newErrors.price = "Price is required";
+    if (lat === "") newErrors.lat = "Latitude is required";
+
+    if (lng === "") newErrors.lng = "Longitude is required";
+    if (description.length < 30 && !newErrors.description)
+      newErrors.description = "Description needs a minimun of 30 characters";
+    if (description.length > 240 && !newErrors.description)
+      newErrors.description = "Description must be below 240 characters";
+      if((!(isFinite(lat) && Math.abs(lat) <= 90)) && !newErrors.lat) newErrors.lat = 'Latitude is invalid';
+      if((!(isFinite(lng) && Math.abs(lng) <= 180)) && !newErrors.lng) newErrors.lng = 'Longitude is invalid';
+    setErrors({...newErrors})
+if(Object.values(newErrors).length === 0) {
+  setBackendToggle(true)};
+    }
+
+  }, [ name, address, city, state, country, description, lat, lng, price, toggle])
+
 
 const handleSubmit = async (e) => {
-    e.preventDefault();
-    const id = spotId.id;
-    const updateSpot = { id, name, city, state, country, address, description, price, lat, lng}
+  e.preventDefault();
+    const spot = {
+      name,
+      city,
+      state,
+      country,
+      address,
+      description,
+      price,
+      lat,
+      lng,
+    };
 
-    setErrors({})
-   const newSpot = await dispatch(spotActions.updateSpotAction(updateSpot)).catch(
-    async (res) => {
-      const data = await res.json();
-      if (data) setErrors({ ...errors, ...data.errors });
-    }
-  );
+    setToggle(true);
+    if(backendToggle) {
 
-  const allErrors = handleErrors(newSpot);
-  if (Object.values(allErrors).length > 0) return allErrors;
-   else if (newSpot) return history.push(`/spots/${newSpot.id}`);
+      //submit backend requests using thunks, with error catching built into it
+      let newErrors = {};
+      let newSpot = await dispatch(spotActions.createSpotAction(spot)).catch(
+        async (res) => {
+          const data = await res.json();
+          if (data && data.errors) newErrors.title = data.errors[0];
+        }
+      );
+
+      setErrors({...newErrors})
+      if ((errors) && (Object.values(newErrors).length > 0)) return errors;
+      else return history.push(`/spots/${newSpot.id}`);
 };
+}
 
 
 
-const allErrors=handleErrors();
 
 
  return (spot && (isLoaded && (
@@ -91,7 +114,7 @@ const allErrors=handleErrors();
       </p>
 
       <label id="country-label"> Country</label>
-      <label id="errors-country">{(allErrors==={}) ||  allErrors.country}</label>
+      <label id="errors-country">{errors?.country}</label>
       <input
         id="country-input"
         type="text"
@@ -102,7 +125,7 @@ const allErrors=handleErrors();
       ></input>
 
       <label id="address-label"> Street address</label>
-      <label id="errors-address">{(allErrors==={}) || allErrors.address}</label>
+      <label id="errors-address">{errors?.address}</label>
       <input
         id="address-input"
         type="text"
@@ -113,7 +136,7 @@ const allErrors=handleErrors();
       ></input>
 
       <label id="state-label"> State</label>
-      <label id="errors-state">{(allErrors==={}) || allErrors.state}</label>
+      <label id="errors-state">{errors?.state}</label>
       <input
         id="state-input"
         type="text"
@@ -125,7 +148,7 @@ const allErrors=handleErrors();
       <p id="state-city-comma">,</p>
 
       <label id="city-label"> City</label>
-      <label id="errors-city">{(allErrors==={}) || allErrors.city}</label>
+      <label id="errors-city">{errors?.city}</label>
       <input
         id="city-input"
         type="text"
@@ -136,7 +159,7 @@ const allErrors=handleErrors();
       ></input>
 
       <label id="lat-label">Latitude</label>
-      <label id="errors-lat">{(allErrors==={}) || allErrors.lat}</label>
+      <label id="errors-lat">{errors?.lat}</label>
       <input
         id="lat-input"
         type="text"
@@ -147,7 +170,7 @@ const allErrors=handleErrors();
       <p id="lat-lng-comma">,</p>
 
       <label id="lng-label">Longitude</label>
-      <label id="errors-lng">{(allErrors==={}) || allErrors.lng}</label>
+      <label id="errors-lng">{errors?.lng}</label>
       <input
         id="lng-input"
         type="text"
@@ -170,12 +193,12 @@ const allErrors=handleErrors();
         placeholder="please write atleast 30 characters"
         required
       ></textarea>
-      <label className="errors-description">{(allErrors==={}) || allErrors.description}</label>
+      <label className="errors-description">{errors?.description}</label>
 
       <hr id="line-break-two" />
 
       <h3 id="title-spot">Create a title for your spot</h3>
-      <label className="errors-name">{(allErrors==={}) || allErrors.name}</label>
+      <label className="errors-name">{errors?.title}</label>
       <h5 id="title-description">
         catch guests attention with a spot title that highlights what makes your
         place special!
@@ -192,7 +215,7 @@ const allErrors=handleErrors();
       <hr id="line-break-three" />
 
       <h3 id="price-title">Set a base price for your spot</h3>
-      <label id="errors-price">{(allErrors==={}) || allErrors.price}</label>
+      <label id="errors-price">{errors?.price}</label>
       <h5 id="price-description">
         competetive pricing can help your listing stand out and rank better in
         search results
