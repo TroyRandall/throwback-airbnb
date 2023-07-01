@@ -78,11 +78,11 @@ const SUClassName = "overlay" + (signUpModal ? "" : "hidden");
 
 const checkInputs = () => {
   if(email.length === 0) return false;
-  if(username.length === 0) return false;
+  if(username.length < 4) return false;
   if(firstName.length === 0) return false;
   if(lastName.length === 0) return false;
-  if(password.length === 0) return false;
-  if(confirmPassword.length === 0) return false;
+  if(password.length < 6) return false;
+  if(confirmPassword.length < 6) return false;
   return true;
 }
 
