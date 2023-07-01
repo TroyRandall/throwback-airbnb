@@ -32,7 +32,7 @@ useEffect(() => {
                 🗺️{spot.city}, {spot.state}
           </h4>
           <h4 id='starRating'  >⭐{spot.avgStarRating === '0.00' ? 'New' : spot.avgStarRating}</h4>
-          <h4 id='price-preview' >💵${spot.price.toLocaleString("en-US")} per/night</h4>
+          <h4 id='price-preview' >💵${(spot.price.toLocaleString("en-US"))} per/night</h4>
           <button className='shrink' id='reserve-button' >Reserve</button>
             </div>
 
