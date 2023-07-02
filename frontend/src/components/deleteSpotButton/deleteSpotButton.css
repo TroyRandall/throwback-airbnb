@@ -54,9 +54,35 @@
     position: relative;
     top: 25px;
     color: white;
-    font-size: 18px;
+    font-size: 20px;
     font-family: cursive;
 }
+#confirm-delete-button {
+    padding: 17px 40px;
+    border-radius: 10px;
+    border: 0;
+    background-color: rgb(255, 56, 86);
+    letter-spacing: 1.5px;
+    transition: all .3s ease;
+    box-shadow: rgb(117, 27, 40) 0px 10px 0px 0px;
+    color: hsl(0, 0%, 100%);
+  }
+
+  #deny-delete-button:hover,
+  #confirm-delete-button:hover {
+    box-shadow: rgb(0, 0, 0) 0px 7px 0px 0px;
+    border: 2px solid black;
+  }
+
+  #deny-delete-button:active,
+  #confirm-delete-button:active {
+    background-color: rgb(255, 56, 86);
+    border: 2px solid black;
+    /*50, 168, 80*/
+    box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+    transform: translateY(5px);
+    transition: 200ms;
+  }
 
 #deny-delete-button {
     grid-row: 4/6;
@@ -64,10 +90,15 @@
     background-color: darkgrey;
     grid-column: 1/2;
     height: 65px;
-    box-shadow: 4px 4px black;
-    color: white;
-    font-size: 18px;
     font-family: cursive;
     position: relative;
     bottom: 10px;
+    padding: 17px 40px;
+    border-radius: 10px;
+    border: 0;
+    letter-spacing: 1.5px;
+    font-size: 20px;
+    transition: all .3s ease;
+    box-shadow: rgb(58, 58, 58) 0px 10px 0px 0px;
+    color: hsl(0, 0%, 100%);
 }

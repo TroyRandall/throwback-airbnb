@@ -59,7 +59,7 @@
     grid-template-columns: repeat(1, 350px);
     justify-items: center;
     align-items: center;
-    top: 14vh;
+    top: 36vh;
     height: 340px;
     width: 340px;
     background: rgba(255, 255, 255, .95);
@@ -67,14 +67,14 @@
     border-radius: 10px;
     overflow: hidden;
     outline: 2px solid white;
-    position: relative;
+    position: fixed;
     z-index: 2000;
 }
 
   .blob {
     position: relative;
     z-index: -1000;
-    top: 150px;
+    top: 190px;
     left: 50%;
     width: 250px;
     height: 250px;
@@ -148,16 +148,36 @@
     display: block;
     text-align: center;
     height: 35px;
-    width: 85px;
-    z-index: 9;
     width: 330px;
-    z-index: 9;
     box-shadow: 4px 4px black;
-    background-color: rgb(255, 90, 95);
-    color: white;
-    font-size: 16px;
+    font-size: 26px;
     grid-row: 3/4;
  }
+
+ #submit-button {
+  border-radius: 10px;
+  border: 0;
+  background-color: rgb(255, 56, 86);
+  letter-spacing: 1.5px;
+  transition: all .3s ease;
+  box-shadow: rgb(117, 27, 40) 0px 10px 0px 0px;
+  color: hsl(0, 0%, 100%);
+}
+
+
+#submit-button:hover {
+  box-shadow: rgb(0, 0, 0) 0px 7px 0px 0px;
+  border: 2px solid black;
+}
+
+#submit-button:active {
+  background-color: rgb(255, 56, 86);
+  border: 2px solid black;
+  /*50, 168, 80*/
+  box-shadow: rgb(0, 0, 0) 0px 0px 0px 0px;
+  transform: translateY(5px);
+  transition: 200ms;
+}
 
 #credential-input {
 width: 320px;
@@ -183,13 +203,21 @@ height: 30px;
         display: block;
         text-align: center;
         height: 35px;
-        width: 85px;
-        z-index: 9;
         width: 330px;
-        z-index: 9;
         box-shadow: 4px 4px black;
-        font-size: 16px;
+        font-size: 26px;
         grid-row: 3/4;
+        font-family: cursive;
+        position: relative;
+        bottom: 10px;
+        border-radius: 10px;
+        border: 0;
+        letter-spacing: 1.5px;
+        font-size: 20px;
+        transition: all .3s ease;
+        box-shadow: rgb(58, 58, 58) 0px 10px 0px 0px;
+        color: hsl(0, 0%, 100%);
+        background-color: darkgrey;
  }
 
  #demo-user-sign-in {

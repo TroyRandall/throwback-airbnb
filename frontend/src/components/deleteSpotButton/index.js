@@ -56,7 +56,7 @@ function DeleteSpotButton({ id }) {
             <h3 id="confirm-delete-info">
               Are you sure you want to remove this spot from the listings?
             </h3>
-            <button id="confirm-delete-button" ref={deleteButtonRef}>
+            <button id="confirm-delete-button" className='shrink' ref={deleteButtonRef}>
               Yes ( Delete Spot )
             </button>
             <button id="deny-delete-button" ref={keepButtonRef}>

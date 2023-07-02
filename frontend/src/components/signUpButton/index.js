@@ -163,7 +163,7 @@ if(signUpModal === true) {
           />
 
 
-        <button id={checkInputs() ? 'sign-up-button-enabled' : 'sign-up-button-disabled'} disabled = {checkInputs() ? false : true} ref={signUpRef} >Sign Up</button>
+        <button className={checkInputs() ? 'btn' : ''} id={checkInputs() ? 'sign-up-button-enabled' : 'sign-up-button-disabled'} disabled = {checkInputs() ? false : true} ref={signUpRef} >Sign Up</button>
       </div>
       </div>
       </>
@@ -172,7 +172,7 @@ if(signUpModal === true) {
 }
     return (
         <>
-           <button type="submit" className='sign-up-button' onClick={toggleSignUpModal}>Sign Up</button>
+           <button type="submit" id='sign-up-button' className='btn' onClick={toggleSignUpModal}>Sign Up</button>
             <div>{checkSignUpModal()}</div>
         </>
     )

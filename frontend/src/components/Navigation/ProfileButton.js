@@ -60,10 +60,10 @@ function ProfileButton({ user }) {
         <li>Hello, {user.firstName}</li>
         <li>{user.email}</li>
         <li>
-          <button onClick={redirect} id='manage-spots-button'>Manage Spots</button>
+          <button onClick={redirect} id='manage-spots-button' className='btn' >Manage Spots</button>
         </li>
         <li>
-          <button onClick={logout} id='log-out-button'><span>Log Out</span><i></i></button>
+          <button onClick={logout} id='log-out-button' className='btn' ><span>Log Out</span><i></i></button>
         </li>
       </ul>))}{(!sessionUser && (
         <ul className={ulClassName} ref={ulRef}>

@@ -73,15 +73,58 @@
   max-width: 100px;
   align-self: center;
   margin: 10px;
-  box-shadow: 4px 4px black;
   z-index: 0;
   justify-self: baseline;
-  background-color: rgb(102, 102, 102);
-  color: white;
   position: relative;
-  bottom: 35px;
+  bottom: 40px;
   right: 45px;
 }
+
+#delete_spot_button {
+    display: inline-block;
+    padding: 5px 12px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #ff0000;
+    border: 2px solid #000;
+    border-radius: 10px;
+    box-shadow: 5px 5px 0px #000;
+    transition: all 0.3s ease;
+    animation: pulse 1s infinite;
+  }
+
+  .update_spot_button:hover,
+  #delete_spot_button:hover {
+    background-color: #fff;
+    color: #ff0000;
+    border: 2px solid #ff0000;
+    box-shadow: 5px 5px 0px #ff0000;
+    animation: none;
+  }
+
+  .update_spot_button:active,
+  #delete_spot_button:active {
+    background-color: #fcf414;
+    box-shadow: none;
+    transform: translateY(4px);
+  }
+
+  @keyframes pulse {
+    0% {
+      background-color: #ff0000;
+    }
+
+    50% {
+      background-color: #ff5252;
+    }
+
+    100% {
+      background-color: #ff0000;
+    }
+  }
 
 .update_spot_button {
   grid-row: 2/3;
@@ -89,19 +132,22 @@
   max-height: 30px;
   max-width: 100px;
   align-self: center;
-  box-shadow: 4px 4px black;
   z-index: 0;
   justify-self: flex-start;
-  background-color: rgb(102, 102, 102);
-  color: white;
   position: relative;
-  bottom: 35px;
+  bottom: 40px;
   right: 45px;
-}
-
-.update_spot_button:hover,
-#delete_spot_button:hover {
-  scale: 1.2;
-  cursor: pointer;
-  z-index: 1000;
+  display: inline-block;
+  padding: 5px 12px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #ff0000;
+  border: 2px solid #000;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px #000;
+  transition: all 0.3s ease;
+  animation: pulse 1s infinite;
 }

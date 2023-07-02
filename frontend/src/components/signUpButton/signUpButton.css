@@ -23,17 +23,7 @@
     justify-items: center;
 }
 
-#sign-up-button {
-    position: relative;
-    bottom: 15px;
-    max-width: 150px;
-    justify-self: center;
-    background-color: rgb(255, 90, 95);
-    top: 10px;
-    box-shadow: 4px 4px black;
-    grid-column: 1/2;
-    height: 30px;
-}
+
 
 #sign-up-button-disabled {
     background-color: darkgrey;

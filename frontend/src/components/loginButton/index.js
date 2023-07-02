@@ -138,7 +138,7 @@ function LoginButton() {
 
   return (
     <>
-      <button onClick={toggleModal} id="login-button">
+      <button onClick={toggleModal} id="login-button" className='btn'>
         Log In
       </button>
       <div>{checkModal()}</div>
