@@ -11,14 +11,14 @@ function UpdateSpotPage  ()  {
 
 const dispatch = useDispatch();
 const history = useHistory();
-const spotId = useParams();
+const { id } = useParams();
 const[isLoaded, setIsLoaded] = useState(false);
 const sessionUser = useSelector((state) => state.session.user)
-const spot = useSelector((state) => state.spots[spotId.id]);
+const spot = useSelector((state) => state.spots[id]);
 
     useEffect(() => {
-        if(spotId) dispatch(spotActions.spotsById(spotId.id)).then(() => setIsLoaded(true));
-      }, [dispatch, spotId]);
+        if(id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
+      }, [dispatch, id]);
 
 
 const [country, setCountry] = useState(spot ? spot.country : '');
@@ -65,12 +65,13 @@ if(Object.values(newErrors).length === 0) {
   setBackendToggle(true)};
     }
 
-  }, [ name, address, city, state, country, description, lat, lng, price, toggle])
+  }, [ id, name, address, city, state, country, description, lat, lng, price, toggle])
 
 
 const handleSubmit = async (e) => {
   e.preventDefault();
     const spot = {
+      id,
       name,
       city,
       state,
