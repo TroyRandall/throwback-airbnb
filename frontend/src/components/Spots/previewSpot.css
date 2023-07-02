@@ -10,7 +10,7 @@
     overflow: hidden;
 }
 
-.prevSpots:hover {
+#prevSpots:hover {
   transform: scale(0.98);
   border-radius: 20px;
 }

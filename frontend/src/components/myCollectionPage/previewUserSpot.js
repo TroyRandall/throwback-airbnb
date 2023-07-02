@@ -26,9 +26,9 @@ function PreviewUserSpot({ spot }) {
   });
 
   return (
-    <div className='tooltip-container'>
-      <div className="prev-user-spots" onClick={redirect} id='grow'>
-        <span className='tooltip' id='tooltip-user-spots'>{spot.name}</span>
+    <div className='tooltip-container' id='shrink'>
+      <span className='tooltip' id='tooltip-user-spots'>{spot.name}</span>
+      <div id="prev-user-spots" className = 'shrink' onClick={redirect} >
         <img
           className="images"
           id="image-preview"
@@ -38,12 +38,12 @@ function PreviewUserSpot({ spot }) {
           }
           alt={spot.description}
         ></img>
-        <div id="prev_spot_info">
+        <div id="prev_spot_info" className='shrink-info'>
           <h4 id="state_country">
             🗺️{spot.city}, {spot.state}
           </h4>
-          <h4 id="starRating">⭐{spot.avgStarRating}</h4>
-          <h4 id="price-user">💵${spot.price} per/night</h4>
+          <h4 id="starRating">⭐{spot.avgStarRating === '0.00' ? 'New' : spot.avgStarRating}</h4>
+          <h4 id="price-user">💵${spot.price.toLocaleString('en-US')} per/night</h4>
         </div>
       </div>
       </div>
