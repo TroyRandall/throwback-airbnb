@@ -90,7 +90,6 @@
 #price-box {
     border: solid 2px black;
     border-radius: 25px;
-    max-width: 100%;
     max-height: 150px;
     min-height: 150px;
     grid-column: 2/2;
@@ -99,6 +98,8 @@
     display: grid;
     grid-template-rows: 40% 60%;
     grid-template-columns: 50% 50%;
+    width: 500px;
+    justify-self: end;
 }
 
 #price {
