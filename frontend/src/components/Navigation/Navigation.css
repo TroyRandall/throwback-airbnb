@@ -206,3 +206,12 @@ button:hover {
     height: 25px;
     width: 100px;
 }
+
+#profile-button-image {
+    font-size: 40px;
+    transform: ease;
+}
+
+.slow-bounce {
+    animation: fa-bounce 1s infinite linear;
+}

@@ -10,6 +10,7 @@ function CreateSpotButton() {
     e.preventDefault();
     history.push("/spots/create");
   };
+  
   return (
     <button onClick={spotButton} className='createSpotButton'>
       <span>Create a Spot</span><i></i>

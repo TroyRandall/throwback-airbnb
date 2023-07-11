@@ -49,11 +49,13 @@ function ProfileButton({ user }) {
     history.push('/mycollection');
   }
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
+  const height = { '--fa-bounce-height': '-10px'}
 
   return (
     <><div id='profile_button_container'>
       <button onClick={openMenu} className='profileButton'>
-        <i className="fas fa-user-circle" />
+        <div id='profile-button-image'><i className="fa-solid fa-address-card slow-bounce" style={height}/></div>
+
       </button>
       {(sessionUser && (
       <ul className={ulClassName} ref={ulRef}>

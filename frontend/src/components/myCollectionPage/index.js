@@ -8,7 +8,6 @@ import * as currentActions from "../../store/current.js";
 import "./myCollection.css";
 import UpdateSpotButton from "../../components/updateSpotButton";
 import DeleteSpotButton from "../../components/deleteSpotButton";
-import CreateSpotButton from "../../components/createSpotButton";
 
 function MyCollection() {
   const dispatch = useDispatch();
@@ -25,12 +24,20 @@ function MyCollection() {
 
   const userSpots = useSelector((state) => state.current.current);
 
-  if (userSpots && Object.values(userSpots).length < 1) {
+  const spotButton = (e) => {
+    e.preventDefault();
+    history.push("/spots/create");
+  };
+
+  if (isLoaded && Object.values(userSpots).length < 1) {
     return (
       isLoaded && (
-        <div>
-          <h1>Manage spots</h1>
-          <CreateSpotButton />
+        <div className='button-holder'>
+          <h1 className='manage-spots-title'>Manage spots</h1>
+          <button onClick={spotButton} className="createSpotButton" id='manage-spots-create'>
+            <span>Create a Spot</span>
+            <i></i>
+          </button>
         </div>
       )
     );
@@ -38,7 +45,7 @@ function MyCollection() {
     return (
       isLoaded && (
         <>
-          <h1>Manage spots</h1>
+          <h1 className='manage-spots-title'>Manage spots</h1>
           <div className="user-spots-container">
             {userSpots.map((spot) => {
               return (

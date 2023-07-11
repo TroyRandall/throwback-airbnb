@@ -60,7 +60,7 @@
     justify-items: center;
     align-items: center;
     top: 36vh;
-    height: 340px;
+    height: 335px;
     width: 340px;
     background: rgba(255, 255, 255, .95);
     backdrop-filter: blur(24px);
@@ -76,12 +76,12 @@
     z-index: -1000;
     top: 190px;
     left: 50%;
-    width: 250px;
-    height: 250px;
+    width: 350px;
+    height: 350px;
     background-color: #ff0000;
     opacity: 1;
     filter: blur(12px);
-    animation: blob-bounce 4s infinite ease
+    animation: blob-bounce 3s infinite linear
   }
 
   @keyframes blob-bounce {
