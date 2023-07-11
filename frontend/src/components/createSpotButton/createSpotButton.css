@@ -4,14 +4,14 @@
     padding: 10px 30px;
     transition: 0.5s;
     position: relative;
-    font-size: 17px;
+    font-size: 1vw;
     background-color: #f7257f;
     border: 2px solid  rgb(238, 222, 0);
     color: #ffa5c5;
   }
 
   .createSpotButton:hover {
-    letter-spacing: 0.25em;
+    letter-spacing: 0.01em;
     background: #420017;
     color: #ffffff;
     box-shadow: 0 0 45px #ff1867;

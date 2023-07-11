@@ -1,217 +1,271 @@
 .hidden {
-    display: none;
+  display: none;
 }
 
-.nav{
-    height: 75px;
-    border-bottom: solid 2px darkred;
-    border-top: solid 2px darkred;
-    padding-bottom: 15px;
-    padding-top: 10px;
-    background-color: white;
-    display: grid;
-    grid-template-columns: repeat(3, 33%);
+.nav {
+  height: 75px;
+  border-bottom: solid 2px darkred;
+  border-top: solid 2px darkred;
+  padding-bottom: 15px;
+  padding-top: 10px;
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(3, 33%);
+  grid-template-rows: repeat(1, 100%);
 }
 
 #nav-link {
-        height: 75px;
-        width: 75px;
-
+  height: 75px;
+  width: 75px;
 }
 
 .navLinks {
-    height: 75px;
-    width: 400px;
+  height: 75px;
+  width: 400px;
+}
+
+#transform-title {
+  text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #ff0040 0%,
+    #f700ff 29%,
+    #3c00c7 67%,
+    #d10000 100%
+  );
+  background-clip: border-box;
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+  font-size: 4vw;
+  position: relative;
+  grid-row: 1/2;
+  grid-column: 2/3;
+  align-self: center;
+  justify-self: end;
+  width: 40vw;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
+
+#regular-title {
+  text-transform: uppercase;
+  background-image: linear-gradient(
+    -225deg,
+    #ff0040 0%,
+    #f700ff 29%,
+    #3c00c7 67%,
+    #d10000 100%
+  );
+  background-clip: border-box;
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+  font-size: 4vw;
+  position: relative;
+  grid-row: 1/2;
+  grid-column: 2/3;
+  align-self: center;
+  justify-self: end;
+  width: 40vw;
+}
+
+#transform-title:hover, #regular-title:hover {
+    cursor: pointer;
+    animation: textclip 2s linear infinite;
 }
 
 button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #profile_button_container {
-    height: 180px;
-    width: 200px;
-    position: absolute;
-    top: 35px;
-    right: 30px;
-    display: grid;
-    grid-template-rows: auto;
-    z-index: 1000;
-}
-.profileButton {
-    height: 65px;
-    width: 200px;
-    grid-row: 1/2;
+  height: 20vh;
+  width: 12vw;
+  grid-column: 3/4;
+  grid-row: 1/2;
+  justify-self: end;
+  display: grid;
+  grid-template-rows: auto;
+  z-index: 1000;
 }
 
 .profileButton {
-    outline: none;
-    border: none;
-    cursor: pointer;
-    padding: 10px 20px;
-    font-size: 12px;
-    font-weight: 700;
-    color: hsl(0, 0%, 100%);
-    border-radius: 10px;
-    text-transform: uppercase;
-    transition: all 0.2s ease-in-out;
-    position: relative;
-    background-color: #ff0081;
-    box-shadow: rgba(233, 30, 99, 0.5);
-  }
+  outline: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 1vw;
+  font-weight: 700;
+  color: hsl(0, 0%, 100%);
+  border-radius: 10px;
+  text-transform: uppercase;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  background-color: #ff0081;
+  box-shadow: rgba(233, 30, 99, 0.5);
+  height: 65px;
+  width: 8vw;
+}
 
-  .profileButton::after,
-  .profileButton::before {
-    transition: all 0.2s ease-in-out;
-  }
+.profileButton::after,
+.profileButton::before {
+  transition: all 0.2s ease-in-out;
+}
 
-  .profileButton::before {
-    z-index: -1;
-    position: absolute;
-    content: "";
-    left: -2em;
-    right: -2em;
-    top: -2em;
-    bottom: -2em;
-    background-repeat: no-repeat;
-    background-image: radial-gradient(circle, #ff0081 20%, transparent 20%),
+.profileButton::before {
+  z-index: -1;
+  position: absolute;
+  content: "";
+  left: -2em;
+  right: -2em;
+  top: -2em;
+  bottom: -2em;
+  background-repeat: no-repeat;
+  background-image: radial-gradient(circle, #ff0081 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, white 20%, transparent 20%),
+    radial-gradient(circle, #ff0081 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
+    radial-gradient(circle, #ff0081 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
+    radial-gradient(circle, #ff0081 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
+    /*  */
       radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
-      radial-gradient(circle, transparent 10%, white 20%, transparent 20%),
-      radial-gradient(circle, #ff0081 20%, transparent 20%),
-      radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
-      radial-gradient(circle, #ff0081 20%, transparent 20%),
-      radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
-      radial-gradient(circle, #ff0081 20%, transparent 20%),
-      radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
-      /*  */
-        radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
-      radial-gradient(circle, #ff0081 20%, transparent 20%),
-      radial-gradient(circle, transparent 10%, white 20%, transparent 20%),
-      radial-gradient(circle, #ff0081 20%, transparent 20%),
-      radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
-      radial-gradient(circle, #ff0081 20%, transparent 20%),
-      radial-gradient(circle, transparent 10%, white 20%, transparent 20%);
-    background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
-      10% 10%, 18% 18%, 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%,
-      20% 20%;
-    background-position: 18% 40%, 20% 31%, 30% 30%, 40% 30%, 50% 30%, 57% 30%,
-      65% 30%, 80% 32%, 15% 60%, 83% 60%, 18% 70%, 25% 70%, 41% 70%, 50% 70%,
-      64% 70%, 80% 71%;
-  }
+    radial-gradient(circle, #ff0081 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, white 20%, transparent 20%),
+    radial-gradient(circle, #ff0081 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, #ff0081 20%, transparent 20%),
+    radial-gradient(circle, #ff0081 20%, transparent 20%),
+    radial-gradient(circle, transparent 10%, white 20%, transparent 20%);
+  background-size: 10% 10%, 20% 20%, 15% 15%, 20% 20%, 18% 18%, 10% 10%, 15% 15%,
+    10% 10%, 18% 18%, 15% 15%, 20% 20%, 18% 18%, 20% 20%, 15% 15%, 10% 10%,
+    20% 20%;
+  background-position: 18% 40%, 20% 31%, 30% 30%, 40% 30%, 50% 30%, 57% 30%,
+    65% 30%, 80% 32%, 15% 60%, 83% 60%, 18% 70%, 25% 70%, 41% 70%, 50% 70%,
+    64% 70%, 80% 71%;
+}
 
-  .profileButton:hover::before {
-    background-position: 5% 44%, -5% 20%, 7% 5%, 23% 0%, 37% 0, 58% -2%, 80% 0%,
-      100% -2%, -5% 80%, 100% 55%, 2% 100%, 23% 100%, 42% 100%, 60% 95%, 70% 96%,
-      100% 100%;
-    background-size: 0% 0%;
-    transition: background-position 0.5s ease-in-out,
-      background-size 0.75s ease-in-out;
-  }
+.profileButton:hover::before {
+  background-position: 5% 44%, -5% 20%, 7% 5%, 23% 0%, 37% 0, 58% -2%, 80% 0%,
+    100% -2%, -5% 80%, 100% 55%, 2% 100%, 23% 100%, 42% 100%, 60% 95%, 70% 96%,
+    100% 100%;
+  background-size: 0% 0%;
+  transition: background-position 0.5s ease-in-out,
+    background-size 0.75s ease-in-out;
+}
 
 .profileButton:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .profile-dropdown {
-    background-color: white;
-    border: solid black 2px;
-    grid-row: 2/3;
+  background-color: white;
+  border: solid black 2px;
+  grid-row: 2/3;
 }
 
 .createSpotButton {
-      height: 65px;
-      width: 200px;
-      grid-column: 8/9;
-      justify-self: center;
-      position: absolute;
-      top: 35px;
-      right: 240px;
+  height: 65px;
+  width: 8vw;
+  grid-column: 3/4;
+  grid-row: 1/2;
+  justify-self: center;
+  position: relative;
+  right: 45px;
 }
 
 .createSpotButton:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .logo {
-    height: 75px;
-    width: 75px;
+  height: 75px;
+  width: 75px;
 }
 
 #manage-spots-button {
-    margin-top: 5px;
-    background-color: rgb(102, 102, 102);
-    color: white;
+  margin-top: 5px;
+  background-color: rgb(102, 102, 102);
+  color: white;
 }
 
 #manage-spots-button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #log-out-button {
-    margin-top: 5px;
-    background-color: rgb(102, 102, 102);
-    color: white;
-    height: 25px;
-    width: 100px;
+  margin-top: 5px;
+  background-color: rgb(102, 102, 102);
+  color: white;
+  height: 25px;
+  width: 100px;
 }
 
 #log-out-button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
-
 
 #login-button {
-    margin-top: 10px;
-    background-color: rgb(102, 102, 102);
-    color: white;
-    height: 25px;
-    width: 100px;
+  margin-top: 10px;
+  background-color: rgb(102, 102, 102);
+  color: white;
+  height: 25px;
+  width: 100px;
 }
 .btn {
-    display: inline-block;
-    font-size: 14px;
-    font-weight: 700;
-    color: white;
-    border: 3px solid rgb(252, 70, 100);
-    cursor: pointer;
-    position: relative;
-    background-color: transparent;
-    text-decoration: none;
-    overflow: hidden;
-    z-index: 1;
-    font-family: inherit;
-   }
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  border: 3px solid rgb(252, 70, 100);
+  cursor: pointer;
+  position: relative;
+  background-color: transparent;
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 1;
+  font-family: inherit;
+}
 
-   .btn::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgb(252, 70, 100);
-    transform: translateX(-100%);
-    transition: all .3s;
-    z-index: -1;
-   }
+.btn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(252, 70, 100);
+  transform: translateX(-100%);
+  transition: all 0.3s;
+  z-index: -1;
+}
 
-   .btn:hover::before {
-    transform: translateX(0);
-   }
+.btn:hover::before {
+  transform: translateX(0);
+}
 
 #sign-up-button {
-    margin-top: 10px;
-    background-color: rgb(102, 102, 102);
-    color: white;
-    height: 25px;
-    width: 100px;
+  margin-top: 10px;
+  background-color: rgb(102, 102, 102);
+  color: white;
+  height: 25px;
+  width: 100px;
 }
 
 #profile-button-image {
-    font-size: 40px;
-    transform: ease;
+  font-size: 2vw;
+  transform: ease;
 }
 
 .slow-bounce {
-    animation: fa-bounce 1s infinite linear;
+  animation: fa-bounce 1s infinite linear;
 }
