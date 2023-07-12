@@ -113,9 +113,10 @@
     justify-self: start;
     position: relative;
     font-family: cursive;
-    top: 24px;
+    top: 20px;
+    right: 8px;
     font-style: oblique;
-    font-weight: 300;
+    font-weight: 600;
 }
 
 #rating {
@@ -128,9 +129,10 @@ margin-top: 10px;
 font-family: cursive;
 justify-self: center;
 position: relative;
-top: 20px;
+top: 24px;
+left: 8px;
 font-style: oblique;
-font-weight: 300;
+font-weight: 600;
 }
 
 #reserve {
