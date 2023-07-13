@@ -21,7 +21,7 @@ function SpotsById() {
   const UlClassName = "overlay" + (imageToggle ? "" : "hidden");
   const overlayRef = useRef();
   const pictureRef = useRef();
-  const [imageValue, setImageValue] = useState('')
+  const [imageValue, setImageValue] = useState("");
 
   const checkReviewOwner = () => {
     if (sessionUser && reviews !== null) {
@@ -51,27 +51,26 @@ function SpotsById() {
     }
   }, [id, dispatch, reviews, imageToggle]);
 
-const toggleImage = (e) => {
-  setImageToggle(true);
-  setImageValue(e.target);
-}
+  const toggleImage = (e) => {
+    setImageToggle(true);
+    setImageValue(e.target);
+  };
   const checkModal = (e) => {
     let image = {};
-   image = imageValue;
-    if(imageToggle === true) {
-          return (
-      <div className={UlClassName}>
-        <div className="overlay" ref={overlayRef}></div>
+    image = imageValue;
+    if (imageToggle === true) {
+      return (
+        <div className={UlClassName}>
+          <div className="overlay" ref={overlayRef}></div>
           <img
-          id='image-viewing'
+            id="image-viewing"
             alt={image.alt}
             srcSet={image.src}
             ref={pictureRef}
           ></img>
-      </div> );
+        </div>
+      );
     }
-
-
   };
 
   const addImages = (spotImages = [], i = 0) => {
@@ -119,7 +118,7 @@ const toggleImage = (e) => {
           </h3>
           <div id="spot-images-container">
             <SpotImages
-            toggle = {toggleImage}
+              toggle={toggleImage}
               spotImages={addImages(Object.values(spot.SpotImages))}
               description={spot.description}
             />

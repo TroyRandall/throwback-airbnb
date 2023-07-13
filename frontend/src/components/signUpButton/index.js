@@ -82,7 +82,7 @@ const checkInputs = () => {
   if(firstName.length === 0) return false;
   if(lastName.length === 0) return false;
   if(password.length < 6) return false;
-  if(confirmPassword !== password) return false;
+  if(confirmPassword < 6) return false;
   return true;
 }
 

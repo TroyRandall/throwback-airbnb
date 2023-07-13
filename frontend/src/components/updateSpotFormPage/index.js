@@ -233,7 +233,7 @@ const handleSubmit = async (e) => {
 
       <hr id="line-break-four" />
 
-        <button id='submit-update-spot' onClick={handleSubmit}>Update Spot</button>
+        <button id='submit-update-spot' onClick={handleSubmit}>Update Your Spot</button>
     </div>
     </div>
  )))
