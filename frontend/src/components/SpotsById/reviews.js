@@ -13,6 +13,8 @@ const reviews = useSelector((state) => state.reviews);
 const sessionUser = useSelector((state) => state.session.user);
 const spotId  = useParams();
 const { id } = spotId;
+const spot = useSelector((state) => state.spots[id])
+
     useEffect(() => {
         if (id) dispatch(reviewActions.reviewsBySpotId(id)).then(() => setIsLoaded(true));
       }, [id, dispatch]);
@@ -20,7 +22,7 @@ const { id } = spotId;
 let newArray;
 const checkReviews = () => {
   if(isLoaded)  newArray = Object.values(reviews);
- if(newArray.length > 0) {
+ if(newArray.length > 0 ) {
   return true;
 } else return false;
 }
@@ -51,7 +53,7 @@ const formatDate = (date) => {
                 <label id='delete-review' >{checkReviewOwner(review) ? <DeleteReviewButton reviewId={review.id}  spotId={id}/> : null}</label>
              </div>)
             })}
-        </div>) : <p>Be The First Person to Post Your Review!</p>
+        </div>) : ((sessionUser.id !== spot.ownerId) ? <p>Be The First Person to Post Your Review!</p> : '')
 
       )
 }
