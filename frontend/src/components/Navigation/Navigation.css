@@ -94,7 +94,6 @@ button:hover {
   justify-self: end;
   display: grid;
   grid-template-rows: auto;
-  z-index: 1000;
 }
 
 .profileButton {

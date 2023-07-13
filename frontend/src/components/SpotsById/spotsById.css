@@ -282,3 +282,27 @@ hr {
     cursor: pointer;
 
  }
+
+ .modal, .overlay {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.overlay {
+    background-color: rgba(55,55,55,0.8);
+    z-index: 10001;
+}
+
+#image-viewing {
+    height: 90vh;
+    width: 70vw;
+    z-index: 10001;
+    position: absolute;
+    top: 5vh;
+    left: 25vh;
+}

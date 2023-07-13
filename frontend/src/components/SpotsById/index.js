@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -17,6 +17,11 @@ function SpotsById() {
   const reviews = useSelector((state) => state.reviews);
   const [reserve, setReserve] = useState(false);
   const sessionUser = useSelector((state) => state.session.user);
+  const [imageToggle, setImageToggle] = useState(false);
+  const UlClassName = "overlay" + (imageToggle ? "" : "hidden");
+  const overlayRef = useRef();
+  const pictureRef = useRef();
+  const [imageValue, setImageValue] = useState('')
 
   const checkReviewOwner = () => {
     if (sessionUser && reviews !== null) {
@@ -34,7 +39,40 @@ function SpotsById() {
 
   useEffect(() => {
     if (id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
-  }, [id, dispatch, reviews]);
+
+    const closeModal = (e) => {
+      if (overlayRef?.current.contains(e.target)) setImageToggle(false);
+    };
+
+    if (imageToggle) {
+      document.addEventListener("click", closeModal);
+
+      return () => document.removeEventListener("click", closeModal);
+    }
+  }, [id, dispatch, reviews, imageToggle]);
+
+const toggleImage = (e) => {
+  setImageToggle(true);
+  setImageValue(e.target);
+}
+  const checkModal = (e) => {
+    let image = {};
+   image = imageValue;
+    if(imageToggle === true) {
+          return (
+      <div className={UlClassName}>
+        <div className="overlay" ref={overlayRef}></div>
+          <img
+          id='image-viewing'
+            alt={image.alt}
+            srcSet={image.src}
+            ref={pictureRef}
+          ></img>
+      </div> );
+    }
+
+
+  };
 
   const addImages = (spotImages = [], i = 0) => {
     while (spotImages.length < 5) {
@@ -81,6 +119,7 @@ function SpotsById() {
           </h3>
           <div id="spot-images-container">
             <SpotImages
+            toggle = {toggleImage}
               spotImages={addImages(Object.values(spot.SpotImages))}
               description={spot.description}
             />
@@ -110,6 +149,7 @@ function SpotsById() {
           <Reviews spotId={id} />
         </div>
         <hr></hr>
+        <div>{checkModal()}</div>
       </div>
     )
   );
