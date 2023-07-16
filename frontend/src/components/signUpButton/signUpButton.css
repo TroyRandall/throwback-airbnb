@@ -7,8 +7,7 @@
     max-height: 500px;
     width: 310px;
     left: 40vw;
-    top: 30vh;
-    text-align: center;
+    top: 20vh;
     display: grid;
     grid-template-rows: repeat(8, 35px);
     grid-template-columns: repeat(1, 350px);
@@ -77,7 +76,7 @@ input[type="text"], input[type='password'], textarea {
     border: 3px solid black;
     background-color: rgb(206, 222, 255);
     border-radius: 5px;
-    width: 200px;
+    width: 320px;
     justify-self: center;
   }
 
@@ -156,8 +155,18 @@ input[type="text"], input[type='password'], textarea {
     color: red;
     top: 9px;
     position: relative;
+    text-align: center;
+    justify-content: center;
   }
 
   li {
     display: block;
+  }
+
+  .labels {
+    position: relative;
+    grid-column: 1/2;
+    font-size: 18px;
+    margin: 0px;
+    margin-left: 20px;
   }

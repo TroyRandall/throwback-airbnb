@@ -97,7 +97,7 @@ if(signUpModal === true) {
         <h1 id='sign-up-title'>Sign Up</h1>
 {<p id='errors-errors'>{Object.values(errors).map(error => <li>{error}</li>)}</p>}
 
-            <label>Email
+            <label class='labels'>Email</label>
             <input
           id='email-input'
             type="text"
@@ -105,9 +105,9 @@ if(signUpModal === true) {
             onChange={(e) => setEmail(e.target.value)}
             required
             placeholder='Email required'
-          /></label>
+          />
 
-          <label>Username
+          <label class='labels'>Username</label>
           <input
           id='username-input'
             type="text"
@@ -115,9 +115,9 @@ if(signUpModal === true) {
             onChange={(e) => setUsername(e.target.value)}
             required
             placeholder='Username required'
-          /></label>
+          />
 
-          <label>First Name
+          <label class='labels'>First Name</label>
           <input
           id='firstname-input'
             type="text"
@@ -125,10 +125,10 @@ if(signUpModal === true) {
             onChange={(e) => setFirstName(e.target.value)}
             required
             placeholder='First name required'
-          /></label>
+          />
 
 
-          <label>Last Name
+          <label class='labels'>Last Name</label>
           <input
           id='lastname-input'
             type="text"
@@ -136,10 +136,10 @@ if(signUpModal === true) {
             onChange={(e) => setLastName(e.target.value)}
             required
             placeholder='Last name required'
-          /></label>
+          />
 
 
-          <label>Password
+          <label class='labels'>Password</label>
           <input
           id='password-input-signup'
             type="password"
@@ -148,10 +148,10 @@ if(signUpModal === true) {
             required
             placeholder='Password required'
             autoComplete='new-password'
-          /></label>
+          />
 
 
-          <label>Confirm Password
+          <label class='labels'>Confirm Password</label>
           <input
           id='confirm-password-input'
             type="password"
@@ -160,7 +160,7 @@ if(signUpModal === true) {
             required
             placeholder='Confirmed Password required'
             autoComplete='new-password'
-          /></label>
+          />
 
 
         <button className={checkInputs() ? 'btn' : ''} id={checkInputs() ? 'sign-up-button-enabled' : 'sign-up-button-disabled'} disabled = {checkInputs() ? false : true} ref={signUpRef} >Sign Up</button>
