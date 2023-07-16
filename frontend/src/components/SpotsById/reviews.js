@@ -37,11 +37,9 @@ const checkReviewOwner = useCallback((review) => {
 
 const formatDate = (date) => {
   const newDate = date.split('-');
-  console.log(newDate);
   const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   return `${months[+newDate[1]]} ${newDate[0]}`
 }
-
 
       return isLoaded && (
         (checkReviews()) ?  (<div> {(Object.values(reviews).reverse()).map(review => {
@@ -53,7 +51,7 @@ const formatDate = (date) => {
                 <label id='delete-review' >{checkReviewOwner(review) ? <DeleteReviewButton reviewId={review.id}  spotId={id}/> : null}</label>
              </div>)
             })}
-        </div>) : ((sessionUser.id !== spot.ownerId) ? <p>Be The First Person to Post Your Review!</p> : '')
+        </div>) : ((sessionUser?.id !== spot?.ownerId) ? <p>Be The First Person to Post Your Review!</p> : '')
 
       )
 }

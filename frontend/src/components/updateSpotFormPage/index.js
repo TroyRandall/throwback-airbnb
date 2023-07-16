@@ -16,9 +16,9 @@ const[isLoaded, setIsLoaded] = useState(false);
 const sessionUser = useSelector((state) => state.session.user)
 const spot = useSelector((state) => state.spots[id]);
 
-    useEffect(() => {
-        if(id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
-      }, [dispatch, id]);
+    // useEffect(() => {
+    //     if(id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
+    //   }, [dispatch, id]);
 
 
 const [country, setCountry] = useState(spot ? spot.country : '');
@@ -39,6 +39,16 @@ const [backendToggle, setBackendToggle] = useState(false);
 if(sessionUser === null && isLoaded) history.push('/');
 
 useEffect(() => {
+  if(id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
+
+  console.log(document.body.classList.contains('darkMode'))
+  const textInputs = document.getElementsByClassName('darkModeTexts');
+    Array.prototype.forEach.call(textInputs, (input) => {
+      console.log(input)
+      input.classList.add('darkModeInput')
+    })
+
+
 
       //frontend validation checks on input fields
 
@@ -65,7 +75,7 @@ if(Object.values(newErrors).length === 0) {
   setBackendToggle(true)};
     }
 
-  }, [ id, name, address, city, state, country, description, lat, lng, price, toggle])
+  }, [ id, dispatch, name, address, city, state, country, description, lat, lng, price, toggle])
 
 
 const handleSubmit = async (e) => {
@@ -103,10 +113,11 @@ const handleSubmit = async (e) => {
 
 
 
+const darkMode = ('darkModeTexts')
 
 
  return (spot && (isLoaded && (
-    <div>
+  <div>
          <div id="create-spot-form">
       <h1 className="title">Update your Spot</h1>
       <p id="title-info">Where is your spot located?</p>
@@ -118,6 +129,7 @@ const handleSubmit = async (e) => {
       <label id="errors-country">{errors?.country}</label>
       <input
         id="country-input"
+        className={darkMode}
         type="text"
         value={country}
         onChange={(e) => setCountry(e.target.value)}
@@ -129,6 +141,7 @@ const handleSubmit = async (e) => {
       <label id="errors-address">{errors?.address}</label>
       <input
         id="address-input"
+        className={darkMode}
         type="text"
         value={address}
         onChange={(e) => setAddress(e.target.value)}
@@ -140,6 +153,7 @@ const handleSubmit = async (e) => {
       <label id="errors-state">{errors?.state}</label>
       <input
         id="state-input"
+        className={darkMode}
         type="text"
         value={state}
         onChange={(e) => setState(e.target.value)}
@@ -152,6 +166,7 @@ const handleSubmit = async (e) => {
       <label id="errors-city">{errors?.city}</label>
       <input
         id="city-input"
+        className={darkMode}
         type="text"
         value={city}
         onChange={(e) => setCity(e.target.value)}
@@ -163,6 +178,7 @@ const handleSubmit = async (e) => {
       <label id="errors-lat">{errors?.lat}</label>
       <input
         id="lat-input"
+        className={darkMode}
         type="text"
         value={lat}
         onChange={(e) => setLat(e.target.value)}
@@ -174,6 +190,7 @@ const handleSubmit = async (e) => {
       <label id="errors-lng">{errors?.lng}</label>
       <input
         id="lng-input"
+        className={darkMode}
         type="text"
         value={lng}
         onChange={(e) => setLng(e.target.value)}
@@ -189,6 +206,7 @@ const handleSubmit = async (e) => {
 
       <textarea
         id="description-input"
+        className={darkMode}
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="please write atleast 30 characters"
@@ -206,6 +224,7 @@ const handleSubmit = async (e) => {
       </h5>
       <input
         id="title-input"
+        className={darkMode}
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -224,6 +243,7 @@ const handleSubmit = async (e) => {
       <p id="Money-sign">💲</p>
       <input
         id="price-input"
+        className={darkMode}
         type="text"
         value={price}
         onChange={(e) => setPrice(e.target.value)}
@@ -238,5 +258,6 @@ const handleSubmit = async (e) => {
     </div>
  )))
 };
+
 
 export default UpdateSpotPage;

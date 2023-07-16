@@ -26,6 +26,10 @@ input[type=text], textarea {
     border-radius: 5px;
 }
 
+input[type=text].darkModeInput, textarea.darkModeInput {
+    border: 3px solid white;
+}
+
 .title {
     font-size: 38px;
     font-family: cursive;
@@ -152,7 +156,7 @@ input[type=text], textarea {
     width: 140px;
     justify-self: end;
     position: relative;
-    right: 30px;
+    right: 40px;
 }
 
 #state-city-comma {

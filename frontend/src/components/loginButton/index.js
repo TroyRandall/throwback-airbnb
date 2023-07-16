@@ -90,7 +90,6 @@ function LoginButton() {
         <div className={UlClassName} onClick={toggleModal}>
           <div className="overlay"></div>
           <div className="modal-content" ref={overlayRef}>
-            <div className="bg">
               <h2 id="header">Log In</h2>
               <label id="errors-login">{errors?.errors}</label>
               <form onSubmit={handleSubmit} id="login-form">
@@ -131,7 +130,6 @@ function LoginButton() {
              <div className="blob"></div>
           </div>
 
-        </div>
       );
     }
   };

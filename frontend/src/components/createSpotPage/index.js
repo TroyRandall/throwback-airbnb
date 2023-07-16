@@ -8,7 +8,7 @@ import * as spotImageActions from "../../store/spotImages";
 
 
 
-function CreateSpotPage() {
+function CreateSpotPage({ dark }) {
   const [country, setCountry] = useState("");
   const [state, setState] = useState("");
   const [city, setCity] = useState("");
@@ -36,7 +36,14 @@ function CreateSpotPage() {
   if (!sessionUser) history.push("/");
 
   useEffect(() => {
-
+    const inputs = document.getElementsByClassName('darkModeTexts');
+    if(document.body.classList.contains('darkMode')){
+      console.log(inputs);
+      Array.prototype.forEach.call(inputs, (input) => {
+        input.classList.add('darkModeInput')
+      })
+      console.log(inputs);
+    }
     //frontend validation checks on input fields
 
     if(toggle) {
@@ -163,14 +170,14 @@ if(Object.values(newErrors).length === 0) {
           }
         }
       }
-      
+
           setErrors({...newErrors})
       if ((errors) && (Object.values(newErrors).length > 0)) return errors;
       else return history.push(`/spots/${newSpot.id}`);
  }}
 
 
-
+const darkMode = ('darkModeTexts')
 
     return (
       <div id="create-spot-form">
@@ -184,6 +191,7 @@ if(Object.values(newErrors).length === 0) {
         <label id="errors-country">{errors?.country}</label>
         <input
           id="country-input-create"
+          className={darkMode}
           type="text"
           value={country}
           onChange={(e) => setCountry(e.target.value)}
@@ -195,6 +203,7 @@ if(Object.values(newErrors).length === 0) {
         <label id="errors-address">{errors?.address}</label>
         <input
           id="address-input-create"
+          className={darkMode}
           type="text"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
@@ -206,6 +215,7 @@ if(Object.values(newErrors).length === 0) {
         <label id="errors-state">{errors?.state}</label>
         <input
           id="state-input-create"
+          className={darkMode}
           type="text"
           value={state}
           onChange={(e) => setState(e.target.value)}
@@ -218,6 +228,7 @@ if(Object.values(newErrors).length === 0) {
         <label id="errors-city">{errors?.city}</label>
         <input
           id="city-input-create"
+          className={darkMode}
           type="text"
           value={city}
           onChange={(e) => setCity(e.target.value)}
@@ -229,6 +240,7 @@ if(Object.values(newErrors).length === 0) {
         <label id="errors-lat">{errors?.lat}</label>
         <input
           id="lat-input-create"
+          className={darkMode}
           type="text"
           value={lat}
           onChange={(e) => setLat(e.target.value)}
@@ -240,6 +252,7 @@ if(Object.values(newErrors).length === 0) {
         <label id="errors-lng">{errors?.lng}</label>
         <input
           id="lng-input-create"
+          className={darkMode}
           type="text"
           value={lng}
           onChange={(e) => setLng(e.target.value)}
@@ -255,6 +268,7 @@ if(Object.values(newErrors).length === 0) {
 
         <textarea
           id="description-input-create"
+          className={darkMode}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="please write atleast 30 characters"
@@ -272,6 +286,7 @@ if(Object.values(newErrors).length === 0) {
         </h5>
         <input
           id="title-input-create"
+          className={darkMode}
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -290,6 +305,7 @@ if(Object.values(newErrors).length === 0) {
         <p id="Money-sign">💲</p>
         <input
           id="price-input-create"
+          className={darkMode}
           type="text"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
@@ -306,6 +322,7 @@ if(Object.values(newErrors).length === 0) {
 
         <input
           id="photo-input-1-create"
+          className={darkMode}
           type="text"
           value={image1}
           onChange={(e) => setImage1(e.target.value)}
@@ -315,6 +332,7 @@ if(Object.values(newErrors).length === 0) {
         <label id="errors-image1">{errors?.image1}</label>
         <input
           id="photo-input-2-create"
+          className={darkMode}
           type="text"
           value={image2}
           onChange={(e) => setImage2(e.target.value)}
@@ -323,6 +341,7 @@ if(Object.values(newErrors).length === 0) {
         <label id="errors-image2">{errors?.image2}</label>
         <input
           id="photo-input-3-create"
+          className={darkMode}
           type="text"
           value={image3}
           onChange={(e) => setImage3(e.target.value)}
@@ -331,6 +350,7 @@ if(Object.values(newErrors).length === 0) {
         <label id="errors-image3">{errors?.image3}</label>
         <input
           id="photo-input-4-create"
+          className={darkMode}
           type="text"
           value={image4}
           onChange={(e) => setImage4(e.target.value)}
@@ -339,6 +359,7 @@ if(Object.values(newErrors).length === 0) {
         <label id="errors-image4">{errors?.image4}</label>
         <input
           id="photo-input-5-create"
+          className={darkMode}
           type="text"
           value={image5}
           onChange={(e) => setImage5(e.target.value)}

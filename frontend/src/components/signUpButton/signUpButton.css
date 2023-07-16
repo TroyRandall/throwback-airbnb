@@ -14,7 +14,33 @@
     grid-template-columns: repeat(1, 350px);
     padding: 10px;
     justify-content: center;
-}
+    filter: drop-shadow(46px 36px 24px #ff527e) drop-shadow(-55px -40px 25px #9e30a9);
+    animation: boxShadowsFilter 8s ease-in infinite;
+    z-index: 1000;
+    color: black;
+  }
+
+  @keyframes boxShadowsFilter {
+    0% {
+      filter: drop-shadow(46px 36px 28px rgba(255, 0, 55, 0.341)) drop-shadow(-55px -40px 28px #9e30a9);
+    }
+
+    25% {
+      filter: drop-shadow(46px -36px 24px rgba(255, 19, 78, 0.898)) drop-shadow(-55px 40px 24px #9e30a9);
+    }
+
+    50% {
+      filter: drop-shadow(46px 36px 30px rgba(255, 38, 121, 0.898)) drop-shadow(-55px 40px 30px rgba(159, 48, 169, 0.2941176471));
+    }
+
+    75% {
+      filter: drop-shadow(20px -18px 25px rgba(255, 19, 78, 0.898)) drop-shadow(-20px 20px 25px rgba(159, 48, 169, 0.2941176471));
+    }
+
+    to {
+      filter: drop-shadow(46px 36px 28px rgba(255, 0, 55, 0.341)) drop-shadow(-55px -40px 28px #9e30a9);
+    }
+  }
 
 #sign_up_form {
     display: grid;

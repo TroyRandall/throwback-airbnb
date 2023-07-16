@@ -4,7 +4,6 @@
 }
 
 #title-box {
-  background-color: white;
   padding: 20px;
   border-radius: 25px;
 }
@@ -30,6 +29,7 @@
   display: grid;
   grid-template-columns: 50% 25% 25%;
   grid-template-rows: 50% 50%;
+  filter: drop-shadow(0 0 0.5rem rgb(238, 50, 255))
 }
 
 #image1 {
@@ -68,6 +68,10 @@
   border: solid black 2px;
 }
 
+.owner_info {
+  font-family: cursive;
+}
+
 #description-spot-by-id {
   max-width: 100%;
   max-height: 100%;
@@ -76,12 +80,12 @@
   margin-right: 30px;
   position: static;
   padding-right: 55px;
+  font-family: cursive;
 }
 
 #description-box {
   border-radius: 25px;
   padding: 20px;
-  background-color: white;
   margin: 15px;
   display: grid;
   grid-template-rows: 20% 80%;
@@ -130,7 +134,6 @@
   justify-self: center;
   position: relative;
   top: 24px;
-  left: 8px;
   font-style: oblique;
   font-weight: 600;
 }

@@ -12,6 +12,8 @@
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
+  filter: drop-shadow(0 5px 0.25rem rgb(255, 52, 113));
+  color: black
 }
 
 #prevSpots:hover {

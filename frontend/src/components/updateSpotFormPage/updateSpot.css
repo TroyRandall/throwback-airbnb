@@ -412,3 +412,7 @@ bottom: 37px;
     color: white;
     font-family: cursive;
 }
+
+input[type=text].darkModeInput, textarea.darkModeInput {
+    border: 3px solid white;
+}
