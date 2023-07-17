@@ -39,13 +39,13 @@ router.delete("/:id/images/:imageid", requireAuth, async (req, res, next) => {
     err.status = 401;
     return next(err);
   }
-//handle spotImage not found error
-if(!spotImage){
-  const err = new Error ("Spot Image couldn't be found");
-  err.status = 404;
-  err.errors = ["You must provide a valid id for the spot's image"];
-  return next(err);
-}
+  //handle spotImage not found error
+  if (!spotImage) {
+    const err = new Error("Spot Image couldn't be found");
+    err.status = 404;
+    err.errors = ["You must provide a valid id for the spot's image"];
+    return next(err);
+  }
   await spotImage.destroy();
 
   return res.json({
@@ -61,13 +61,13 @@ router.delete("/:id", requireAuth, async (req, res, next) => {
   if (!spot) {
     const err = new Error("Spot couldn't be found");
     err.status = 404;
-   return next(err);
+    return next(err);
   }
   //authorization error handling
   if (userId !== spot.ownerId) {
     const err = new Error("Forbidden");
     err.status = 401;
-   return next(err);
+    return next(err);
   }
 
   await spot.destroy();
@@ -99,12 +99,21 @@ router.put(
     if (!spot) {
       const err = new Error("Spot couldn't be found");
       err.status = 404;
-     return next(err);
+      return next(err);
     }
     //authorization error handling
     if (userId !== spot.ownerId) {
       const err = new Error("Forbidden");
       err.status = 401;
+      return next(err);
+    }
+
+    const spot1 = await Spot.findAll({ where: { name: name } });
+
+    if (spot1.length > 0) {
+      const err = new Error("Validation Error");
+      err.status = 400;
+      err.errors = ["Name must be unique"];
       return next(err);
     }
 
@@ -164,7 +173,7 @@ router.post(
     if (userId === spot.ownerId) {
       const err = new Error("Forbidden");
       err.status = 401;
-     return next(err);
+      return next(err);
     }
     //validating startDate against existing bookings dates
     if (bookings.length > 0) {
@@ -173,7 +182,7 @@ router.post(
       );
       err.status = 403;
       err.errors = "Start date conflicts with an existing booking";
-     return next(err);
+      return next(err);
     }
     //validating endDate against existing bookings dates
     if (bookings2.length > 0) {
@@ -182,7 +191,7 @@ router.post(
       );
       err.status = 403;
       err.errors = "End date conflicts with an existing booking";
-     return next(err);
+      return next(err);
     }
 
     const newBooking = await Booking.create({
@@ -212,20 +221,20 @@ router.post(
       if (prevReview) {
         const err = new Error("user already has a review for this spot");
         err.status = 403;
-       return next(err);
+        return next(err);
       }
       // spot cant be found error handling
       if (!spot) {
         const err = new Error("Spot couldn't be found");
         err.status = 404;
-       return next(err);
+        return next(err);
       }
       // stars validation error handling
       if (stars < 0 || stars > 5 || stars === undefined) {
         const err = new Error("Validation error");
         err.status = 400;
         err.errors = ["stars must be an integer from 1 to 5"];
-       return next(err);
+        return next(err);
       }
 
       const newReview = await Review.create({
@@ -243,9 +252,9 @@ router.post(
           {
             model: User,
             attributes: ["id", "firstName", "lastName"],
-          }
-        ]
-        })
+          },
+        ],
+      });
 
       return res.json(newReviewUpdated);
     }
@@ -304,52 +313,42 @@ router.post(
       description,
       price,
     } = req.body;
-const spot = await Spot.findAll({where: {name: name}});
+    const spot = await Spot.findAll({ where: { name: name } });
 
-if(spot.length > 0){
-  const err = new Error('Validation Error');
-  err.status = 400
-  err.errors = [
-    "Name must be unique"
-  ];
- return next(err);
-}
+    if (spot.length > 0) {
+      const err = new Error("Validation Error");
+      err.status = 400;
+      err.errors = ["Name must be unique"];
+      return next(err);
+    }
 
-if(lat.toString() === lat){
-  const err = new Error('Validation Error');
-  err.status = 400;
-  err.errors = [
-    "Latitude is invalid"
-  ];
-  return next(err);
-}
+    if (lat.toString() === lat) {
+      const err = new Error("Validation Error");
+      err.status = 400;
+      err.errors = ["Latitude is invalid"];
+      return next(err);
+    }
 
-if(!(isFinite(lat) && Math.abs(lat) <= 90)) {
-  const err = new Error('Validation Error');
-  err.status = 400;
-  err.errors = [
-    'Latitude is invalid'
-  ]
-  return next(err);
-}
+    if (!(isFinite(lat) && Math.abs(lat) <= 90)) {
+      const err = new Error("Validation Error");
+      err.status = 400;
+      err.errors = ["Latitude is invalid"];
+      return next(err);
+    }
 
-if(lng.toString() === lng) {
-  const err = new Error('Validation Error');
-  err.status = 400;
-  err.errors = [
-    "longitude is invalid"
-  ];
-  return next(err);
-}
+    if (lng.toString() === lng) {
+      const err = new Error("Validation Error");
+      err.status = 400;
+      err.errors = ["longitude is invalid"];
+      return next(err);
+    }
 
-if(!(isFinite(lng) && Math.abs(lng) <= 180)) {
-  const err = new Error('Validation Error');
-  err.status = 400;
-  err.errors = [
-    'Longitude is invalid'
-  ]
-  return next(err);
-}
+    if (!(isFinite(lng) && Math.abs(lng) <= 180)) {
+      const err = new Error("Validation Error");
+      err.status = 400;
+      err.errors = ["Longitude is invalid"];
+      return next(err);
+    }
     const newSpot = await Spot.create({
       ownerId: userId,
       address: address,
@@ -479,7 +478,7 @@ router.get("/:id", async (req, res, next) => {
         [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"],
       ],
     },
-    group: [["Reviews.spotId"],["Spot.id"]],
+    group: [["Reviews.spotId"], ["Spot.id"]],
     include: [
       {
         model: Review, //needed for aggregate data to work properly
@@ -489,13 +488,19 @@ router.get("/:id", async (req, res, next) => {
   });
 
   if (spots) {
-    const spot = spots.toJSON()
+    const spot = spots.toJSON();
     spot.avgStarRating = (+spot.avgStarRating).toFixed(2);
-    const spotImages = await SpotImage.findAll({where: {spotId: spotId}, attributes: ['id', 'url', 'preview']})
-  spot.SpotImages = spotImages;
+    const spotImages = await SpotImage.findAll({
+      where: { spotId: spotId },
+      attributes: ["id", "url", "preview"],
+    });
+    spot.SpotImages = spotImages;
 
-  const owner = await User.findOne({where: {id: spot.ownerId }, attributes: ['id', 'firstName', 'lastName']})
-  spot.Owner = owner;
+    const owner = await User.findOne({
+      where: { id: spot.ownerId },
+      attributes: ["id", "firstName", "lastName"],
+    });
+    spot.Owner = owner;
     return res.json(spot);
   } else {
     //spot couldnt be found error handling
@@ -509,13 +514,14 @@ router.get("/", async (req, res, next) => {
   let page = req.query.page;
   let size = req.query.size;
   const { minLat, maxLat, maxLng, minLng, minPrice, maxPrice } = req.query;
-  if (!page) page = 0;  //default value for page
+  if (!page) page = 0; //default value for page
   if (!size) size = 20; //default value for size
   let queries = { where: {} };
   let pagination = {};
-  if (page > 0) pagination.offset = size * (page); //validating and setting page
+  if (page > 0) pagination.offset = size * page; //validating and setting page
   pagination.limit = size; // setting size
-  if (maxLat) { //building pagination objects starts here
+  if (maxLat) {
+    //building pagination objects starts here
     queries.where.lat = { [Op.lte]: maxLat };
   }
   if (minLat) {
