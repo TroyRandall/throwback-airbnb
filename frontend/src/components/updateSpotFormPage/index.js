@@ -39,14 +39,14 @@ const [backendToggle, setBackendToggle] = useState(false);
 if(sessionUser === null && isLoaded) history.push('/');
 
 useEffect(() => {
-  if(id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
+  // if(id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
 
-  console.log(document.body.classList.contains('darkMode'))
-  const textInputs = document.getElementsByClassName('darkModeTexts');
-    Array.prototype.forEach.call(textInputs, (input) => {
-      console.log(input)
-      input.classList.add('darkModeInput')
-    })
+  // console.log(document.body.classList.contains('darkMode'))
+  // const textInputs = document.getElementsByClassName('darkModeTexts');
+  //   Array.prototype.forEach.call(textInputs, (input) => {
+  //     console.log(input)
+  //     input.classList.add('darkModeInput')
+  //   })
 
 
 

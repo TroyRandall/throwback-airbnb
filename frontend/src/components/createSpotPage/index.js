@@ -36,14 +36,14 @@ function CreateSpotPage({ dark }) {
   if (!sessionUser) history.push("/");
 
   useEffect(() => {
-    const inputs = document.getElementsByClassName('darkModeTexts');
-    if(document.body.classList.contains('darkMode')){
-      console.log(inputs);
-      Array.prototype.forEach.call(inputs, (input) => {
-        input.classList.add('darkModeInput')
-      })
-      console.log(inputs);
-    }
+    // const inputs = document.getElementsByClassName('darkModeTexts');
+    // if(document.body.classList.contains('darkMode')){
+    //   console.log(inputs);
+    //   Array.prototype.forEach.call(inputs, (input) => {
+    //     input.classList.add('darkModeInput')
+    //   })
+    //   console.log(inputs);
+    // }
     //frontend validation checks on input fields
 
     if(toggle) {
