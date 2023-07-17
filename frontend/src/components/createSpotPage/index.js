@@ -59,7 +59,7 @@ function CreateSpotPage({ dark }) {
 
     if (lng === "") newErrors.lng = "Longitude is required";
     if (image1 === "") newErrors.image1 = "Preview Image is required";
-    if((!image1.endsWith("jpg", "png", ".jpeg")) && !newErrors.image1) newErrors.image1 = "Image URL must end in .png, .jpg, or .jpeg"
+    if(!(image1.endsWith("jpg") || image1.endsWith("jpeg") || image1.endsWith("png")) && !newErrors.image1) newErrors.image1 = "Image URL must end in .png, .jpg, or .jpeg"
     if (description.length < 30 && !newErrors.description)
       newErrors.description = "Description needs a minimun of 30 characters";
     if (description.length > 240 && !newErrors.description)
