@@ -110,7 +110,7 @@ router.put(
 
     const spot1 = await Spot.findAll({ where: { name: name } });
 
-    if (spot1.length > 0) {
+    if (spot.name !== name && spot1.length > 1) {
       const err = new Error("Validation Error");
       err.status = 400;
       err.errors = ["Name must be unique"];
