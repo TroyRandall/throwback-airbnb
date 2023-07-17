@@ -16,9 +16,6 @@ const[isLoaded, setIsLoaded] = useState(false);
 const sessionUser = useSelector((state) => state.session.user)
 const spot = useSelector((state) => state.spots[id]);
 
-    // useEffect(() => {
-    //     if(id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
-    //   }, [dispatch, id]);
 
 
 const [country, setCountry] = useState(spot ? spot.country : '');
@@ -39,7 +36,7 @@ const [backendToggle, setBackendToggle] = useState(false);
 if(sessionUser === null && isLoaded) history.push('/');
 
 useEffect(() => {
-  // if(id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
+  if(id) dispatch(spotActions.spotsById(id)).then(() => setIsLoaded(true));
 
   // console.log(document.body.classList.contains('darkMode'))
   // const textInputs = document.getElementsByClassName('darkModeTexts');
