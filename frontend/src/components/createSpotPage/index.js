@@ -64,13 +64,13 @@ function CreateSpotPage({ dark }) {
       newErrors.description = "Description needs a minimun of 30 characters";
     if (description.length > 240 && !newErrors.description)
       newErrors.description = "Description must be below 240 characters";
-    if (image2 !== "" && !(image2.endsWith("jpg", "png", ".jpeg")))
+    if (image2 !== "" && !(image2.endsWith("jpg") || image2.endsWith("jepg") || image2.endsWith("png")))
       newErrors.image2 = "Image URL must end in .png, .jpg, or .jpeg";
-    if (image3 !== "" && !(image3.endsWith("jpg", "png", ".jpeg")))
+    if (image3 !== "" && !(image3.endsWith("jpg") || image3.endsWith("jepg") || image3.endsWith("png")))
       newErrors.image3 = "Image URL must end in .png, .jpg, or .jpeg";
-    if (image4 !== "" && !(image4.endsWith("jpg", "png", ".jpeg")))
+    if (image4 !== "" && !(image4.endsWith("jpg") || image4.endsWith("jepg") || image4.endsWith("png")))
       newErrors.image4 = "Image URL must end in .png, .jpg, or .jpeg";
-    if (image5 !== "" && !(image5.endsWith("jpg", "png", ".jpeg")))
+    if (image5 !== "" && !(image5.endsWith("jpg") || image5.endsWith("jepg") || image5.endsWith("png")))
       newErrors.image5 = "Image URL must end in .png, .jpg, or .jpeg";
 
       if((!(isFinite(lat) && Math.abs(lat) <= 90)) && !newErrors.lat) newErrors.lat = 'Latitude is invalid';
