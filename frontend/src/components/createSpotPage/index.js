@@ -59,6 +59,7 @@ function CreateSpotPage({ dark }) {
 
     if (lng === "") newErrors.lng = "Longitude is required";
     if (image1 === "") newErrors.image1 = "Preview Image is required";
+    if((!image1.endsWith("jpg", "png", ".jpeg")) && !newErrors.image1) newErrors.image1 = "Image URL must end in .png, .jpg, or .jpeg"
     if (description.length < 30 && !newErrors.description)
       newErrors.description = "Description needs a minimun of 30 characters";
     if (description.length > 240 && !newErrors.description)
@@ -71,13 +72,13 @@ if(Object.values(newErrors).length === 0) {
     }
       if (newSpot) {
         let newErrors = {};
-        if (image2 !== "" && !image2.endsWith("jpg", "png", ".jpeg"))
+        if (image2 !== "" && !(image2.endsWith("jpg", "png", ".jpeg")))
           newErrors.image2 = "Image URL must end in .png, .jpg, or .jpeg";
-        if (image3 !== "" && !image3.endsWith("jpg", "png", ".jpeg"))
+        if (image3 !== "" && !(image3.endsWith("jpg", "png", ".jpeg")))
           newErrors.image3 = "Image URL must end in .png, .jpg, or .jpeg";
-        if (image4 !== "" && !image4.endsWith("jpg", "png", ".jpeg"))
+        if (image4 !== "" && !(image4.endsWith("jpg", "png", ".jpeg")))
           newErrors.image4 = "Image URL must end in .png, .jpg, or .jpeg";
-        if (image5 !== "" && !image5.endsWith("jpg", "png", ".jpeg"))
+        if (image5 !== "" && !(image5.endsWith("jpg", "png", ".jpeg")))
           newErrors.image5 = "Image URL must end in .png, .jpg, or .jpeg";
           setErrors({...newErrors})
       }
