@@ -59,18 +59,18 @@ function CreateSpotPage({ dark }) {
 
     if (lng === "") newErrors.lng = "Longitude is required";
     if (image1 === "") newErrors.image1 = "Preview Image is required";
-    if(!(image1.endsWith("jpg") || image1.endsWith("jpeg") || image1.endsWith("png")) && !newErrors.image1) newErrors.image1 = "Image URL must end in .png, .jpg, or .jpeg"
+    if(!(image1.toLowerCase().endsWith("jpg") || image1.toLowerCase().endsWith("jpeg") || image1.toLowerCase().endsWith("png")) && !newErrors.image1) newErrors.image1 = "Image URL must end in .png, .jpg, or .jpeg"
     if (description.length < 30 && !newErrors.description)
       newErrors.description = "Description needs a minimun of 30 characters";
     if (description.length > 240 && !newErrors.description)
       newErrors.description = "Description must be below 240 characters";
-    if (image2 !== "" && !(image2.endsWith("jpg") || image2.endsWith("jpeg") || image2.endsWith("png")))
+    if (image2 !== "" && !(image2.toLowerCase().endsWith("jpg") || image2.toLowerCase().endsWith("jpeg") || image2.toLowerCase().endsWith("png")))
       newErrors.image2 = "Image URL must end in .png, .jpg, or .jpeg";
-    if (image3 !== "" && !(image3.endsWith("jpg") || image3.endsWith("jpeg") || image3.endsWith("png")))
+    if (image3 !== "" && !(image3.toLowerCase().endsWith("jpg") || image3.toLowerCase().endsWith("jpeg") || image3.toLowerCase().endsWith("png")))
       newErrors.image3 = "Image URL must end in .png, .jpg, or .jpeg";
-    if (image4 !== "" && !(image4.endsWith("jpg") || image4.endsWith("jpeg") || image4.endsWith("png")))
+    if (image4 !== "" && !(image4.toLowerCase().endsWith("jpg") || image4.toLowerCase().endsWith("jpeg") || image4.toLowerCase().endsWith("png")))
       newErrors.image4 = "Image URL must end in .png, .jpg, or .jpeg";
-    if (image5 !== "" && !(image5.endsWith("jpg") || image5.endsWith("jpeg") || image5.endsWith("png")))
+    if (image5 !== "" && !(image5.toLowerCase().endsWith("jpg") || image5.toLowerCase().endsWith("jpeg") || image5.toLowerCase().endsWith("png")))
       newErrors.image5 = "Image URL must end in .png, .jpg, or .jpeg";
 
       if((!(isFinite(lat) && Math.abs(lat) <= 90)) && !newErrors.lat) newErrors.lat = 'Latitude is invalid';
@@ -79,18 +79,6 @@ function CreateSpotPage({ dark }) {
 if(Object.values(newErrors).length === 0) {
   setBackendToggle(true)};
     }
-      if (newSpot) {
-        let newErrors = {};
-        if (image2 !== "" && !(image2.endsWith("jpg", "png", ".jpeg")))
-          newErrors.image2 = "Image URL must end in .png, .jpg, or .jpeg";
-        if (image3 !== "" && !(image3.endsWith("jpg", "png", ".jpeg")))
-          newErrors.image3 = "Image URL must end in .png, .jpg, or .jpeg";
-        if (image4 !== "" && !(image4.endsWith("jpg", "png", ".jpeg")))
-          newErrors.image4 = "Image URL must end in .png, .jpg, or .jpeg";
-        if (image5 !== "" && !(image5.endsWith("jpg", "png", ".jpeg")))
-          newErrors.image5 = "Image URL must end in .png, .jpg, or .jpeg";
-          setErrors({...newErrors})
-      }
 
   }, [ image2, image3, image4, image5, newSpot, name, address, city, state, country, description, image1, lat, lng, price, toggle])
 
